@@ -1,0 +1,93 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "mcp/github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "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"
+      },
+      "enabled": true
+    },
+    "fetch": {
+      "command": "docker",
+      "args": ["run",
+       "-i",
+       "--rm", 
+       "mcp/fetch"],
+      "enabled": true
+    },
+    "playwright": {
+      "url": "http://localhost:8932/sse",
+      "enabled": true
+    },
+    "brave-search": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "BRAVE_API_KEY",
+        "mcp/brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "BSAeNnAyJIan8INYnMXQOqJqND9K-1W"
+      },
+      "enabled": true
+    },
+    "markdownify": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-v",
+        "D:\\桌面\\王康康\\AI:/data",
+        "-v",
+        "D:\\桌面\\王康康\\AI\\cursor使用流程规范化\\outputs:/outputs",
+        "-e",
+        "OUTPUT_DIR=/outputs",
+        "mcp/markdownify"
+      ],
+      "enabled": true
+    },
+    "notion-api": {
+      "command": "docker",
+      "args": ["exec", "-i", "notion-api-mcp", "python", "-m", "notion_api_mcp"],
+      "env": {}
+    },
+    "memory": {
+      "command": "docker",
+      "args": ["run",
+       "-i",
+       "--rm",
+       "mcp/memory"],
+      "enabled": true
+    },
+    "everything": {
+      "command": "docker",
+      "args": ["run", 
+      "-i", 
+      "--rm", 
+      "mcp/everything"],
+      "enabled": true
+    },
+    "git": {
+      "command": "docker",
+      "args": ["run", 
+      "--rm", 
+      "-i", 
+      "-v", 
+      "D:/:/d/", 
+      "mcp/git"],
+      "enabled": true
+    }
+  }
+}
