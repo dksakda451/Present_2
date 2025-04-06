@@ -70,6 +70,24 @@
        "--rm",
        "mcp/memory"],
       "enabled": true
+    },
+    "everything": {
+      "command": "docker",
+      "args": ["run", 
+      "-i", 
+      "--rm", 
+      "mcp/everything"],
+      "enabled": true
+    },
+    "git": {
+      "command": "docker",
+      "args": ["run", 
+      "--rm", 
+      "-i", 
+      "-v", 
+      "D:/:/d/", 
+      "mcp/git"],
+      "enabled": true
     }
   }
 }
