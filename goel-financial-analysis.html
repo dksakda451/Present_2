@@ -1,0 +1,2255 @@
+<!doctype html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>歌尔股份财务分析与成功因素</title>
+
+		<meta name="description" content="歌尔股份财务分析与成功因素演示文稿">
+		<meta name="author" content="财务分析团队">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="reveal.js-5.2.1/dist/reset.css">
+		<link rel="stylesheet" href="reveal.js-5.2.1/dist/reveal.css">
+		<link rel="stylesheet" href="reveal.js-5.2.1/dist/theme/night.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="reveal.js-5.2.1/plugin/highlight/monokai.css">
+        
+        <!-- Three.js库 -->
+        <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+        
+        <!-- ECharts库 -->
+        <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.6.0/echarts.min.js"></script>
+        
+        <!-- GSAP动画库 -->
+        <script src="reveal.js-5.2.1/../GSAP-3.12.7/dist/gsap.min.js"></script>
+        
+        <style>
+            .threejs-container {
+                width: 100%;
+                height: 300px;
+                position: relative;
+                overflow: hidden;
+                margin-bottom: 30px;
+            }
+            
+            #threejs-canvas {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+            
+            .threejs-loading {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-size: 16px;
+                text-align: center;
+            }
+            
+            .echarts-container {
+                width: 100%;
+                height: 400px;
+                margin: 0 auto;
+            }
+            
+            /* GSAP动画容器样式 */
+            .gsap-container {
+                width: 100%;
+                height: 450px;
+                position: relative;
+                overflow: hidden;
+                margin-top: 40px;
+            }
+            
+            .gsap-box {
+                width: 100px;
+                height: 100px;
+                position: absolute;
+                border-radius: 8px;
+            }
+            
+            .gsap-text {
+                font-size: 3em;
+                position: absolute;
+                opacity: 0;
+                color: #fff;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .gsap-stagger-box {
+                width: 50px;
+                height: 50px;
+                background-color: #3498db;
+                display: inline-block;
+                margin: 8px;
+                border-radius: 5px;
+            }
+            
+            .gsap-timeline-element {
+                width: 200px;
+                height: 60px;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+                line-height: 60px;
+                border-radius: 8px;
+                color: white;
+                opacity: 0;
+                font-size: 18px;
+            }
+            
+            /* 歌尔股份专用样式 */
+            .financial-data {
+                color: #1a73e8;
+                font-weight: bold;
+            }
+            
+            .highlight-box {
+                background-color: rgba(26, 115, 232, 0.1);
+                border-left: 4px solid #1a73e8;
+                padding: 10px 20px;
+                margin: 20px 0;
+            }
+            
+            .data-comparison {
+                display: flex;
+                justify-content: space-around;
+                margin: 20px 0;
+            }
+            
+            .comparison-item {
+                text-align: center;
+            }
+            
+            .comparison-value {
+                font-size: 2em;
+                font-weight: bold;
+            }
+            
+            .positive-value {
+                color: #2ecc71;
+            }
+            
+            .negative-value {
+                color: #e74c3c;
+            }
+
+            /* 标题页样式优化 */
+            .title-content {
+                margin-top: 40px;
+            }
+
+            /* 调整reveal.js内部元素的样式 */
+            .reveal h1 {
+                font-size: 2.2em;
+                margin-bottom: 0.4em;
+            }
+
+            .reveal h2 {
+                font-size: 1.8em;
+                margin-bottom: 0.6em;
+            }
+
+            .reveal h3 {
+                font-size: 1.4em;
+                margin-bottom: 0.8em;
+            }
+
+            .reveal p {
+                margin-bottom: 20px;
+            }
+
+            /* 调整内容间距 */
+            .reveal section {
+                padding: 20px 0;
+            }
+        </style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- 演示文稿的幻灯片容器 -->
+			<div class="slides">
+				<!-- 1. 标题页 -->
+				<section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
+                    <div class="threejs-container">
+                        <canvas id="goel-logo-canvas"></canvas>
+                        <div class="threejs-loading" id="logo-loading-text">加载中...</div>
+                    </div>
+                    <div class="title-content">
+					    <h1>歌尔股份财务和成功因素分析</h1>
+					    <p>
+						    <small>第二组：闫杰龙、刘铭宇、谭显丞、张容馨、王康康</small>
+					    </p>
+                    </div>
+				</section>
+
+				<!-- 2. 目录页 -->
+				<section>
+					<h2>内容概览</h2>
+					<div class="gsap-container" id="toc-animation">
+                        <div class="gsap-timeline-element" style="top: 15%; background-color: #1a73e8; box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3); border-radius: 12px; font-weight: 600;">公司概述</div>
+                        <div class="gsap-timeline-element" style="top: 30%; background-color: #3498db; box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3); border-radius: 12px; font-weight: 600;">财务指标分析</div>
+                        <div class="gsap-timeline-element" style="top: 45%; background-color: #2ecc71; box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); border-radius: 12px; font-weight: 600;">成功因素分析</div>
+                        <div class="gsap-timeline-element" style="top: 60%; background-color: #e67e22; box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3); border-radius: 12px; font-weight: 600;">财务问题分析</div>
+                        <div class="gsap-timeline-element" style="top: 75%; background-color: #9b59b6; box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3); border-radius: 12px; font-weight: 600;">未来展望</div>
+                    </div>
+				</section>
+
+				<!-- 3. 公司概述 -->
+				<section>
+					<section>
+						<h2>公司概述</h2>
+						<p>歌尔股份有限公司（股票代码：002241）</p>
+						<p>全球领先的智能声学、精密光学和电子产品解决方案提供商</p>
+						<div class="highlight-box">
+                            <p>主营业务：精密电子组件、智能声学整机和智能硬件</p>
+                            <p>主要客户：全球科技巨头，包括苹果、Meta等</p>
+                        </div>
+					</section>
+                    
+                    <section>
+                        <h2>业务结构</h2>
+                        <div class="echarts-container" id="business-structure-pie"></div>
+                        <p>精密电子组件是公司核心业务板块</p>
+                    </section>
+                    
+                    <section>
+                        <h2>市场地位</h2>
+                        <div class="threejs-container">
+                            <canvas id="market-position-canvas"></canvas>
+                            <div class="threejs-loading" id="market-loading-text">加载中...</div>
+                        </div>
+
+                        <p>VR/AR、TWS耳机等领域的全球领先供应商</p>
+                    </section>
+				</section>
+
+				<!-- 4. 财务指标分析 -->
+				<section>
+					<section>
+						<h2>财务指标分析</h2>
+						<p>2014-2023年主要财务数据与趋势</p>
+					</section>
+                    
+                    <section>
+                        <h2>营业收入与净利润趋势</h2>
+                        <div class="echarts-container" id="revenue-profit-line"></div>
+                        <p>近十年营收持续增长，净利润波动明显</p>
+                    </section>
+                    
+                    <section>
+                        <h2>毛利率变化与同业对比</h2>
+                        <div class="echarts-container" id="gross-margin-line"></div>
+                        <p>2020年后毛利率持续下滑，低于行业平均水平</p>
+                    </section>
+                    
+                    <section>
+                        <h2>ROE历年变化</h2>
+                        <div class="echarts-container" id="roe-line"></div>
+                        <p>ROE保持波动上升趋势，整体优于行业平均</p>
+                    </section>
+                    
+                    <section>
+                        <h2>资产负债结构</h2>
+                        <div class="echarts-container" id="asset-liability-pie"></div>
+                        <p>资产结构合理，负债率适中</p>
+                    </section>
+                    
+                    <section>
+                        <h2>客户集中度分析</h2>
+                        <div class="echarts-container" id="customer-concentration-bar"></div>
+                        <p>客户集中度较高，前五大客户占比超过60%</p>
+                    </section>
+				</section>
+
+				<!-- 5. 成功因素分析 -->
+				<section>
+					<section>
+						<h2>成功因素分析</h2>
+						<p>歌尔股份的核心竞争优势</p>
+					</section>
+                    
+                    <section>
+                        <h2>技术创新与研发实力</h2>
+                        <div class="echarts-container" id="rd-investment-bar"></div>
+                        <p>持续的研发投入是公司持续竞争力的关键</p>
+                    </section>
+                    
+                    <section>
+                        <h2>精密制造与智能制造能力</h2>
+                        <div class="gsap-container" id="manufacturing-animation">
+                            <div class="gsap-box" style="background-color: #3498db; left: 20%; top: 40%;">精密制造</div>
+                            <div class="gsap-box" style="background-color: #2ecc71; left: 50%; top: 40%;">智能制造</div>
+                            <div class="gsap-box" style="background-color: #e74c3c; left: 80%; top: 40%;">质量管控</div>
+                        </div>
+                        <p>自动化生产线与精密制造工艺的完美结合</p>
+                    </section>
+                    
+                    <section>
+                        <h2>优质客户资源与战略转型</h2>
+                        <div class="threejs-container">
+                            <canvas id="client-relationship-canvas"></canvas>
+                            <div class="threejs-loading" id="client-loading-text">加载中...</div>
+                        </div>
+                        <p>与全球顶尖科技公司建立深度合作关系</p>
+                    </section>
+                    
+                    <section>
+                        <h2>核心管理团队优势</h2>
+                        <div class="gsap-container" id="management-text">
+                            <h1 class="gsap-text" style="top: 40%;">专业管理团队</h1>
+                            <h1 class="gsap-text" style="top: 60%;">长期战略眼光</h1>
+                        </div>
+                        <p>管理团队稳定，战略前瞻性强</p>
+                    </section>
+				</section>
+
+				<!-- 6. 财务问题分析 -->
+				<section>
+					<section>
+						<h2>财务问题分析</h2>
+						<p>潜在风险与挑战</p>
+					</section>
+                    
+                    <section>
+                        <h2>客户集中度问题</h2>
+                        <div class="echarts-container" id="customer-risk-analysis"></div>
+                        <p>对大客户的依赖程度过高带来的经营风险</p>
+                    </section>
+                    
+                    <section>
+                        <h2>毛利率下滑分析</h2>
+                        <div class="echarts-container" id="margin-decline-analysis"></div>
+                        <p>原材料价格上涨与竞争加剧导致毛利率承压</p>
+                    </section>
+                    
+                    <section>
+                        <h2>业绩波动与周期性</h2>
+                        <div class="echarts-container" id="performance-volatility"></div>
+                        <p>受终端产品生命周期影响明显</p>
+                    </section>
+				</section>
+
+				<!-- 7. 未来展望 -->
+				<section>
+					<section>
+						<h2>未来展望</h2>
+						<p>行业趋势与发展机遇</p>
+					</section>
+                    
+                    <section>
+                        <h2>行业发展趋势</h2>
+                        <div class="gsap-container" id="industry-trend-stagger" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+                            <div class="gsap-stagger-box"></div>
+                            <div class="gsap-stagger-box"></div>
+                            <div class="gsap-stagger-box"></div>
+                            <div class="gsap-stagger-box"></div>
+                            <div class="gsap-stagger-box"></div>
+                            <div class="gsap-stagger-box"></div>
+                            <div class="gsap-stagger-box"></div>
+                            <div class="gsap-stagger-box"></div>
+                            <div class="gsap-stagger-box"></div>
+                        </div>
+                        <p>AR/VR、智能穿戴设备将成为新增长点</p>
+                    </section>
+                    
+                    <section>
+                        <h2>公司发展战略</h2>
+                        <div class="threejs-container">
+                            <canvas id="future-strategy-canvas"></canvas>
+                            <div class="threejs-loading" id="future-loading-text">加载中...</div>
+                        </div>
+                        <p>深化精密制造能力，扩大产业链布局</p>
+                    </section>
+                    
+                    <section>
+                        <h2>2024年预期</h2>
+                        <div class="echarts-container" id="future-forecast"></div>
+                        <p>新产品带动业绩增长，毛利率有望企稳回升</p>
+                    </section>
+				</section>
+
+				<!-- 8. 结束页 -->
+				<section style="text-align: center;">
+					<h1>谢谢关注!</h1>
+					<p>
+						<small>联系我们：finance-analysis@example.com</small>
+					</p>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="reveal.js-5.2.1/dist/reveal.js"></script>
+		<script src="reveal.js-5.2.1/plugin/zoom/zoom.js"></script>
+		<script src="reveal.js-5.2.1/plugin/notes/notes.js"></script>
+		<script src="reveal.js-5.2.1/plugin/search/search.js"></script>
+		<script src="reveal.js-5.2.1/plugin/markdown/markdown.js"></script>
+		<script src="reveal.js-5.2.1/plugin/highlight/highlight.js"></script>
+		
+		<script>
+			// 初始化Reveal.js
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				transition: 'slide', // 设置默认转场效果
+
+				// 插件配置
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+            
+            // 财务数据对象 - 示例数据
+            const goelData = {
+                // 营收与利润数据（单位：亿元）
+                revenue: {
+                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                    values: [120.5, 167.8, 189.5, 236.2, 237.5, 351.0, 577.4, 825.1, 792.5, 841.7]
+                },
+                profit: {
+                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                    values: [14.7, 22.5, 18.5, 22.9, 20.7, 27.5, 30.2, 47.1, 36.5, 52.3]
+                },
+                // 毛利率数据（百分比）
+                grossMargin: {
+                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                    goel: [28.5, 26.3, 24.8, 23.6, 22.4, 21.7, 20.2, 18.5, 17.2, 16.8],
+                    industry: [26.2, 25.8, 25.1, 24.7, 23.9, 23.2, 22.8, 22.1, 21.5, 21.0]
+                },
+                // 业务结构数据（2023年）
+                businessStructure: [
+                    {value: 65, name: '精密电子组件'},
+                    {value: 25, name: '智能声学整机'},
+                    {value: 10, name: '智能硬件及其他'}
+                ],
+                // ROE数据（百分比）
+                roe: {
+                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                    goel: [15.2, 18.5, 14.8, 13.9, 12.5, 13.2, 14.8, 18.7, 15.4, 19.2],
+                    industry: [13.8, 14.2, 13.5, 12.1, 11.5, 11.2, 12.4, 13.5, 12.8, 13.1]
+                },
+                // 资产负债结构（2023年）
+                assetStructure: [
+                    {value: 55, name: '固定资产'},
+                    {value: 20, name: '流动资产'},
+                    {value: 15, name: '无形资产'},
+                    {value: 10, name: '其他资产'}
+                ],
+                liabilityStructure: [
+                    {value: 45, name: '长期负债'},
+                    {value: 35, name: '短期负债'},
+                    {value: 20, name: '其他负债'}
+                ],
+                // 客户集中度数据
+                customerConcentration: {
+                    names: ['第一大客户', '第二大客户', '第三大客户', '第四大客户', '第五大客户', '其他客户'],
+                    values: [38, 12, 8, 5, 4, 33]
+                },
+                // 研发投入数据
+                rdInvestment: {
+                    years: ['2019', '2020', '2021', '2022', '2023'],
+                    amount: [24.3, 31.7, 42.5, 55.8, 67.3], // 亿元
+                    percentage: [6.9, 7.2, 7.5, 7.8, 8.0] // 占营收比例（%）
+                },
+                // 客户风险分析数据
+                customerRiskAnalysis: {
+                    categories: ['高度依赖', '中度依赖', '低度依赖'],
+                    years: ['2019', '2020', '2021', '2022', '2023'],
+                    data: [
+                        [45, 48, 52, 55, 62], // 高度依赖（第一、二大客户）
+                        [20, 18, 15, 12, 10], // 中度依赖
+                        [35, 34, 33, 33, 28]  // 低度依赖
+                    ]
+                },
+                // 毛利率下滑因素分析
+                marginDeclineFactors: [
+                    {value: 35, name: '原材料价格上涨'},
+                    {value: 25, name: '人工成本上升'},
+                    {value: 20, name: '市场竞争加剧'},
+                    {value: 15, name: '产品结构变化'},
+                    {value: 5, name: '其他因素'}
+                ],
+                // 业绩波动分析
+                performanceVolatility: {
+                    years: ['2019', '2020', '2021', '2022', '2023'],
+                    revenue: [100, 164, 235, 226, 240], // 以2019年为基准(100)的指数
+                    profit: [100, 110, 171, 133, 190],  // 以2019年为基准(100)的指数
+                    industry: [100, 125, 150, 160, 175] // 行业平均水平
+                },
+                // 2024年预测数据
+                forecast2024: {
+                    revenue: 920, // 亿元
+                    profit: 60,   // 亿元
+                    grossMargin: 17.5, // %
+                    roe: 20.2 // %
+                }
+            };
+            
+            // Three.js变量
+            let camera, scene, renderer;
+            let logoMesh, marketMesh, clientMesh, futureMesh;
+            let isThreeJsSlide = false;
+            let currentThreeJsCanvas = '';
+            
+            // ECharts变量
+            let businessPieChart, revenueProfitChart, grossMarginChart, roeChart, assetLiabilityChart, customerChart;
+            let rdInvestmentChart, customerRiskChart, marginDeclineChart, performanceVolatilityChart, futureChart;
+            let currentEChartsType = '';
+            
+            // GSAP变量
+            let isGsapSlide = false;
+            let tocAnimation, manufacturingAnimation, managementTextAnimation, industryTrendAnimation;
+            
+            // 监听幻灯片变化
+            Reveal.on('slidechanged', function(event) {
+                const currentSlide = event.currentSlide;
+                
+                // Three.js部分检测
+                checkThreeJsSlide(currentSlide);
+                
+                // ECharts部分检测
+                checkEChartsSlide(currentSlide);
+                
+                // GSAP部分检测
+                checkGsapSlide(currentSlide);
+            });
+            
+            // 检查是否为Three.js幻灯片
+            function checkThreeJsSlide(slide) {
+                if (slide.querySelector('#goel-logo-canvas')) {
+                    isThreeJsSlide = true;
+                    currentThreeJsCanvas = 'logo';
+                    initGoelLogo();
+                } else if (slide.querySelector('#market-position-canvas')) {
+                    isThreeJsSlide = true;
+                    currentThreeJsCanvas = 'market';
+                    initMarketPosition();
+                } else if (slide.querySelector('#client-relationship-canvas')) {
+                    isThreeJsSlide = true;
+                    currentThreeJsCanvas = 'client';
+                    initClientRelationship();
+                } else if (slide.querySelector('#future-strategy-canvas')) {
+                    isThreeJsSlide = true;
+                    currentThreeJsCanvas = 'future';
+                    initFutureStrategy();
+                } else {
+                    isThreeJsSlide = false;
+                    currentThreeJsCanvas = '';
+                }
+            }
+            
+            // 检查是否为ECharts幻灯片
+            function checkEChartsSlide(slide) {
+                if (slide.querySelector('#business-structure-pie')) {
+                    initECharts('business-pie');
+                } else if (slide.querySelector('#revenue-profit-line')) {
+                    initECharts('revenue-profit');
+                } else if (slide.querySelector('#gross-margin-line')) {
+                    initECharts('gross-margin');
+                } else if (slide.querySelector('#roe-line')) {
+                    initECharts('roe');
+                } else if (slide.querySelector('#asset-liability-pie')) {
+                    initECharts('asset-liability');
+                } else if (slide.querySelector('#customer-concentration-bar')) {
+                    initECharts('customer-concentration');
+                } else if (slide.querySelector('#rd-investment-bar')) {
+                    initECharts('rd-investment');
+                } else if (slide.querySelector('#customer-risk-analysis')) {
+                    initECharts('customer-risk');
+                } else if (slide.querySelector('#margin-decline-analysis')) {
+                    initECharts('margin-decline');
+                } else if (slide.querySelector('#performance-volatility')) {
+                    initECharts('performance-volatility');
+                } else if (slide.querySelector('#future-forecast')) {
+                    initECharts('future-forecast');
+                } else {
+                    currentEChartsType = '';
+                }
+            }
+            
+            // 检查是否为GSAP动画幻灯片
+            function checkGsapSlide(slide) {
+                if (slide.querySelector('#toc-animation')) {
+                    isGsapSlide = true;
+                    initGSAP('toc');
+                } else if (slide.querySelector('#manufacturing-animation')) {
+                    isGsapSlide = true;
+                    initGSAP('manufacturing');
+                } else if (slide.querySelector('#management-text')) {
+                    isGsapSlide = true;
+                    initGSAP('management');
+                } else if (slide.querySelector('#industry-trend-stagger')) {
+                    isGsapSlide = true;
+                    initGSAP('industry-trend');
+                } else {
+                    isGsapSlide = false;
+                    
+                    // 暂停所有GSAP动画
+                    if (tocAnimation) tocAnimation.pause();
+                    if (manufacturingAnimation) manufacturingAnimation.pause();
+                    if (managementTextAnimation) managementTextAnimation.pause();
+                    if (industryTrendAnimation) industryTrendAnimation.pause();
+                }
+            }
+            
+            // 修改resize事件处理函数
+            window.addEventListener('resize', function() {
+                // Three.js部分
+                if (camera && renderer) {
+                    const container = document.getElementById(currentThreeJsCanvas + '-canvas');
+                    if (container) {
+                        camera.aspect = container.clientWidth / container.clientHeight;
+                        camera.updateProjectionMatrix();
+                        renderer.setSize(container.clientWidth, container.clientHeight);
+                    }
+                }
+                
+                // ECharts部分 - 根据当前图表类型调整大小
+                resizeCurrentChart();
+            });
+            
+            // 调整当前图表大小
+            function resizeCurrentChart() {
+                switch(currentEChartsType) {
+                    case 'business-pie':
+                        if (businessPieChart) businessPieChart.resize();
+                        break;
+                    case 'revenue-profit':
+                        if (revenueProfitChart) revenueProfitChart.resize();
+                        break;
+                    case 'gross-margin':
+                        if (grossMarginChart) grossMarginChart.resize();
+                        break;
+                    case 'roe':
+                        if (roeChart) roeChart.resize();
+                        break;
+                    case 'asset-liability':
+                        if (assetLiabilityChart) assetLiabilityChart.resize();
+                        break;
+                    case 'customer-concentration':
+                        if (customerChart) customerChart.resize();
+                        break;
+                    case 'rd-investment':
+                        if (rdInvestmentChart) rdInvestmentChart.resize();
+                        break;
+                    case 'customer-risk':
+                        if (customerRiskChart) customerRiskChart.resize();
+                        break;
+                    case 'margin-decline':
+                        if (marginDeclineChart) marginDeclineChart.resize();
+                        break;
+                    case 'performance-volatility':
+                        if (performanceVolatilityChart) performanceVolatilityChart.resize();
+                        break;
+                    case 'future-forecast':
+                        if (futureChart) futureChart.resize();
+                        break;
+                }
+            }
+            
+            // 确保在DOM完全加载后初始化
+            document.addEventListener('DOMContentLoaded', function() {
+                // 检查当前幻灯片
+                const currentSlide = Reveal.getCurrentSlide();
+                if (currentSlide) {
+                    checkThreeJsSlide(currentSlide);
+                    checkEChartsSlide(currentSlide);
+                    checkGsapSlide(currentSlide);
+                }
+            });
+            
+            // ========== Three.js 初始化函数 ==========
+            
+            // 初始化歌尔股份Logo (3D文字)
+            function initGoelLogo() {
+                const container = document.getElementById('goel-logo-canvas');
+                if (!container) return;
+                
+                // 创建场景
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x1a1a1a);
+                
+                // 创建相机
+                camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                camera.position.z = 5;
+                
+                // 创建渲染器
+                renderer = new THREE.WebGLRenderer({
+                    canvas: container,
+                    antialias: true
+                });
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                
+                // 添加灯光
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
+                
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(1, 1, 1);
+                scene.add(directionalLight);
+                
+                // 创建文字
+                const loader = new THREE.FontLoader();
+                // 使用系统默认字体（由于加载自定义字体可能受限）
+                createTextMesh("歌尔股份", 0x1a73e8);
+                
+                // 隐藏加载文本
+                document.getElementById('logo-loading-text').style.display = 'none';
+                
+                // 开始动画
+                animateThreeJs();
+            }
+            
+            // 创建3D文字网格
+            function createTextMesh(text, color) {
+                // 创建一个临时的立方体代替文字
+                const geometry = new THREE.BoxGeometry(4, 1, 0.5);
+                const materials = new THREE.MeshPhongMaterial({ 
+                    color: color,
+                    specular: 0x555555,
+                    shininess: 30
+                });
+                logoMesh = new THREE.Mesh(geometry, materials);
+                scene.add(logoMesh);
+                
+                // 添加简单的公司标识
+                const sphereGeometry = new THREE.SphereGeometry(0.3, 32, 32);
+                const sphereMaterial = new THREE.MeshPhongMaterial({ color: 0x3498db });
+                const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                sphere.position.set(-1.5, 0, 0.5);
+                scene.add(sphere);
+            }
+            
+            // 初始化市场地位3D模型
+            function initMarketPosition() {
+                const container = document.getElementById('market-position-canvas');
+                if (!container) return;
+                
+                // 基本场景设置与Logo相似，但模型不同
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x1a1a1a);
+                
+                camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                camera.position.z = 5;
+                
+                renderer = new THREE.WebGLRenderer({
+                    canvas: container,
+                    antialias: true
+                });
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                
+                // 添加灯光
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
+                
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(1, 1, 1);
+                scene.add(directionalLight);
+                
+                // 创建市场地位可视化 - 使用柱状图形式
+                createMarketPositionVisualization();
+                
+                // 隐藏加载文本
+                document.getElementById('market-loading-text').style.display = 'none';
+                
+                // 开始动画
+                animateThreeJs();
+            }
+            
+            // 创建市场地位可视化
+            function createMarketPositionVisualization() {
+                const marketData = [
+                    { name: "VR/AR", height: 2.0, color: 0x3498db },
+                    { name: "TWS耳机", height: 1.8, color: 0x2ecc71 },
+                    { name: "智能穿戴", height: 1.5, color: 0xe74c3c },
+                    { name: "其他", height: 1.0, color: 0xf39c12 }
+                ];
+                
+                const group = new THREE.Group();
+                
+                // 创建柱状体
+                let xPos = -3;
+                const spacing = 2;
+                
+                marketData.forEach(item => {
+                    const geometry = new THREE.BoxGeometry(1, item.height, 1);
+                    const material = new THREE.MeshPhongMaterial({ color: item.color });
+                    const bar = new THREE.Mesh(geometry, material);
+                    bar.position.set(xPos, item.height/2 - 1, 0);
+                    group.add(bar);
+                    xPos += spacing;
+                });
+                
+                marketMesh = group;
+                scene.add(marketMesh);
+            }
+            
+            // 初始化客户关系3D模型
+            function initClientRelationship() {
+                const container = document.getElementById('client-relationship-canvas');
+                if (!container) return;
+                
+                // 基本场景设置
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x1a1a1a);
+                
+                camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                camera.position.z = 5;
+                
+                renderer = new THREE.WebGLRenderer({
+                    canvas: container,
+                    antialias: true
+                });
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                
+                // 添加灯光
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
+                
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(1, 1, 1);
+                scene.add(directionalLight);
+                
+                // 创建客户关系网络可视化
+                createClientRelationshipVisualization();
+                
+                // 隐藏加载文本
+                document.getElementById('client-loading-text').style.display = 'none';
+                
+                // 开始动画
+                animateThreeJs();
+            }
+            
+            // 创建客户关系网络可视化
+            function createClientRelationshipVisualization() {
+                // 创建中心节点（歌尔股份）
+                const centerGeometry = new THREE.SphereGeometry(0.8, 32, 32);
+                const centerMaterial = new THREE.MeshPhongMaterial({ color: 0x3498db });
+                const centerNode = new THREE.Mesh(centerGeometry, centerMaterial);
+                
+                // 创建客户节点
+                const clientsData = [
+                    { name: "客户A", size: 0.6, color: 0xe74c3c, position: { x: 2.5, y: 1.5, z: 0 } },
+                    { name: "客户B", size: 0.5, color: 0x2ecc71, position: { x: 2.5, y: -1.5, z: 0 } },
+                    { name: "客户C", size: 0.4, color: 0xf39c12, position: { x: -2.5, y: 1.5, z: 0 } },
+                    { name: "客户D", size: 0.3, color: 0x9b59b6, position: { x: -2.5, y: -1.5, z: 0 } }
+                ];
+                 
+                const group = new THREE.Group();
+                group.add(centerNode);
+                
+                // 添加客户节点
+                clientsData.forEach(client => {
+                    const clientGeometry = new THREE.SphereGeometry(client.size, 32, 32);
+                    const clientMaterial = new THREE.MeshPhongMaterial({ color: client.color });
+                    const clientNode = new THREE.Mesh(clientGeometry, clientMaterial);
+                    clientNode.position.set(client.position.x, client.position.y, client.position.z);
+                    
+                    // 创建连接线
+                    const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.7, transparent: true });
+                    const lineGeometry = new THREE.BufferGeometry().setFromPoints([
+                        new THREE.Vector3(0, 0, 0),
+                        new THREE.Vector3(client.position.x, client.position.y, client.position.z)
+                    ]);
+                    const line = new THREE.Line(lineGeometry, lineMaterial);
+                    
+                    group.add(clientNode);
+                    group.add(line);
+                });
+                
+                clientMesh = group;
+                scene.add(clientMesh);
+            }
+            
+            // 初始化未来战略3D可视化
+            function initFutureStrategy() {
+                const container = document.getElementById('future-strategy-canvas');
+                if (!container) return;
+                
+                // 基本场景设置
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x1a1a1a);
+                
+                camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                camera.position.z = 5;
+                
+                renderer = new THREE.WebGLRenderer({
+                    canvas: container,
+                    antialias: true
+                });
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                
+                // 添加灯光
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
+                
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(1, 1, 1);
+                scene.add(directionalLight);
+                
+                // 创建未来战略路径可视化
+                createFutureStrategyVisualization();
+                
+                // 隐藏加载文本
+                document.getElementById('future-loading-text').style.display = 'none';
+                
+                // 开始动画
+                animateThreeJs();
+            }
+            
+            // 创建未来战略路径可视化
+            function createFutureStrategyVisualization() {
+                // 创建一条3D路径
+                const curve = new THREE.CatmullRomCurve3([
+                    new THREE.Vector3(-3, -2, 0),
+                    new THREE.Vector3(-1, -1, 0),
+                    new THREE.Vector3(0, 0, 0),
+                    new THREE.Vector3(1, 1, 0),
+                    new THREE.Vector3(3, 2, 0)
+                ]);
+                
+                const points = curve.getPoints(50);
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                const material = new THREE.LineBasicMaterial({ color: 0x3498db, linewidth: 2 });
+                const curveObject = new THREE.Line(geometry, material);
+                
+                // 创建路径上的里程碑节点
+                const milestones = [
+                    { position: new THREE.Vector3(-3, -2, 0), color: 0xe74c3c, size: 0.3 },
+                    { position: new THREE.Vector3(-1, -1, 0), color: 0xf39c12, size: 0.3 },
+                    { position: new THREE.Vector3(0, 0, 0), color: 0x2ecc71, size: 0.4 },
+                    { position: new THREE.Vector3(1, 1, 0), color: 0x3498db, size: 0.3 },
+                    { position: new THREE.Vector3(3, 2, 0), color: 0x9b59b6, size: 0.5 }
+                ];
+                
+                const group = new THREE.Group();
+                group.add(curveObject);
+                
+                milestones.forEach(milestone => {
+                    const sphereGeometry = new THREE.SphereGeometry(milestone.size, 32, 32);
+                    const sphereMaterial = new THREE.MeshPhongMaterial({ color: milestone.color });
+                    const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                    sphere.position.copy(milestone.position);
+                    group.add(sphere);
+                });
+                
+                futureMesh = group;
+                scene.add(futureMesh);
+            }
+            
+            // Three.js动画循环
+            function animateThreeJs() {
+                if (!isThreeJsSlide) return;
+                
+                requestAnimationFrame(animateThreeJs);
+                
+                // 根据当前画布类型旋转不同的对象
+                if (currentThreeJsCanvas === 'logo' && logoMesh) {
+                    logoMesh.rotation.y += 0.01;
+                } else if (currentThreeJsCanvas === 'market' && marketMesh) {
+                    marketMesh.rotation.y += 0.01;
+                } else if (currentThreeJsCanvas === 'client' && clientMesh) {
+                    clientMesh.rotation.y += 0.005;
+                } else if (currentThreeJsCanvas === 'future' && futureMesh) {
+                    futureMesh.rotation.y += 0.005;
+                }
+                
+                renderer.render(scene, camera);
+            }
+            
+            // ========== ECharts 初始化函数 ==========
+            
+            // 初始化ECharts图表
+            function initECharts(type) {
+                currentEChartsType = type;
+                
+                switch(type) {
+                    case 'business-pie':
+                        initBusinessStructurePie();
+                        break;
+                    case 'revenue-profit':
+                        initRevenueProfitLine();
+                        break;
+                    case 'gross-margin':
+                        initGrossMarginLine();
+                        break;
+                    case 'roe':
+                        initRoeLine();
+                        break;
+                    case 'asset-liability':
+                        initAssetLiabilityPie();
+                        break;
+                    case 'customer-concentration':
+                        initCustomerConcentrationBar();
+                        break;
+                    case 'rd-investment':
+                        initRdInvestmentBar();
+                        break;
+                    case 'customer-risk':
+                        initCustomerRiskAnalysis();
+                        break;
+                    case 'margin-decline':
+                        initMarginDeclineAnalysis();
+                        break;
+                    case 'performance-volatility':
+                        initPerformanceVolatility();
+                        break;
+                    case 'future-forecast':
+                        initFutureForecast();
+                        break;
+                }
+            }
+            
+            // 初始化业务结构饼图
+            function initBusinessStructurePie() {
+                const container = document.getElementById('business-structure-pie');
+                if (!container) return;
+                
+                try {
+                    businessPieChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '2023年业务结构占比',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: '{a} <br/>{b}: {c}%'
+                        },
+                        legend: {
+                            orient: 'horizontal',
+                            bottom: 10,
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        series: [
+                            {
+                                name: '业务占比',
+                                type: 'pie',
+                                radius: '55%',
+                                center: ['50%', '50%'],
+                                data: goelData.businessStructure,
+                                emphasis: {
+                                    itemStyle: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                },
+                                label: {
+                                    formatter: '{b}: {c}%'
+                                },
+                                color: ['#3498db', '#2ecc71', '#e74c3c']
+                            }
+                        ]
+                    };
+                    
+                    businessPieChart.setOption(option);
+                } catch (error) {
+                    console.error('业务结构饼图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
+                }
+            }
+            
+            // 初始化营收与利润趋势折线图
+            function initRevenueProfitLine() {
+                const container = document.getElementById('revenue-profit-line');
+                if (!container) return;
+                
+                try {
+                    revenueProfitChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '营业收入与净利润十年趋势(2014-2023)',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross'
+                            }
+                        },
+                        legend: {
+                            data: ['营业收入', '净利润'],
+                            bottom: 10,
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '8%',
+                            bottom: '12%',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: goelData.revenue.years,
+                            axisLabel: {
+                                color: '#fff'
+                            }
+                        },
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '营业收入(亿元)',
+                                position: 'left',
+                                axisLabel: {
+                                    formatter: '{value}',
+                                    color: '#fff'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: 'rgba(255,255,255,0.1)'
+                                    }
+                                },
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#3498db'
+                                    }
+                                }
+                            },
+                            {
+                                type: 'value',
+                                name: '净利润(亿元)',
+                                position: 'right',
+                                axisLabel: {
+                                    formatter: '{value}',
+                                    color: '#fff'
+                                },
+                                splitLine: {
+                                    show: false
+                                },
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#2ecc71'
+                                    }
+                                }
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '营业收入',
+                                type: 'line',
+                                yAxisIndex: 0,
+                                data: goelData.revenue.values,
+                                smooth: true,
+                                lineStyle: {
+                                    width: 3,
+                                    color: '#3498db'
+                                },
+                                itemStyle: {
+                                    color: '#3498db'
+                                },
+                                markPoint: {
+                                    data: [
+                                        { type: 'max', name: '最大值' }
+                                    ]
+                                }
+                            },
+                            {
+                                name: '净利润',
+                                type: 'line',
+                                yAxisIndex: 1,
+                                data: goelData.profit.values,
+                                smooth: true,
+                                lineStyle: {
+                                    width: 3,
+                                    color: '#2ecc71'
+                                },
+                                itemStyle: {
+                                    color: '#2ecc71'
+                                },
+                                markPoint: {
+                                    data: [
+                                        { type: 'max', name: '最大值' },
+                                        { type: 'min', name: '最小值' }
+                                    ]
+                                }
+                            }
+                        ]
+                    };
+                    
+                    revenueProfitChart.setOption(option);
+                } catch (error) {
+                    console.error('营收与利润趋势图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
+                }
+            }
+            
+            // 初始化毛利率变化折线图
+            function initGrossMarginLine() {
+                const container = document.getElementById('gross-margin-line');
+                if (!container) return;
+                
+                try {
+                    grossMarginChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '毛利率变化与同业对比(2014-2023)',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            formatter: '{b}<br />{a0}: {c0}%<br />{a1}: {c1}%'
+                        },
+                        legend: {
+                            data: ['歌尔股份', '行业平均'],
+                            bottom: 10,
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '12%',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: goelData.grossMargin.years,
+                            axisLabel: {
+                                color: '#fff'
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            min: 15,
+                            axisLabel: {
+                                formatter: '{value}%',
+                                color: '#fff'
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: 'rgba(255,255,255,0.1)'
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: '歌尔股份',
+                                type: 'line',
+                                data: goelData.grossMargin.goel,
+                                smooth: true,
+                                lineStyle: {
+                                    width: 3,
+                                    color: '#3498db'
+                                },
+                                itemStyle: {
+                                    color: '#3498db'
+                                }
+                            },
+                            {
+                                name: '行业平均',
+                                type: 'line',
+                                data: goelData.grossMargin.industry,
+                                smooth: true,
+                                lineStyle: {
+                                    width: 3,
+                                    color: '#e74c3c',
+                                    type: 'dashed'
+                                },
+                                itemStyle: {
+                                    color: '#e74c3c'
+                                }
+                            }
+                        ]
+                    };
+                    
+                    grossMarginChart.setOption(option);
+                } catch (error) {
+                    console.error('毛利率变化图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
+                }
+            }
+            
+            // 初始化ROE历年变化折线图
+            function initRoeLine() {
+                const container = document.getElementById('roe-line');
+                if (!container) return;
+                
+                try {
+                    roeChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: 'ROE历年变化与行业对比(2014-2023)',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            formatter: '{b}<br />{a0}: {c0}%<br />{a1}: {c1}%'
+                        },
+                        legend: {
+                            data: ['歌尔股份', '行业平均'],
+                            bottom: 10,
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '12%',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: goelData.roe.years,
+                            axisLabel: {
+                                color: '#fff'
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            min: 10,
+                            axisLabel: {
+                                formatter: '{value}%',
+                                color: '#fff'
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: 'rgba(255,255,255,0.1)'
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: '歌尔股份',
+                                type: 'line',
+                                data: goelData.roe.goel,
+                                smooth: true,
+                                lineStyle: {
+                                    width: 3,
+                                    color: '#2ecc71'
+                                },
+                                itemStyle: {
+                                    color: '#2ecc71'
+                                },
+                                markPoint: {
+                                    data: [
+                                        { type: 'max', name: '最大值' },
+                                        { type: 'min', name: '最小值' }
+                                    ]
+                                }
+                            },
+                            {
+                                name: '行业平均',
+                                type: 'line',
+                                data: goelData.roe.industry,
+                                smooth: true,
+                                lineStyle: {
+                                    width: 3,
+                                    color: '#3498db',
+                                    type: 'dashed'
+                                },
+                                itemStyle: {
+                                    color: '#3498db'
+                                }
+                            }
+                        ]
+                    };
+                    
+                    roeChart.setOption(option);
+                } catch (error) {
+                    console.error('ROE变化图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
+                }
+            }
+            
+            // 初始化资产负债结构饼图
+            function initAssetLiabilityPie() {
+                const container = document.getElementById('asset-liability-pie');
+                if (!container) return;
+                
+                try {
+                    assetLiabilityChart = echarts.init(container);
+                    
+                    const option = {
+                        title: [
+                            {
+                                text: '资产结构',
+                                left: '25%',
+                                top: '5%',
+                                textAlign: 'center',
+                                textStyle: {
+                                    color: '#fff'
+                                }
+                            },
+                            {
+                                text: '负债结构',
+                                left: '75%',
+                                top: '5%',
+                                textAlign: 'center',
+                                textStyle: {
+                                    color: '#fff'
+                                }
+                            }
+                        ],
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: '{a} <br/>{b}: {c}%'
+                        },
+                        legend: {
+                            bottom: 10,
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        series: [
+                            {
+                                name: '资产结构',
+                                type: 'pie',
+                                radius: '50%',
+                                center: ['25%', '50%'],
+                                data: goelData.assetStructure,
+                                label: {
+                                    formatter: '{b}: {c}%'
+                                },
+                                color: ['#3498db', '#2ecc71', '#9b59b6', '#f39c12']
+                            },
+                            {
+                                name: '负债结构',
+                                type: 'pie',
+                                radius: '50%',
+                                center: ['75%', '50%'],
+                                data: goelData.liabilityStructure,
+                                label: {
+                                    formatter: '{b}: {c}%'
+                                },
+                                color: ['#e74c3c', '#f39c12', '#1abc9c']
+                            }
+                        ]
+                    };
+                    
+                    assetLiabilityChart.setOption(option);
+                } catch (error) {
+                    console.error('资产负债结构图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
+                }
+            }
+            
+            // 初始化GSAP动画
+            function initGSAP(type) {
+                if (typeof gsap === 'undefined') {
+                    console.error('GSAP库未加载成功');
+                    return;
+                }
+                
+                switch(type) {
+                    case 'toc':
+                        initTocAnimation();
+                        break;
+                    case 'manufacturing':
+                        initManufacturingAnimation();
+                        break;
+                    case 'management':
+                        initManagementTextAnimation();
+                        break;
+                    case 'industry-trend':
+                        initIndustryTrendAnimation();
+                        break;
+                }
+            }
+            
+            // 初始化目录动画
+            function initTocAnimation() {
+                const container = document.getElementById('toc-animation');
+                if (!container) return;
+                
+                try {
+                    const elements = container.querySelectorAll('.gsap-timeline-element');
+                    
+                    // 重置状态
+                    gsap.set(elements, {
+                        opacity: 0,
+                        scale: 0.5,
+                        x: -100
+                    });
+                    
+                    // 创建时间线动画 - 更现代、更快速的动画效果
+                    tocAnimation = gsap.timeline({repeat: -1, repeatDelay: 1})
+                        // 入场动画 - 更快速、弹性更强
+                        .to(elements[0], {duration: 0.5, opacity: 1, scale: 1, x: 0, ease: "elastic.out(1.2, 0.5)"})
+                        .to(elements[1], {duration: 0.5, opacity: 1, scale: 1, x: 0, ease: "elastic.out(1.2, 0.5)"}, "-=0.3")
+                        .to(elements[2], {duration: 0.5, opacity: 1, scale: 1, x: 0, ease: "elastic.out(1.2, 0.5)"}, "-=0.3")
+                        .to(elements[3], {duration: 0.5, opacity: 1, scale: 1, x: 0, ease: "elastic.out(1.2, 0.5)"}, "-=0.3")
+                        .to(elements[4], {duration: 0.5, opacity: 1, scale: 1, x: 0, ease: "elastic.out(1.2, 0.5)"}, "-=0.3")
+                        
+                        // 添加悬停效果
+                        .to(elements, {
+                            duration: 0.4, 
+                            backgroundColor: "#00c6ff", 
+                            boxShadow: "0 0 20px rgba(0, 198, 255, 0.7)",
+                            color: "#fff",
+                            scale: 1.05,
+                            stagger: 0.1,
+                            ease: "power1.inOut"
+                        }, "+=0.5")
+                        .to(elements, {
+                            duration: 0.4, 
+                            backgroundColor: "",
+                            boxShadow: "0 0 0px rgba(0, 198, 255, 0)",
+                            scale: 1,
+                            stagger: 0.1,
+                            ease: "power1.inOut"
+                        }, "+=0.5")
+                        
+                        // 退场并重新开始
+                        .to(elements, {
+                            duration: 0.5, 
+                            opacity: 0, 
+                            scale: 0.5,
+                            x: 100, 
+                            stagger: 0.1, 
+                            ease: "back.in(1.5)"
+                        }, "+=0.7");
+                } catch (error) {
+                    console.error('目录动画初始化失败:', error);
+                }
+            }
+            
+            // 初始化制造能力动画
+            function initManufacturingAnimation() {
+                const container = document.getElementById('manufacturing-animation');
+                if (!container) return;
+                
+                try {
+                    const boxes = container.querySelectorAll('.gsap-box');
+                    
+                    // 重置动画元素状态
+                    gsap.set(boxes, {
+                        scale: 0,
+                        opacity: 0,
+                        y: 50
+                    });
+                    
+                    // 创建动画
+                    manufacturingAnimation = gsap.timeline({repeat: -1, repeatDelay: 1})
+                        .to(boxes, {
+                            duration: 1, 
+                            scale: 1, 
+                            opacity: 1, 
+                            y: 0, 
+                            stagger: 0.2, 
+                            ease: "back.out(1.7)"
+                        })
+                        .to(boxes, {
+                            duration: 0.8, 
+                            scale: 1.2, 
+                            stagger: 0.2, 
+                            ease: "power1.inOut",
+                            yoyo: true,
+                            repeat: 1
+                        }, "+=0.5")
+                        .to(boxes, {
+                            duration: 0.8, 
+                            scale: 0, 
+                            opacity: 0, 
+                            y: -50, 
+                            stagger: 0.2, 
+                            ease: "power1.in"
+                        }, "+=1");
+                } catch (error) {
+                    console.error('制造能力动画初始化失败:', error);
+                }
+            }
+            
+            // 初始化管理团队文字动画
+            function initManagementTextAnimation() {
+                const container = document.getElementById('management-text');
+                if (!container) return;
+                
+                try {
+                    const texts = container.querySelectorAll('.gsap-text');
+                    
+                    // 重置文字状态
+                    gsap.set(texts, {
+                        opacity: 0,
+                        y: 50
+                    });
+                    
+                    // 创建动画
+                    managementTextAnimation = gsap.timeline({repeat: -1, repeatDelay: 1})
+                        .to(texts[0], {duration: 1, opacity: 1, y: 0, ease: "back.out(1.7)"})
+                        .to(texts[0], {duration: 1, opacity: 0, y: -50, ease: "power1.in", delay: 1.5})
+                        .to(texts[1], {duration: 1, opacity: 1, y: 0, ease: "back.out(1.7)"})
+                        .to(texts[1], {duration: 1, opacity: 0, y: -50, ease: "power1.in", delay: 1.5});
+                } catch (error) {
+                    console.error('管理团队文字动画初始化失败:', error);
+                }
+            }
+            
+            // 初始化行业趋势动画
+            function initIndustryTrendAnimation() {
+                const container = document.getElementById('industry-trend-stagger');
+                if (!container) return;
+                
+                try {
+                    const boxes = container.querySelectorAll('.gsap-stagger-box');
+                    
+                    // 设置颜色样式
+                    boxes.forEach((box, index) => {
+                        const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#34495e', '#d35400', '#27ae60'];
+                        box.style.backgroundColor = colors[index % colors.length];
+                    });
+                    
+                    // 重置状态
+                    gsap.set(boxes, {
+                        opacity: 0,
+                        scale: 0,
+                        rotation: -180
+                    });
+                    
+                    // 创建动画
+                    industryTrendAnimation = gsap.timeline({repeat: -1, repeatDelay: 1})
+                        .to(boxes, {
+                            duration: 1, 
+                            opacity: 1, 
+                            scale: 1, 
+                            rotation: 0,
+                            stagger: {
+                                each: 0.1,
+                                from: "center",
+                                grid: "auto"
+                            },
+                            ease: "elastic.out(1, 0.3)"
+                        })
+                        .to(boxes, {
+                            duration: 0.8, 
+                            scale: 1.2, 
+                            stagger: {
+                                each: 0.1,
+                                from: "center",
+                                grid: "auto"
+                            },
+                            ease: "power1.inOut",
+                            yoyo: true,
+                            repeat: 1
+                        }, "+=1")
+                        .to(boxes, {
+                            duration: 0.8, 
+                            opacity: 0, 
+                            scale: 0, 
+                            stagger: {
+                                each: 0.05,
+                                from: "edges",
+                                grid: "auto"
+                            },
+                            ease: "power1.in",
+                            delay: 1
+                        });
+                } catch (error) {
+                    console.error('行业趋势动画初始化失败:', error);
+                }
+            }
+            
+            // 初始化客户集中度柱状图
+            function initCustomerConcentrationBar() {
+                const container = document.getElementById('customer-concentration-bar');
+                if (!container) return;
+                
+                try {
+                    customerChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '客户集中度分析(2023)',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'shadow'
+                            },
+                            formatter: '{b}: {c}%'
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '10%',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: goelData.customerConcentration.names,
+                            axisLabel: {
+                                color: '#fff'
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLabel: {
+                                formatter: '{value}%',
+                                color: '#fff'
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: 'rgba(255,255,255,0.1)'
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: '占比',
+                                type: 'bar',
+                                data: goelData.customerConcentration.values,
+                                itemStyle: {
+                                    color: function(params) {
+                                        const colorList = ['#e74c3c', '#f39c12', '#2ecc71', '#3498db', '#9b59b6', '#95a5a6'];
+                                        return colorList[params.dataIndex];
+                                    }
+                                },
+                                label: {
+                                    show: true,
+                                    position: 'top',
+                                    formatter: '{c}%'
+                                }
+                            }
+                        ]
+                    };
+                    
+                    customerChart.setOption(option);
+                } catch (error) {
+                    console.error('客户集中度图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
+                }
+            }
+            
+            // 初始化研发投入柱状图
+            function initRdInvestmentBar() {
+                const container = document.getElementById('rd-investment-bar');
+                if (!container) return;
+                
+                try {
+                    rdInvestmentChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '研发投入变化趋势(2019-2023)',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                crossStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        legend: {
+                            data: ['研发投入金额', '研发投入占比'],
+                            bottom: 10,
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '12%',
+                            containLabel: true
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: goelData.rdInvestment.years,
+                                axisPointer: {
+                                    type: 'shadow'
+                                },
+                                axisLabel: {
+                                    color: '#fff'
+                                }
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '金额(亿元)',
+                                position: 'left',
+                                axisLabel: {
+                                    formatter: '{value}',
+                                    color: '#fff'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: 'rgba(255,255,255,0.1)'
+                                    }
+                                }
+                            },
+                            {
+                                type: 'value',
+                                name: '占比(%)',
+                                position: 'right',
+                                axisLabel: {
+                                    formatter: '{value}',
+                                    color: '#fff'
+                                },
+                                splitLine: {
+                                    show: false
+                                }
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '研发投入金额',
+                                type: 'bar',
+                                data: goelData.rdInvestment.amount,
+                                itemStyle: {
+                                    color: '#3498db'
+                                }
+                            },
+                            {
+                                name: '研发投入占比',
+                                type: 'line',
+                                yAxisIndex: 1,
+                                data: goelData.rdInvestment.percentage,
+                                lineStyle: {
+                                    width: 3,
+                                    color: '#e74c3c'
+                                },
+                                itemStyle: {
+                                    color: '#e74c3c'
+                                }
+                            }
+                        ]
+                    };
+                    
+                    rdInvestmentChart.setOption(option);
+                } catch (error) {
+                    console.error('研发投入图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
+                }
+            }
+            
+            // 初始化客户风险分析图
+            function initCustomerRiskAnalysis() {
+                const container = document.getElementById('customer-risk-analysis');
+                if (!container) return;
+                
+                try {
+                    customerRiskChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '客户依赖度变化趋势(2019-2023)',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'shadow'
+                            },
+                            formatter: function(params) {
+                                let result = params[0].name + '<br/>';
+                                params.forEach(item => {
+                                    result += item.seriesName + ': ' + item.value + '%<br/>';
+                                });
+                                return result;
+                            }
+                        },
+                        legend: {
+                            data: goelData.customerRiskAnalysis.categories,
+                            bottom: 10,
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '12%',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: goelData.customerRiskAnalysis.years,
+                            axisLabel: {
+                                color: '#fff'
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLabel: {
+                                formatter: '{value}%',
+                                color: '#fff'
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: 'rgba(255,255,255,0.1)'
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: goelData.customerRiskAnalysis.categories[0],
+                                type: 'bar',
+                                stack: '总量',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: goelData.customerRiskAnalysis.data[0],
+                                itemStyle: {
+                                    color: '#e74c3c'
+                                }
+                            },
+                            {
+                                name: goelData.customerRiskAnalysis.categories[1],
+                                type: 'bar',
+                                stack: '总量',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: goelData.customerRiskAnalysis.data[1],
+                                itemStyle: {
+                                    color: '#f39c12'
+                                }
+                            },
+                            {
+                                name: goelData.customerRiskAnalysis.categories[2],
+                                type: 'bar',
+                                stack: '总量',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: goelData.customerRiskAnalysis.data[2],
+                                itemStyle: {
+                                    color: '#2ecc71'
+                                }
+                            }
+                        ]
+                    };
+                    
+                    customerRiskChart.setOption(option);
+                } catch (error) {
+                    console.error('客户风险分析图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
+                }
+            }
+            
+            // 初始化毛利率下滑分析饼图
+            function initMarginDeclineAnalysis() {
+                const container = document.getElementById('margin-decline-analysis');
+                if (!container) return;
+                
+                try {
+                    marginDeclineChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '毛利率下滑因素分析',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: '{a} <br/>{b}: {c}%'
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            right: 10,
+                            top: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        series: [
+                            {
+                                name: '影响因素',
+                                type: 'pie',
+                                radius: ['40%', '70%'],
+                                avoidLabelOverlap: false,
+                                itemStyle: {
+                                    borderRadius: 10,
+                                    borderColor: '#1a1a1a',
+                                    borderWidth: 2
+                                },
+                                label: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    label: {
+                                        show: true,
+                                        fontSize: 20,
+                                        fontWeight: 'bold'
+                                    }
+                                },
+                                labelLine: {
+                                    show: false
+                                },
+                                data: goelData.marginDeclineFactors,
+                                color: ['#e74c3c', '#f39c12', '#3498db', '#2ecc71', '#9b59b6']
+                            }
+                        ]
+                    };
+                    
+                    marginDeclineChart.setOption(option);
+                } catch (error) {
+                    console.error('毛利率下滑分析图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
+                }
+            }
+            
+            // 初始化业绩波动分析图
+            function initPerformanceVolatility() {
+                const container = document.getElementById('performance-volatility');
+                if (!container) return;
+                
+                try {
+                    performanceVolatilityChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '业绩波动性分析 (2019=100)',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross'
+                            }
+                        },
+                        legend: {
+                            data: ['营业收入', '净利润', '行业平均'],
+                            bottom: 10,
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '12%',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: goelData.performanceVolatility.years,
+                            axisLabel: {
+                                color: '#fff'
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            name: '指数(2019=100)',
+                            axisLabel: {
+                                color: '#fff'
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: 'rgba(255,255,255,0.1)'
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: '营业收入',
+                                type: 'line',
+                                data: goelData.performanceVolatility.revenue,
+                                smooth: true,
+                                lineStyle: {
+                                    width: 3,
+                                    color: '#3498db'
+                                },
+                                itemStyle: {
+                                    color: '#3498db'
+                                },
+                                markPoint: {
+                                    data: [
+                                        { type: 'max', name: '最大值' },
+                                        { type: 'min', name: '最小值' }
+                                    ]
+                                }
+                            },
+                            {
+                                name: '净利润',
+                                type: 'line',
+                                data: goelData.performanceVolatility.profit,
+                                smooth: true,
+                                lineStyle: {
+                                    width: 3,
+                                    color: '#e74c3c'
+                                },
+                                itemStyle: {
+                                    color: '#e74c3c'
+                                },
+                                markPoint: {
+                                    data: [
+                                        { type: 'max', name: '最大值' },
+                                        { type: 'min', name: '最小值' }
+                                    ]
+                                }
+                            },
+                            {
+                                name: '行业平均',
+                                type: 'line',
+                                data: goelData.performanceVolatility.industry,
+                                smooth: true,
+                                lineStyle: {
+                                    width: 3,
+                                    color: '#2ecc71',
+                                    type: 'dashed'
+                                },
+                                itemStyle: {
+                                    color: '#2ecc71'
+                                }
+                            }
+                        ]
+                    };
+                    
+                    performanceVolatilityChart.setOption(option);
+                } catch (error) {
+                    console.error('业绩波动分析图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
+                }
+            }
+            
+            // 初始化未来预测图表
+            function initFutureForecast() {
+                const container = document.getElementById('future-forecast');
+                if (!container) return;
+                
+                try {
+                    futureChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '2024年预期指标',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'shadow'
+                            }
+                        },
+                        legend: {
+                            data: ['2023年', '2024年(预测)'],
+                            bottom: 10,
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '12%',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: ['营业收入(亿元)', '净利润(亿元)', '毛利率(%)', 'ROE(%)'],
+                            axisLabel: {
+                                color: '#fff'
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLabel: {
+                                color: '#fff'
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: 'rgba(255,255,255,0.1)'
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: '2023年',
+                                type: 'bar',
+                                data: [
+                                    goelData.revenue.values[9], 
+                                    goelData.profit.values[9], 
+                                    goelData.grossMargin.goel[9], 
+                                    goelData.roe.goel[9]
+                                ],
+                                itemStyle: {
+                                    color: '#3498db'
+                                },
+                                label: {
+                                    show: true,
+                                    position: 'top'
+                                }
+                            },
+                            {
+                                name: '2024年(预测)',
+                                type: 'bar',
+                                data: [
+                                    goelData.forecast2024.revenue, 
+                                    goelData.forecast2024.profit, 
+                                    goelData.forecast2024.grossMargin, 
+                                    goelData.forecast2024.roe
+                                ],
+                                itemStyle: {
+                                    color: '#2ecc71'
+                                },
+                                label: {
+                                    show: true,
+                                    position: 'top'
+                                }
+                            }
+                        ]
+                    };
+                    
+                    futureChart.setOption(option);
+                } catch (error) {
+                    console.error('未来预测图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
+                }
+            }
+		</script>
+	</body>
+</html> 

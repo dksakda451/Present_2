@@ -1,0 +1,1576 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js – The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+        
+        <!-- Three.js库 -->
+        <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+        
+        <!-- ECharts库 -->
+        <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.6.0/echarts.min.js"></script>
+        
+        <!-- GSAP动画库 -->
+        <script src="../GSAP-3.12.7/dist/gsap.min.js"></script>
+        
+        <style>
+            .threejs-container {
+                width: 100%;
+                height: 400px;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            #threejs-canvas {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+            
+            .threejs-loading {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-size: 16px;
+                text-align: center;
+            }
+            
+            .echarts-container {
+                width: 100%;
+                height: 400px;
+                margin: 0 auto;
+            }
+            
+            /* GSAP动画容器样式 */
+            .gsap-container {
+                width: 100%;
+                height: 400px;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .gsap-box {
+                width: 100px;
+                height: 100px;
+                position: absolute;
+                border-radius: 8px;
+            }
+            
+            .gsap-text {
+                font-size: 3em;
+                position: absolute;
+                opacity: 0;
+                color: #fff;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .gsap-stagger-box {
+                width: 50px;
+                height: 50px;
+                background-color: #3498db;
+                display: inline-block;
+                margin: 8px;
+                border-radius: 5px;
+            }
+            
+            .gsap-timeline-element {
+                width: 150px;
+                height: 50px;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+                line-height: 50px;
+                border-radius: 8px;
+                color: white;
+                opacity: 0;
+            }
+        </style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<a href="https://revealjs.com">
+						<img src="https://static.slid.es/reveal/logo-v1/reveal-white-text.svg" alt="reveal.js logo" style="height: 180px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+					</a>
+					<h3>The HTML Presentation Framework</h3>
+					<p>
+						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> and <a href="https://github.com/hakimel/reveal.js/graphs/contributors">contributors</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h2>Hello There</h2>
+					<p>
+						reveal.js enables you to create beautiful interactive slide decks using HTML. This presentation will show you examples of what it can do.
+					</p>
+				</section>
+
+				<!-- Example of nested vertical slides -->
+				<section>
+					<section>
+						<h2>Vertical Slides</h2>
+						<p>Slides can be nested inside of each other.</p>
+						<p>Use the <em>Space</em> key to navigate through all slides.</p>
+						<br>
+						<a href="#/2/1" class="navigate-down">
+							<img class="r-frame" style="background: rgba(255,255,255,0.1);" width="178" height="238" data-src="https://static.slid.es/reveal/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section>
+						<h2>Basement Level 1</h2>
+						<p>Nested slides are useful for adding additional detail underneath a high level horizontal slide.</p>
+					</section>
+					<section>
+						<h2>Basement Level 2</h2>
+						<p>That's it, time to go back up.</p>
+						<br>
+						<a href="#/2">
+							<img class="r-frame" style="background: rgba(255,255,255,0.1); transform: rotate(180deg);" width="178" height="238" data-src="https://static.slid.es/reveal/arrow.png" alt="Up arrow">
+						</a>
+					</section>
+				</section>
+
+				<section>
+					<h2>Slides</h2>
+					<p>
+						Not a coder? Not a problem. There's a fully-featured visual editor for authoring these, try it out at <a href="https://slides.com" target="_blank">https://slides.com</a>.
+					</p>
+				</section>
+
+				<section data-visibility="hidden">
+					<h2>Hidden Slides</h2>
+					<p>
+						This slide is visible in the source, but hidden when the presentation is viewed. You can show all hidden slides by setting the `showHiddenSlides` config option to `true`.
+					</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2 data-id="code-title">Pretty Code</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						import React, { useState } from 'react';
+
+						function Example() {
+						  const [count, setCount] = useState(0);
+
+						  return (
+						    ...
+						  );
+						}
+					</code></pre>
+					<p>Code syntax highlighting courtesy of <a href="https://highlightjs.org/usage/">highlight.js</a>.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2 data-id="code-title">With Animations</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="|4,8-11|17|22-24"><script type="text/template">
+						import React, { useState } from 'react';
+
+						function Example() {
+						  const [count, setCount] = useState(0);
+
+						  return (
+						    <div>
+						      <p>You clicked {count} times</p>
+						      <button onClick={() => setCount(count + 1)}>
+						        Click me
+						      </button>
+						    </div>
+						  );
+						}
+
+						function SecondExample() {
+						  const [count, setCount] = useState(0);
+
+						  return (
+						    <div>
+						      <p>You clicked {count} times</p>
+						      <button onClick={() => setCount(count + 1)}>
+						        Click me
+						      </button>
+						    </div>
+						  );
+						}
+					</script></code></pre>
+				</section>
+
+				<section>
+					<h2>Point of View</h2>
+					<p>
+						Press <strong>ESC</strong> to enter the slide overview.
+					</p>
+					<p>
+						Hold down the <strong>alt</strong> key (<strong>ctrl</strong> in Linux) and click on any element to zoom towards it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Click again to zoom back out.
+					</p>
+					<p>
+						(NOTE: Use ctrl + click in Linux.)
+					</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<h2>Auto-Animate</h2>
+					<p>Automatically animate matching elements across slides with <a href="https://revealjs.com/auto-animate/">Auto-Animate</a>.</p>
+					<div class="r-hstack justify-center">
+						<div data-id="box1" style="background: #999; width: 50px; height: 50px; margin: 10px; border-radius: 5px;"></div>
+						<div data-id="box2" style="background: #999; width: 50px; height: 50px; margin: 10px; border-radius: 5px;"></div>
+						<div data-id="box3" style="background: #999; width: 50px; height: 50px; margin: 10px; border-radius: 5px;"></div>
+					</div>
+				</section>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div class="r-hstack justify-center">
+						<div data-id="box1" data-auto-animate-delay="0" style="background: cyan; width: 150px; height: 100px; margin: 10px;"></div>
+						<div data-id="box2" data-auto-animate-delay="0.1" style="background: magenta; width: 150px; height: 100px; margin: 10px;"></div>
+						<div data-id="box3" data-auto-animate-delay="0.2" style="background: yellow; width: 150px; height: 100px; margin: 10px;"></div>
+					</div>
+					<h2 style="margin-top: 20px;">Auto-Animate</h2>
+				</section>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div class="r-stack">
+						<div data-id="box1" style="background: cyan; width: 300px; height: 300px;"></div>
+						<div data-id="box2" style="background: magenta; width: 200px; height: 200px;"></div>
+						<div data-id="box3" style="background: yellow; width: 100px; height: 100px;"></div>
+					</div>
+					<h2 style="margin-top: 20px;">Auto-Animate</h2>
+				</section>
+
+				<section>
+					<h2>Touch Optimized</h2>
+					<p>
+						Presentations look great on touch devices, like mobile phones and tablets. Simply swipe through your slides.
+					</p>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Markdown Support
+
+						Write content using inline or external Markdown.
+						Instructions and more info available in the [docs](https://revealjs.com/markdown/).
+
+						```html []
+						<section data-markdown>
+						  ## Markdown Support
+
+						  Write content using inline or external Markdown.
+						  Instructions and more info available in the [docs](https://revealjs.com/markdown/).
+						</section>
+						```
+					</script>
+				</section>
+
+				<section>
+					<h2>Lightbox</h2>
+					Turn any element into a <a href="https://revealjs.com/lightbox/">lightbox</a> using <strong>data‑preview‑image</strong> & <strong>data‑preview‑video</strong>.
+					<div class="r-hstack" style="gap: 2rem;">
+						<div>
+							<pre style="font-size: 12px; width: 100%"><code class="html" data-trim>
+								&lt;img src="image.png" data-preview-image="image.png"&gt;
+							</code></pre>
+							<img src="https://static.slid.es/logo/v2/slides-symbol-1024x1024.png" height="100" data-preview-image>
+						</div>
+						<div>
+							<pre style="font-size: 12px; width: 100%"><code class="html" data-trim>
+								&lt;img src="video.png" data-preview-video="video.mp4"&gt;
+							</code></pre>
+							<img src="https://static.slid.es/site/homepage/v1/homepage-video-editor.png" height="100" data-preview-video="https://static.slid.es/site/homepage/v1/homepage-video-editor.mp4">
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<p>Add the <code>r-fit-text</code> class to auto-size text</p>
+					<h2 class="r-fit-text">FIT TEXT</h2>
+				</section>
+
+				<section>
+					<section id="fragments">
+						<h2>Fragments</h2>
+						<p>Hit the next arrow...</p>
+						<p class="fragment">... to step through ...</p>
+						<p><span class="fragment">... a</span> <span class="fragment">fragmented</span> <span class="fragment">slide.</span></p>
+					
+					<aside class="notes">
+							This slide has fragments which are also stepped through in the notes window.
+					</aside>
+					</section>
+					<section>
+						<h2>Fragment Styles</h2>
+						<p>There's different types of fragments, like:</p>
+						<p class="fragment grow">grow</p>
+						<p class="fragment shrink">shrink</p>
+						<p class="fragment fade-out">fade-out</p>
+						<p>
+							<span style="display: inline-block;" class="fragment fade-right">fade-right, </span>
+							<span style="display: inline-block;" class="fragment fade-up">up, </span>
+							<span style="display: inline-block;" class="fragment fade-down">down, </span>
+							<span style="display: inline-block;" class="fragment fade-left">left</span>
+						</p>
+						<p class="fragment fade-in-then-out">fade-in-then-out</p>
+						<p class="fragment fade-in-then-semi-out">fade-in-then-semi-out</p>
+						<p>Highlight <span class="fragment highlight-red">red</span> <span class="fragment highlight-blue">blue</span> <span class="fragment highlight-green">green</span></p>
+					</section>
+				</section>
+
+				<section id="transitions">
+					<h2>Transition Styles</h2>
+					<p>
+						You can select from different transitions, like: <br>
+						<a href="?transition=none#/transitions">None</a> -
+						<a href="?transition=fade#/transitions">Fade</a> -
+						<a href="?transition=slide#/transitions">Slide</a> -
+						<a href="?transition=convex#/transitions">Convex</a> -
+						<a href="?transition=concave#/transitions">Concave</a> -
+						<a href="?transition=zoom#/transitions">Zoom</a>
+					</p>
+				</section>
+
+				<section id="themes">
+					<h2>Themes</h2>
+					<p>
+						reveal.js comes with a few themes built in: <br>
+						<!-- Hacks to swap themes after the page has loaded. Not flexible and only intended for the reveal.js demo deck. -->
+						<a href="#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/theme/black.css'); return false;">Black (default)</a> -
+						<a href="#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/theme/white.css'); return false;">White</a> -
+						<a href="#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/theme/league.css'); return false;">League</a> -
+						<a href="#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/theme/sky.css'); return false;">Sky</a> -
+						<a href="#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/theme/beige.css'); return false;">Beige</a> -
+						<a href="#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/theme/simple.css'); return false;">Simple</a> <br>
+						<a href="#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/theme/serif.css'); return false;">Serif</a> -
+						<a href="#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/theme/blood.css'); return false;">Blood</a> -
+						<a href="#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/theme/night.css'); return false;">Night</a> -
+						<a href="#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/theme/moon.css'); return false;">Moon</a> -
+						<a href="#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/theme/solarized.css'); return false;">Solarized</a>
+					</p>
+				</section>
+
+				<section>
+					<section data-background="#dddddd">
+						<h2>Slide Backgrounds</h2>
+						<p>
+							Set <code>data-background="#dddddd"</code> on a slide to change the background color. All CSS color formats are supported.
+						</p>
+						<a href="#" class="navigate-down">
+							<img class="r-frame" style="background: rgba(255,255,255,0.1);" width="178" height="238" data-src="https://static.slid.es/reveal/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
+						<h2>Gradient Backgrounds</h2>
+						<pre><code class="hljs html wrap">&lt;section data-background-gradient=
+							"linear-gradient(to bottom, #ddd, #191919)"&gt;</code></pre>
+					</section>
+					<section data-background="https://static.slid.es/reveal/image-placeholder.png">
+						<h2>Image Backgrounds</h2>
+						<pre><code class="hljs html">&lt;section data-background="image.png"&gt;</code></pre>
+					</section>
+					<section data-background="https://static.slid.es/reveal/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">
+						<h2>Tiled Backgrounds</h2>
+						<pre><code class="hljs html" style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
+					</section>
+					<section data-background-video="https://static.slid.es/site/homepage/v1/homepage-video-editor.mp4" data-background-color="#000000">
+						<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
+							<h2>Video Backgrounds</h2>
+							<pre><code class="hljs html" style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code></pre>
+						</div>
+					</section>
+					<section data-background="http://i.giphy.com/90F8aUepslB84.gif">
+						<h2>... and GIFs!</h2>
+					</section>
+				</section>
+
+				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+					<h2>Background Transitions</h2>
+					<p>
+						Different background transitions are available via the backgroundTransition option. This one's called "zoom".
+					</p>
+					<pre><code class="hljs javascript">Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>
+				</section>
+
+				<section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">
+					<h2>Background Transitions</h2>
+					<p>
+						You can override background transitions per-slide.
+					</p>
+					<pre><code class="hljs html" style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code></pre>
+				</section>
+
+				<section data-background-iframe="https://hakim.se" data-background-interactive>
+					<div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+						<h2>Iframe Backgrounds</h2>
+						<p>Since reveal.js runs on the web, you can easily embed other web content. Try interacting with the page in the background.</p>
+					</div>
+				</section>
+
+				<section>
+					<h2>Marvelous List</h2>
+					<ul>
+						<li>No order here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Fantastic Ordered List</h2>
+					<ol>
+						<li>One is smaller than...</li>
+						<li>Two is smaller than...</li>
+						<li>Three!</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>Tabular Tables</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Item</th>
+								<th>Value</th>
+								<th>Quantity</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Apples</td>
+								<td>$1</td>
+								<td>7</td>
+							</tr>
+							<tr>
+								<td>Lemonade</td>
+								<td>$2</td>
+								<td>18</td>
+							</tr>
+							<tr>
+								<td>Bread</td>
+								<td>$3</td>
+								<td>2</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section>
+					<h2>Clever Quotes</h2>
+					<p>
+						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">The nice thing about standards is that there are so many to choose from</q> and block:
+					</p>
+					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
+						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
+					</blockquote>
+				</section>
+				
+				<section>
+					<h2>Intergalactic Interconnections</h2>
+					<p>
+						You can link between slides internally,
+						<a href="#/2/3">like this</a>.
+					</p>
+				</section>
+
+				<section>
+					<h2>Speaker View</h2>
+					<p>There's a <a href="https://revealjs.com/speaker-view/">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
+					<p>Press the <em>S</em> key to try it out.</p>
+					
+					<aside class="notes">
+						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+					</aside>
+				</section>
+				
+				<section>
+					<h2>Export to PDF</h2>
+					<p>Presentations can be <a href="https://revealjs.com/pdf-export/">exported to PDF</a>, here's an example:</p>
+					<iframe data-src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+					</section>
+					
+				<section>
+					<h2>Global State</h2>
+					<p>
+						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
+						will be added as a class to the document element when the slide is open. This lets you
+						apply broader style changes, like switching the page background.
+						</p>
+					</section>
+					
+				<section data-state="customevent">
+					<h2>State Events</h2>
+					<p>
+						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
+					</p>
+					<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
+Reveal.on( 'customevent', function() {
+	console.log( '"customevent" has fired' );
+} );
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Take a Moment</h2>
+					<p>
+						Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
+						</p>
+					</section>
+					
+				<section>
+					<h2>Much more</h2>
+					<ul>
+						<li>Right-to-left support</li>
+						<li><a href="https://revealjs.com/api/">Extensive JavaScript API</a></li>
+						<li><a href="https://revealjs.com/auto-slide/">Auto-progression</a></li>
+						<li><a href="https://revealjs.com/backgrounds/#parallax-background">Parallax backgrounds</a></li>
+						<li><a href="https://revealjs.com/keyboard/">Custom keyboard bindings</a></li>
+					</ul>
+					</section>
+					
+				<section style="text-align: left;">
+					<h1>THE END</h1>
+					<p>
+						- <a href="https://slides.com">Try the online editor</a> <br>
+						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
+					</p>
+				</section>
+
+				<section>
+					<h2>Three.js 3D效果演示</h2>
+					<div class="threejs-container">
+                        <canvas id="threejs-canvas"></canvas>
+                        <div class="threejs-loading" id="loading-text">加载中...</div>
+                    </div>
+                    <p>使用方向键控制立方体旋转</p>
+                    <p><small>移动设备上可以触摸拖动</small></p>
+				</section>
+
+				<section>
+					<section>
+						<h2>ECharts 数据可视化示例</h2>
+						<div class="echarts-container" id="echarts-bar"></div>
+						<p>强大的交互式数据可视化图表</p>
+						<p><small>支持柱状图、折线图、饼图、散点图等多种图表类型</small></p>
+					</section>
+					
+					<section>
+						<h2>动态折线图</h2>
+						<div class="echarts-container" id="echarts-line"></div>
+						<p>流畅的动画过渡效果</p>
+					</section>
+					
+					<section>
+						<h2>交互式饼图</h2>
+						<div class="echarts-container" id="echarts-pie"></div>
+						<p>点击图表生成新数据</p>
+					</section>
+					
+					<section>
+						<h2>散点图</h2>
+						<div class="echarts-container" id="echarts-scatter"></div>
+						<p>支持缩放和拖拽</p>
+					</section>
+					
+					<section>
+						<h2>动态仪表盘</h2>
+						<div class="echarts-container" id="echarts-gauge"></div>
+						<p>实时数据监控可视化</p>
+					</section>
+				</section>
+				
+				<section>
+					<section>
+						<h2>GSAP 动画效果演示</h2>
+						<div class="gsap-container" id="gsap-basic">
+							<div class="gsap-box" style="background-color: #e74c3c; left: 50%; top: 50%; transform: translate(-50%, -50%);"></div>
+						</div>
+						<p>强大的JavaScript动画库</p>
+						<p><small>平滑过渡、时间线动画、缓动效果等</small></p>
+					</section>
+					
+					<section>
+						<h2>GSAP 文字效果</h2>
+						<div class="gsap-container" id="gsap-text">
+							<h1 class="gsap-text" style="top: 40%;">创意动画</h1>
+							<h1 class="gsap-text" style="top: 60%;">无限可能</h1>
+						</div>
+					</section>
+					
+					<section>
+						<h2>GSAP Stagger效果</h2>
+						<div class="gsap-container" id="gsap-stagger" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+							<div class="gsap-stagger-box"></div>
+							<div class="gsap-stagger-box"></div>
+							<div class="gsap-stagger-box"></div>
+							<div class="gsap-stagger-box"></div>
+							<div class="gsap-stagger-box"></div>
+							<div class="gsap-stagger-box"></div>
+							<div class="gsap-stagger-box"></div>
+							<div class="gsap-stagger-box"></div>
+							<div class="gsap-stagger-box"></div>
+							<div class="gsap-stagger-box"></div>
+							<div class="gsap-stagger-box"></div>
+							<div class="gsap-stagger-box"></div>
+						</div>
+					</section>
+					
+					<section>
+						<h2>GSAP 时间线演示</h2>
+						<div class="gsap-container" id="gsap-timeline">
+							<div class="gsap-timeline-element" style="top: 20%; background-color: #e74c3c;">第一步</div>
+							<div class="gsap-timeline-element" style="top: 40%; background-color: #f39c12;">第二步</div>
+							<div class="gsap-timeline-element" style="top: 60%; background-color: #2ecc71;">第三步</div>
+							<div class="gsap-timeline-element" style="top: 80%; background-color: #3498db;">第四步</div>
+						</div>
+					</section>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+            
+            // Three.js场景初始化代码
+            let camera, scene, renderer;
+            let cube;
+            let isThreeJsSlide = false;
+            
+            // 初始化Three.js
+            function initThreeJS() {
+                const container = document.getElementById('threejs-canvas');
+                
+                // 创建场景
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x000000);
+                
+                // 创建相机
+                camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                camera.position.z = 5;
+                
+                // 创建渲染器
+                renderer = new THREE.WebGLRenderer({
+                    canvas: container,
+                    antialias: true
+                });
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                
+                // 创建一个彩色立方体
+                const geometry = new THREE.BoxGeometry(2, 2, 2);
+                const materials = [
+                    new THREE.MeshBasicMaterial({ color: 0xff0000 }), // 红
+                    new THREE.MeshBasicMaterial({ color: 0x00ff00 }), // 绿
+                    new THREE.MeshBasicMaterial({ color: 0x0000ff }), // 蓝
+                    new THREE.MeshBasicMaterial({ color: 0xffff00 }), // 黄
+                    new THREE.MeshBasicMaterial({ color: 0xff00ff }), // 紫
+                    new THREE.MeshBasicMaterial({ color: 0x00ffff })  // 青
+                ];
+                cube = new THREE.Mesh(geometry, materials);
+                scene.add(cube);
+                
+                // 隐藏加载文本
+                document.getElementById('loading-text').style.display = 'none';
+                
+                // 开始动画循环
+                animate();
+            }
+            
+            // 动画循环
+            function animate() {
+                if (!isThreeJsSlide) return;
+                
+                requestAnimationFrame(animate);
+                
+                // 旋转立方体
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                
+                renderer.render(scene, camera);
+            }
+            
+            // 监听幻灯片变化
+            Reveal.on('slidechanged', function(event) {
+                // 检查当前幻灯片是否包含Three.js或ECharts容器
+                const currentSlide = event.currentSlide;
+                
+                // Three.js部分
+                if (currentSlide.querySelector('.threejs-container')) {
+                    isThreeJsSlide = true;
+                    
+                    // 如果尚未初始化，则初始化Three.js
+                    if (!scene) {
+                        initThreeJS();
+                    } else {
+                        // 已初始化，只需恢复动画
+                        animate();
+                    }
+                } else {
+                    isThreeJsSlide = false;
+                }
+                
+                // ECharts部分 - 修改为支持多种图表类型
+                if (currentSlide.querySelector('#echarts-bar')) {
+                    initECharts('bar');
+                } else if (currentSlide.querySelector('#echarts-line')) {
+                    initECharts('line');
+                } else if (currentSlide.querySelector('#echarts-pie')) {
+                    initECharts('pie');
+                } else if (currentSlide.querySelector('#echarts-scatter')) {
+                    initECharts('scatter');
+                } else if (currentSlide.querySelector('#echarts-gauge')) {
+                    initECharts('gauge');
+                } else {
+                    currentEChartsType = '';
+                }
+                
+                // GSAP部分
+                if (currentSlide.querySelector('#gsap-basic')) {
+                    isGsapSlide = true;
+                    initGSAP('basic');
+                } else if (currentSlide.querySelector('#gsap-text')) {
+                    isGsapSlide = true;
+                    initGSAP('text');
+                } else if (currentSlide.querySelector('#gsap-stagger')) {
+                    isGsapSlide = true;
+                    initGSAP('stagger');
+                } else if (currentSlide.querySelector('#gsap-timeline')) {
+                    isGsapSlide = true;
+                    initGSAP('timeline');
+                } else {
+                    isGsapSlide = false;
+                    
+                    // 暂停所有GSAP动画
+                    if (basicAnimation) basicAnimation.pause();
+                    if (textAnimation) textAnimation.pause();
+                    if (staggerAnimation) staggerAnimation.pause();
+                    if (timelineAnimation) timelineAnimation.pause();
+                }
+            });
+            
+            // 修改resize事件处理函数
+            window.addEventListener('resize', function() {
+                // Three.js部分
+                if (camera && renderer) {
+                    const container = document.getElementById('threejs-canvas');
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                }
+                
+                // ECharts部分 - 修改为支持多种图表类型
+                if (barChart && currentEChartsType === 'bar') {
+                    barChart.resize();
+                } else if (lineChart && currentEChartsType === 'line') {
+                    lineChart.resize();
+                } else if (pieChart && currentEChartsType === 'pie') {
+                    pieChart.resize();
+                } else if (scatterChart && currentEChartsType === 'scatter') {
+                    scatterChart.resize();
+                } else if (gaugeChart && currentEChartsType === 'gauge') {
+                    gaugeChart.resize();
+                }
+            });
+
+            // 处理键盘控制
+            document.addEventListener('keydown', function(event) {
+                if (!isThreeJsSlide || !cube) return;
+                
+                const rotationSpeed = 0.1;
+                
+                switch(event.key) {
+                    case 'ArrowUp':
+                        cube.rotation.x -= rotationSpeed;
+                        break;
+                    case 'ArrowDown':
+                        cube.rotation.x += rotationSpeed;
+                        break;
+                    case 'ArrowLeft':
+                        cube.rotation.y -= rotationSpeed;
+                        break;
+                    case 'ArrowRight':
+                        cube.rotation.y += rotationSpeed;
+                        break;
+                }
+            });
+
+            // 确保在DOM完全加载后初始化
+            document.addEventListener('DOMContentLoaded', function() {
+                // 检查当前幻灯片是否包含ECharts容器
+                const currentSlide = Reveal.getCurrentSlide();
+                if (currentSlide) {
+                    if (currentSlide.querySelector('#echarts-bar')) {
+                        initECharts('bar');
+                    } else if (currentSlide.querySelector('#echarts-line')) {
+                        initECharts('line');
+                    } else if (currentSlide.querySelector('#echarts-pie')) {
+                        initECharts('pie');
+                    } else if (currentSlide.querySelector('#echarts-scatter')) {
+                        initECharts('scatter');
+                    } else if (currentSlide.querySelector('#echarts-gauge')) {
+                        initECharts('gauge');
+                    }
+                    
+                    // GSAP初始化
+                    if (currentSlide.querySelector('#gsap-basic')) {
+                        initGSAP('basic');
+                    } else if (currentSlide.querySelector('#gsap-text')) {
+                        initGSAP('text');
+                    } else if (currentSlide.querySelector('#gsap-stagger')) {
+                        initGSAP('stagger');
+                    } else if (currentSlide.querySelector('#gsap-timeline')) {
+                        initGSAP('timeline');
+                    }
+                }
+            });
+
+            // ECharts变量
+            let barChart, lineChart, pieChart, scatterChart, gaugeChart;
+            let currentEChartsType = '';
+            let isEChartsSlide = false;
+
+            // 初始化柱状图
+            function initBarChart() {
+                const container = document.getElementById('echarts-bar');
+                if (!container) return;
+                
+                // 添加错误处理
+                if (typeof echarts === 'undefined') {
+                    console.error('ECharts库未加载成功');
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败，请检查网络连接</div>';
+                    return;
+                }
+                
+                try {
+                    barChart = echarts.init(container);
+                    
+                    // 配置项和数据
+                    const option = {
+                        title: {
+                            text: '近五年销售数据统计',
+                            subtext: '虚构数据',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'shadow'
+                            }
+                        },
+                        legend: {
+                            data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
+                            top: 'bottom',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '10%',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: ['2018', '2019', '2020', '2021', '2022'],
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#fff'
+                                }
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#fff'
+                                }
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: 'rgba(255,255,255,0.1)'
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: '直接访问',
+                                type: 'bar',
+                                stack: '总量',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: [320, 332, 301, 334, 390]
+                            },
+                            {
+                                name: '邮件营销',
+                                type: 'bar',
+                                stack: '总量',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: [120, 132, 101, 134, 90]
+                            },
+                            {
+                                name: '联盟广告',
+                                type: 'bar',
+                                stack: '总量',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: [220, 182, 191, 234, 290]
+                            },
+                            {
+                                name: '视频广告',
+                                type: 'bar',
+                                stack: '总量',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: [150, 232, 201, 154, 190]
+                            },
+                            {
+                                name: '搜索引擎',
+                                type: 'bar',
+                                stack: '总量',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: [820, 932, 901, 934, 1290]
+                            }
+                        ]
+                    };
+                    
+                    // 使用配置项
+                    barChart.setOption(option);
+                } catch (error) {
+                    console.error('柱状图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">柱状图初始化失败</div>';
+                }
+            }
+
+            // 初始化折线图（带动画效果）
+            function initLineChart() {
+                const container = document.getElementById('echarts-line');
+                if (!container) return;
+                
+                try {
+                    lineChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '动态数据 + 时间坐标轴',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                animation: false
+                            }
+                        },
+                        xAxis: {
+                            type: 'time',
+                            splitLine: {
+                                show: false
+                            },
+                            axisLabel: {
+                                color: '#fff'
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#fff'
+                                }
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            boundaryGap: [0, '100%'],
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: 'rgba(255,255,255,0.1)'
+                                }
+                            },
+                            axisLabel: {
+                                color: '#fff'
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#fff'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: '实时数据',
+                            type: 'line',
+                            showSymbol: false,
+                            color: '#1E90FF',
+                            data: []
+                        }]
+                    };
+                    
+                    // 生成初始数据
+                    function generateData() {
+                        let now = new Date();
+                        let data = [];
+                        let value = Math.random() * 300;
+                        
+                        for (let i = 0; i < 60; i++) {
+                            value = value + Math.random() * 21 - 10;
+                            let time = new Date(now - (60 - i) * 1000);
+                            data.push([time.getTime(), Math.round(value)]);
+                        }
+                        
+                        return data;
+                    }
+                    
+                    option.series[0].data = generateData();
+                    lineChart.setOption(option);
+                    
+                    // 启动更新定时器
+                    let lineChartInterval;
+                    
+                    function startLineChartUpdate() {
+                        // 先清除可能存在的旧定时器
+                        if (lineChartInterval) {
+                            clearInterval(lineChartInterval);
+                        }
+                        
+                        lineChartInterval = setInterval(function () {
+                            if (currentEChartsType !== 'line') {
+                                clearInterval(lineChartInterval);
+                                return;
+                            }
+                            
+                            let now = new Date();
+                            let value = option.series[0].data[option.series[0].data.length - 1][1];
+                            value = value + Math.random() * 21 - 10;
+                            
+                            option.series[0].data.shift();
+                            option.series[0].data.push([now.getTime(), Math.round(value)]);
+                            
+                            lineChart.setOption(option);
+                        }, 1000);
+                    }
+                    
+                    startLineChartUpdate();
+                    
+                } catch (error) {
+                    console.error('折线图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">折线图初始化失败</div>';
+                }
+            }
+
+            // 初始化饼图（带转换动画）
+            function initPieChart() {
+                const container = document.getElementById('echarts-pie');
+                if (!container) return;
+                
+                try {
+                    pieChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '动态切换饼图',
+                            subtext: '点击切换数据',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: '{a} <br/>{b}: {c} ({d}%)'
+                        },
+                        legend: {
+                            orient: 'horizontal',
+                            bottom: 10,
+                            data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        series: [
+                            {
+                                name: '访问来源',
+                                type: 'pie',
+                                radius: '55%',
+                                center: ['50%', '50%'],
+                                roseType: 'radius',
+                                data: [
+                                    {value: 335, name: '直接访问'},
+                                    {value: 310, name: '邮件营销'},
+                                    {value: 234, name: '联盟广告'},
+                                    {value: 135, name: '视频广告'},
+                                    {value: 1548, name: '搜索引擎'}
+                                ],
+                                emphasis: {
+                                    itemStyle: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                },
+                                animationType: 'scale',
+                                animationEasing: 'elasticOut',
+                                animationDelay: function (idx) {
+                                    return Math.random() * 200;
+                                }
+                            }
+                        ]
+                    };
+                    
+                    pieChart.setOption(option);
+                    
+                    // 点击事件，切换数据
+                    pieChart.on('click', function() {
+                        // 生成随机数据
+                        const newData = [
+                            {value: Math.round(Math.random() * 1000), name: '直接访问'},
+                            {value: Math.round(Math.random() * 1000), name: '邮件营销'},
+                            {value: Math.round(Math.random() * 1000), name: '联盟广告'},
+                            {value: Math.round(Math.random() * 1000), name: '视频广告'},
+                            {value: Math.round(Math.random() * 1000), name: '搜索引擎'}
+                        ];
+                        
+                        pieChart.setOption({
+                            series: [{
+                                data: newData
+                            }]
+                        });
+                    });
+                    
+                } catch (error) {
+                    console.error('饼图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">饼图初始化失败</div>';
+                }
+            }
+
+            // 初始化散点图
+            function initScatterChart() {
+                const container = document.getElementById('echarts-scatter');
+                if (!container) return;
+                
+                try {
+                    scatterChart = echarts.init(container);
+                    
+                    // 生成随机数据
+                    function generateData(count) {
+                        let data = [];
+                        for (let i = 0; i < count; i++) {
+                            data.push([
+                                Math.round(Math.random() * 100),
+                                Math.round(Math.random() * 100),
+                                Math.round(Math.random() * 40)
+                            ]);
+                        }
+                        return data;
+                    }
+                    
+                    const option = {
+                        title: {
+                            text: '动态散点图',
+                            subtext: '支持缩放和拖拽',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '7%',
+                            bottom: '10%',
+                            containLabel: true
+                        },
+                        tooltip: {
+                            showDelay: 0,
+                            formatter: function (params) {
+                                return '值: (' + params.value[0] + ', ' + params.value[1] + ', ' + params.value[2] + ')';
+                            },
+                            axisPointer: {
+                                show: true,
+                                type: 'cross',
+                                lineStyle: {
+                                    type: 'dashed',
+                                    width: 1
+                                }
+                            }
+                        },
+                        xAxis: {
+                            type: 'value',
+                            scale: true,
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#fff'
+                                }
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: 'rgba(255,255,255,0.1)'
+                                }
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            scale: true,
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#fff'
+                                }
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: 'rgba(255,255,255,0.1)'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: '散点数据',
+                            type: 'scatter',
+                            symbolSize: function (data) {
+                                return data[2];
+                            },
+                            emphasis: {
+                                focus: 'series',
+                                label: {
+                                    show: true,
+                                    formatter: function (param) {
+                                        return param.data[2];
+                                    },
+                                    position: 'top'
+                                }
+                            },
+                            itemStyle: {
+                                color: function(params) {
+                                    const value = params.data[2];
+                                    return 'rgb(' + [
+                                        Math.round(50 + value * 5),
+                                        Math.round(250 - value * 5),
+                                        Math.round(value * 5)
+                                    ].join(',') + ')';
+                                }
+                            },
+                            data: generateData(50)
+                        }]
+                    };
+                    
+                    scatterChart.setOption(option);
+                    
+                } catch (error) {
+                    console.error('散点图初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">散点图初始化失败</div>';
+                }
+            }
+
+            // 初始化仪表盘
+            function initGaugeChart() {
+                const container = document.getElementById('echarts-gauge');
+                if (!container) return;
+                
+                try {
+                    gaugeChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '动态仪表盘',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            formatter: '{a} <br/>{b} : {c}%'
+                        },
+                        series: [
+                            {
+                                name: 'CPU使用率',
+                                type: 'gauge',
+                                detail: {
+                                    formatter: '{value}%',
+                                    color: '#fff'
+                                },
+                                data: [
+                                    {
+                                        value: 50,
+                                        name: 'CPU',
+                                        title: {
+                                            color: '#fff'
+                                        }
+                                    }
+                                ],
+                                axisLabel: {
+                                    color: '#fff'
+                                },
+                                title: {
+                                    color: '#fff'
+                                },
+                                axisLine: {
+                                    lineStyle: {
+                                        width: 10,
+                                        color: [
+                                            [0.3, '#67e0e3'],
+                                            [0.7, '#37a2da'],
+                                            [1, '#fd666d']
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    
+                    gaugeChart.setOption(option);
+                    
+                    // 更新仪表盘
+                    let gaugeChartInterval;
+                    
+                    function startGaugeChartUpdate() {
+                        // 先清除可能存在的旧定时器
+                        if (gaugeChartInterval) {
+                            clearInterval(gaugeChartInterval);
+                        }
+                        
+                        gaugeChartInterval = setInterval(function () {
+                            if (currentEChartsType !== 'gauge') {
+                                clearInterval(gaugeChartInterval);
+                                return;
+                            }
+                            
+                            gaugeChart.setOption({
+                                series: [
+                                    {
+                                        data: [
+                                            {
+                                                value: (Math.random() * 100).toFixed(2) - 0
+                                            }
+                                        ]
+                                    }
+                                ]
+                            });
+                        }, 2000);
+                    }
+                    
+                    startGaugeChartUpdate();
+                    
+                } catch (error) {
+                    console.error('仪表盘初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">仪表盘初始化失败</div>';
+                }
+            }
+
+            // 整合一个统一的初始化函数
+            function initECharts(type) {
+                currentEChartsType = type;
+                
+                switch(type) {
+                    case 'bar':
+                        initBarChart();
+                        break;
+                    case 'line':
+                        initLineChart();
+                        break;
+                    case 'pie':
+                        initPieChart();
+                        break;
+                    case 'scatter':
+                        initScatterChart();
+                        break;
+                    case 'gauge':
+                        initGaugeChart();
+                        break;
+                }
+            }
+
+            // GSAP相关变量和函数
+            let isGsapSlide = false;
+            let basicAnimation, textAnimation, staggerAnimation, timelineAnimation;
+
+            // 初始化基础动画
+            function initBasicAnimation() {
+                const container = document.getElementById('gsap-basic');
+                if (!container) return;
+                
+                try {
+                    const box = container.querySelector('.gsap-box');
+                    
+                    // 重置动画元素状态
+                    gsap.set(box, {
+                        scale: 1,
+                        rotation: 0,
+                        x: 0,
+                        y: 0
+                    });
+                    
+                    // 创建动画
+                    basicAnimation = gsap.timeline({repeat: -1, yoyo: true})
+                        .to(box, {duration: 1, scale: 1.5, ease: "power1.inOut"})
+                        .to(box, {duration: 1, rotation: 360, ease: "power1.inOut"})
+                        .to(box, {duration: 1, x: "+=50", y: "-=50", ease: "power1.inOut"})
+                        .to(box, {duration: 1, borderRadius: "50%", backgroundColor: "#2ecc71", ease: "power1.inOut"})
+                        .to(box, {duration: 1, x: "-=100", ease: "power1.inOut"})
+                        .to(box, {duration: 1, y: "+=100", backgroundColor: "#3498db", ease: "power1.inOut"})
+                        .to(box, {duration: 1, x: "+=50", y: "-=50", borderRadius: "8px", backgroundColor: "#e74c3c", ease: "power1.inOut"});
+                } catch (error) {
+                    console.error('GSAP基础动画初始化失败:', error);
+                }
+            }
+
+            // 初始化文字动画
+            function initTextAnimation() {
+                const container = document.getElementById('gsap-text');
+                if (!container) return;
+                
+                try {
+                    const texts = container.querySelectorAll('.gsap-text');
+                    
+                    // 重置文字状态
+                    gsap.set(texts, {
+                        opacity: 0,
+                        y: 50
+                    });
+                    
+                    // 创建动画
+                    textAnimation = gsap.timeline({repeat: -1, repeatDelay: 1})
+                        .to(texts[0], {duration: 1, opacity: 1, y: 0, ease: "back.out(1.7)"})
+                        .to(texts[0], {duration: 1, opacity: 0, y: -50, ease: "power1.in", delay: 1})
+                        .to(texts[1], {duration: 1, opacity: 1, y: 0, ease: "back.out(1.7)"})
+                        .to(texts[1], {duration: 1, opacity: 0, y: -50, ease: "power1.in", delay: 1});
+                } catch (error) {
+                    console.error('GSAP文字动画初始化失败:', error);
+                }
+            }
+
+            // 初始化Stagger动画
+            function initStaggerAnimation() {
+                const container = document.getElementById('gsap-stagger');
+                if (!container) return;
+                
+                try {
+                    const boxes = container.querySelectorAll('.gsap-stagger-box');
+                    
+                    // 重置状态
+                    gsap.set(boxes, {
+                        opacity: 0,
+                        scale: 0,
+                        rotation: -180
+                    });
+                    
+                    // 创建动画
+                    staggerAnimation = gsap.timeline({repeat: -1, repeatDelay: 1})
+                        .to(boxes, {
+                            duration: 1, 
+                            opacity: 1, 
+                            scale: 1, 
+                            rotation: 0,
+                            stagger: {
+                                each: 0.1,
+                                from: "center",
+                                grid: "auto"
+                            },
+                            ease: "elastic.out(1, 0.3)"
+                        })
+                        .to(boxes, {
+                            duration: 0.8, 
+                            opacity: 0, 
+                            scale: 0, 
+                            stagger: {
+                                each: 0.05,
+                                from: "edges",
+                                grid: "auto"
+                            },
+                            ease: "power1.in",
+                            delay: 1
+                        });
+                } catch (error) {
+                    console.error('GSAP Stagger动画初始化失败:', error);
+                }
+            }
+
+            // 初始化时间线动画
+            function initTimelineAnimation() {
+                const container = document.getElementById('gsap-timeline');
+                if (!container) return;
+                
+                try {
+                    const elements = container.querySelectorAll('.gsap-timeline-element');
+                    
+                    // 重置状态
+                    gsap.set(elements, {
+                        opacity: 0,
+                        x: -100
+                    });
+                    
+                    // 创建时间线动画
+                    timelineAnimation = gsap.timeline({repeat: -1, repeatDelay: 2})
+                        .to(elements[0], {duration: 0.7, opacity: 1, x: 0, ease: "back.out(1.7)"})
+                        .to(elements[1], {duration: 0.7, opacity: 1, x: 0, ease: "back.out(1.7)"}, "+=0.5")
+                        .to(elements[2], {duration: 0.7, opacity: 1, x: 0, ease: "back.out(1.7)"}, "+=0.5")
+                        .to(elements[3], {duration: 0.7, opacity: 1, x: 0, ease: "back.out(1.7)"}, "+=0.5")
+                        .to(elements, {duration: 0.5, opacity: 0, x: 100, stagger: 0.2, ease: "power1.in"}, "+=1");
+                } catch (error) {
+                    console.error('GSAP时间线动画初始化失败:', error);
+                }
+            }
+
+            // 统一的GSAP初始化函数
+            function initGSAP(type) {
+                switch(type) {
+                    case 'basic':
+                        initBasicAnimation();
+                        break;
+                    case 'text':
+                        initTextAnimation();
+                        break;
+                    case 'stagger':
+                        initStaggerAnimation();
+                        break;
+                    case 'timeline':
+                        initTimelineAnimation();
+                        break;
+                }
+            }
+
+		</script>
+
+	</body>
+</html>

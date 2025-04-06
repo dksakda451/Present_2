@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js 3D地球效果展示</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+        }
+        
+        #earth-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 100;
+            transition: opacity 0.5s ease;
+        }
+        
+        #loading-text {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        #loading-progress {
+            width: 200px;
+            height: 4px;
+            background-color: #333;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        #loading-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #42affa;
+            transition: width 0.3s ease;
+        }
+        
+        #error-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #ff4444;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 80%;
+            display: none;
+            z-index: 200;
+        }
+        
+        #info {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="earth-container"></div>
+    
+    <div id="loading">
+        <div id="loading-text">加载资源中...</div>
+        <div id="loading-progress"><div id="loading-bar"></div></div>
+    </div>
+    
+    <div id="error-message"></div>
+    
+    <div id="info">
+        使用鼠标拖动以旋转视角 | 滚轮缩放 | 右键平移
+    </div>
+    
+    <!-- 核心库 - Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    
+    <!-- 资源加载管理器 -->
+    <script>
+        // 全局变量
+        let scene, camera, renderer, controls;
+        let earth, clouds;
+        let animateEarth = true;
+        
+        // 加载管理
+        const manager = new THREE.LoadingManager();
+        const earthTextureURLs = {
+            primary: {
+                map: 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_atmos_2048.jpg',
+                bumpMap: 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_normal_2048.jpg',
+                specularMap: 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_specular_2048.jpg'
+            },
+            fallback: {
+                map: 'https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg',
+                bumpMap: 'https://threejs.org/examples/textures/planets/earth_normal_2048.jpg',
+                specularMap: 'https://threejs.org/examples/textures/planets/earth_specular_2048.jpg'
+            },
+            alternate: {
+                map: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg',
+                bumpMap: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_normal_2048.jpg',
+                specularMap: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_specular_2048.jpg'
+            }
+        };
+        
+        const cloudTextureURLs = [
+            'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_clouds_1024.jpg',
+            'https://threejs.org/examples/textures/planets/earth_clouds_1024.jpg',
+            'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_clouds_1024.jpg'
+        ];
+        
+        // 加载状态更新
+        manager.onProgress = function(url, itemsLoaded, itemsTotal) {
+            const progress = (itemsLoaded / itemsTotal * 100);
+            document.getElementById('loading-bar').style.width = progress + '%';
+            console.log(`资源加载进度: ${progress.toFixed(0)}%`);
+        };
+        
+        manager.onLoad = function() {
+            console.log('所有资源加载完成');
+            const loadingElement = document.getElementById('loading');
+            loadingElement.style.opacity = '0';
+            setTimeout(() => loadingElement.style.display = 'none', 500);
+        };
+        
+        manager.onError = function(url) {
+            console.error('资源加载失败:', url);
+            // 不显示错误，尝试备用资源
+        };
+        
+        // 显示错误消息
+        function showError(message) {
+            const errorElement = document.getElementById('error-message');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+        
+        // 尝试加载纹理，有多个备用URL
+        function loadTextureWithFallback(urls, onLoad, onError) {
+            if (!Array.isArray(urls)) {
+                urls = [urls];
+            }
+            
+            function tryLoad(index) {
+                if (index >= urls.length) {
+                    if (onError) onError();
+                    return;
+                }
+                
+                const url = urls[index];
+                const texture = new THREE.TextureLoader(manager).load(
+                    url,
+                    function(loadedTexture) {
+                        if (onLoad) onLoad(loadedTexture);
+                    },
+                    undefined,
+                    function() {
+                        console.warn(`纹理加载失败，尝试备用地址: ${url}`);
+                        tryLoad(index + 1);
+                    }
+                );
+                
+                return texture;
+            }
+            
+            return tryLoad(0);
+        }
+    </script>
+    
+    <!-- 控件和依赖项 -->
+    <script>
+        // 加载OrbitControls
+        function loadScripts(urls, callback) {
+            let loaded = 0;
+            
+            function loadScript(url) {
+                const script = document.createElement('script');
+                script.src = url;
+                
+                script.onload = function() {
+                    loaded++;
+                    if (loaded === urls.length && callback) {
+                        callback();
+                    }
+                };
+                
+                script.onerror = function() {
+                    console.error(`脚本加载失败: ${url}`);
+                    // 尝试备用URL
+                    const fallbackUrl = url.replace('cdn.jsdelivr.net/npm', 'unpkg.com');
+                    const fallbackScript = document.createElement('script');
+                    fallbackScript.src = fallbackUrl;
+                    
+                    fallbackScript.onload = function() {
+                        loaded++;
+                        if (loaded === urls.length && callback) {
+                            callback();
+                        }
+                    };
+                    
+                    fallbackScript.onerror = function() {
+                        console.error(`备用脚本加载也失败: ${fallbackUrl}`);
+                        showError(`无法加载必要的组件: ${url}`);
+                    };
+                    
+                    document.head.appendChild(fallbackScript);
+                };
+                
+                document.head.appendChild(script);
+            }
+            
+            urls.forEach(loadScript);
+        }
+        
+        // 加载所需控件
+        loadScripts([
+            'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js'
+        ], initScene);
+        
+        // 场景初始化
+        function initScene() {
+            console.log('初始化3D场景');
+            
+            if (typeof THREE.OrbitControls === 'undefined') {
+                console.error('OrbitControls未加载，手动定义一个简单版本');
+                // 如果控件加载失败，创建一个简单的替代控件
+                THREE.OrbitControls = function(camera, domElement) {
+                    this.update = function() {};
+                    this.dispose = function() {};
+                };
+            }
+            
+            // 创建场景
+            scene = new THREE.Scene();
+            
+            // 创建相机
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 3;
+            
+            // 创建渲染器
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.getElementById('earth-container').appendChild(renderer.domElement);
+            
+            // 添加控件
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.screenSpacePanning = false;
+            controls.minDistance = 1.5;
+            controls.maxDistance = 10;
+            
+            // 创建地球
+            createEarth();
+            
+            // 添加光源
+            addLights();
+            
+            // 添加星空背景
+            addStars();
+            
+            // 开始动画
+            animate();
+            
+            // 窗口大小调整
+            window.addEventListener('resize', onWindowResize);
+        }
+        
+        // 创建地球
+        function createEarth() {
+            console.log('创建地球');
+            
+            // 地球几何体
+            const earthGeometry = new THREE.SphereGeometry(1, 64, 64);
+            
+            // 加载纹理 - 地图
+            const earthMap = loadTextureWithFallback([
+                earthTextureURLs.primary.map,
+                earthTextureURLs.fallback.map,
+                earthTextureURLs.alternate.map
+            ]);
+            
+            // 加载纹理 - 凹凸贴图
+            const earthBumpMap = loadTextureWithFallback([
+                earthTextureURLs.primary.bumpMap,
+                earthTextureURLs.fallback.bumpMap,
+                earthTextureURLs.alternate.bumpMap
+            ]);
+            
+            // 加载纹理 - 高光贴图
+            const earthSpecularMap = loadTextureWithFallback([
+                earthTextureURLs.primary.specularMap,
+                earthTextureURLs.fallback.specularMap,
+                earthTextureURLs.alternate.specularMap
+            ]);
+            
+            // 创建地球材质
+            const earthMaterial = new THREE.MeshPhongMaterial({
+                map: earthMap,
+                bumpMap: earthBumpMap,
+                bumpScale: 0.05,
+                specularMap: earthSpecularMap,
+                shininess: 15
+            });
+            
+            // 创建地球网格
+            earth = new THREE.Mesh(earthGeometry, earthMaterial);
+            scene.add(earth);
+            
+            // 云层几何体
+            const cloudGeometry = new THREE.SphereGeometry(1.01, 64, 64);
+            
+            // 加载云层纹理
+            const cloudTexture = loadTextureWithFallback(cloudTextureURLs);
+            
+            // 创建云层材质
+            const cloudMaterial = new THREE.MeshPhongMaterial({
+                map: cloudTexture,
+                transparent: true,
+                opacity: 0.4
+            });
+            
+            // 创建云层网格
+            clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
+            scene.add(clouds);
+        }
+        
+        // 添加光源
+        function addLights() {
+            console.log('添加光源');
+            
+            // 环境光 - 提供基础亮度
+            const ambientLight = new THREE.AmbientLight(0x333333);
+            scene.add(ambientLight);
+            
+            // 定向光 - 模拟太阳光
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 3, 5);
+            scene.add(directionalLight);
+        }
+        
+        // 添加星空背景
+        function addStars() {
+            console.log('添加星空背景');
+            
+            const starGeometry = new THREE.BufferGeometry();
+            const starMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.05
+            });
+            
+            const starVertices = [];
+            for (let i = 0; i < 10000; i++) {
+                const x = (Math.random() - 0.5) * 2000;
+                const y = (Math.random() - 0.5) * 2000;
+                const z = (Math.random() - 0.5) * 2000;
+                starVertices.push(x, y, z);
+            }
+            
+            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+            const stars = new THREE.Points(starGeometry, starMaterial);
+            scene.add(stars);
+        }
+        
+        // 动画循环
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            if (animateEarth) {
+                earth.rotation.y += 0.0005;
+                clouds.rotation.y += 0.0007;
+            }
+            
+            if (controls) controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        // 窗口大小调整处理
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+    </script>
+</body>
+</html> 

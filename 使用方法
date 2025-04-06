@@ -1,0 +1,7 @@
+服务器：http://localhost:8000/
+介绍：http://localhost:8000/demo.html#/26
+
+管理员身份
+   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass     
+   cd D:\桌面\王康康\AI\Github学习\reveal.js-5.2.1
+   npm start
