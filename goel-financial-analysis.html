@@ -106,7 +106,7 @@
                 border-radius: 8px;
                 color: white;
                 opacity: 0;
-                font-size: 18px;
+                font-size: 26px;
             }
             
             /* 歌尔股份专用样式 */
@@ -174,6 +174,123 @@
             .reveal section {
                 padding: 20px 0;
             }
+
+            /* GSAP动画容器样式 */
+            .gsap-container {
+                width: 100%;
+                height: 450px;
+                position: relative;
+                overflow: hidden;
+                margin-top: 40px;
+            }
+            
+            .gsap-box {
+                width: 100px;
+                height: 100px;
+                position: absolute;
+                border-radius: 8px;
+            }
+            
+            .gsap-text {
+                font-size: 3em;
+                position: absolute;
+                opacity: 0;
+                color: #fff;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .gsap-stagger-box {
+                width: 50px;
+                height: 50px;
+                background-color: #3498db;
+                display: inline-block;
+                margin: 8px;
+                border-radius: 5px;
+            }
+            
+            .gsap-timeline-element {
+                width: 200px;
+                height: 60px;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+                line-height: 60px;
+                border-radius: 8px;
+                color: white;
+                opacity: 0;
+                font-size: 26px;
+            }
+            
+            /* --- 新增：标题页动画初始状态 --- */
+            .reveal .slides section[data-background-gradient] .threejs-container,
+            .reveal .slides section[data-background-gradient] .title-content h1,
+            .reveal .slides section[data-background-gradient] .title-content p small {
+                opacity: 1; /* 修改为1 */
+                transition: none;
+            }
+
+            .reveal .slides section[data-background-gradient] .title-content h1 {
+                transform: translateY(0); /* 移除初始位移 */
+            }
+            /* --- 结束：标题页动画初始状态 --- */
+
+            /* --- 新增：增大目录按钮字体 --- */
+            #toc-animation .gsap-timeline-element {
+                width: 200px;
+                height: 60px;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+                line-height: 60px;
+                border-radius: 8px;
+                color: white;
+                opacity: 1; /* 修改为1，使其默认显示 */
+                font-size: 26px;
+            }
+            /* --- 结束：增大目录按钮字体 --- */
+
+            /* 调整公司概述页面的字体大小 */
+            section h2 {
+                font-size: 48px; /* 原来可能更大，调小一些 */
+                margin-bottom: 30px;
+            }
+
+            .highlight-box {
+                background: rgba(30, 41, 59, 0.8);
+                border-radius: 10px;
+                padding: 20px;
+                margin: 15px 0;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .highlight-box h3 {
+                font-size: 28px; /* 原来可能是32px或更大，调小 */
+                margin-bottom: 15px;
+                color: #e2e8f0;
+            }
+
+            .highlight-box p {
+                font-size: 20px; /* 原来可能是24px，调小 */
+                line-height: 1.5;
+                margin-bottom: 10px;
+            }
+
+            .highlight-box ul {
+                font-size: 20px; /* 原来可能是24px，调小 */
+                line-height: 1.5;
+                margin-left: 20px;
+            }
+
+            .highlight-box li {
+                margin-bottom: 8px;
+            }
+
+            .highlight-box strong {
+                color: #60a5fa;
+            }
         </style>
 	</head>
 
@@ -199,7 +316,7 @@
 
 				<!-- 2. 目录页 -->
 				<section>
-					<h2>内容概览</h2>
+					<!-- <h2>内容概览</h2> --> <!-- 删除此行 -->
 					<div class="gsap-container" id="toc-animation">
                         <div class="gsap-timeline-element" style="top: 15%; background-color: #1a73e8; box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3); border-radius: 12px; font-weight: 600;">公司概述</div>
                         <div class="gsap-timeline-element" style="top: 30%; background-color: #3498db; box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3); border-radius: 12px; font-weight: 600;">财务指标分析</div>
@@ -209,36 +326,52 @@
                     </div>
 				</section>
 
-				<!-- 3. 公司概述 -->
+				<!-- 3. 公司概述第一页 -->
 				<section>
-					<section>
-						<h2>公司概述</h2>
-						<p>歌尔股份有限公司（股票代码：002241）</p>
+					<h2>公司概述</h2>
+					<div class="highlight-box">
+						<h3>歌尔股份有限公司（股票代码：002241）</h3>
 						<p>全球领先的智能声学、精密光学和电子产品解决方案提供商</p>
-						<div class="highlight-box">
-                            <p>主营业务：精密电子组件、智能声学整机和智能硬件</p>
-                            <p>主要客户：全球科技巨头，包括苹果、Meta等</p>
-                        </div>
-					</section>
-                    
-                    <section>
-                        <h2>业务结构</h2>
-                        <div class="echarts-container" id="business-structure-chart"></div>
-                        <p>精密电子组件是公司核心业务板块</p>
-                    </section>
-                    
-                    <section>
-                        <h2>市场地位</h2>
-                        <div class="threejs-container">
-                            <canvas id="market-position-canvas"></canvas>
-                            <div class="threejs-loading" id="market-loading-text">加载中...</div>
-                        </div>
-
-                        <p>VR/AR、TWS耳机等领域的全球领先供应商</p>
-                    </section>
+					</div>
+					<div class="highlight-box">
+						<h3>市场地位</h3>
+						<ul>
+							<li>全球知名的消费电子精密零组件和智能产品制造商</li>
+							<li>苹果公司AirPods等产品的重要供应商</li>
+							<li>VR/AR领域的核心供应商之一</li>
+						</ul>
+					</div>
+					<div class="highlight-box">
+						<h3>2023年重要荣誉</h3>
+						<ul>
+							<li>中国电子元器件骨干企业百强榜单第4位</li>
+							<li>中国电子信息竞争力百强企业第15位</li>
+							<li>中国制造业民营企业500强第55位</li>
+						</ul>
+					</div>
 				</section>
 
-				<!-- 4. 财务指标分析 -->
+				<!-- 4. 公司概述第二页 -->
+				<section>
+					<h2>主营业务</h2>
+					<div class="highlight-box">
+						<p>公司主要服务于全球科技和消费电子行业领先客户，提供精密零组件和智能硬件的垂直整合产品解决方案。</p>
+					</div>
+					<div class="highlight-box">
+						<h3>主要业务板块</h3>
+						<ul>
+							<li><strong>精密零组件业务</strong>：声学、光学、微电子、结构件等产品，包括微型扬声器/受话器、MEMS传感器、VR/MR光学器件等。</li>
+							<li><strong>智能声学整机业务</strong>：TWS智能无线耳机、有线/无线耳机、智能音箱等。</li>
+							<li><strong>智能硬件业务</strong>：VR虚拟现实、MR混合现实、AR增强现实、智能可穿戴、智能家用电子游戏机及配件、智能家居等。</li>
+						</ul>
+					</div>
+					<div class="highlight-box">
+						<h3>主要客户</h3>
+						<p>全球科技巨头，包括苹果、Meta等领先企业</p>
+					</div>
+				</section>
+
+				<!-- 5. 财务指标分析 -->
 				<section>
 					<section>
 						<h2>财务指标分析</h2>
@@ -356,7 +489,7 @@
                     </section>
 				</section>
 
-				<!-- 5. 成功因素分析 -->
+				<!-- 6. 成功因素分析 -->
 				<section>
 					<section>
 						<h2>成功因素分析</h2>
@@ -398,7 +531,7 @@
                     </section>
 				</section>
 
-				<!-- 6. 财务问题分析 -->
+				<!-- 7. 财务问题分析 -->
 				<section>
 					<section>
 						<h2>财务问题分析</h2>
@@ -2017,55 +2150,39 @@
                     const elements = container.querySelectorAll('.gsap-timeline-element');
                     console.log('找到元素数量:', elements.length);
                     
-                    // 重置状态
+                    // 设置初始状态为可见
                     gsap.set(elements, {
-                        opacity: 0,
-                        scale: 0.5,
-                        x: -100
+                        opacity: 1,
+                        scale: 1,
+                        x: 0
                     });
                     
-                    // 创建时间线动画 - 更现代、更快速的动画效果
-                    tocAnimation = gsap.timeline({repeat: -1, repeatDelay: 1})
-                        // 入场动画 - 更快速、弹性更强
-                        .to(elements[0], {duration: 0.5, opacity: 1, scale: 1, x: 0, ease: "elastic.out(1.2, 0.5)"})
-                        .to(elements[1], {duration: 0.5, opacity: 1, scale: 1, x: 0, ease: "elastic.out(1.2, 0.5)"}, "-=0.3")
-                        .to(elements[2], {duration: 0.5, opacity: 1, scale: 1, x: 0, ease: "elastic.out(1.2, 0.5)"}, "-=0.3")
-                        .to(elements[3], {duration: 0.5, opacity: 1, scale: 1, x: 0, ease: "elastic.out(1.2, 0.5)"}, "-=0.3")
-                        .to(elements[4], {duration: 0.5, opacity: 1, scale: 1, x: 0, ease: "elastic.out(1.2, 0.5)"}, "-=0.3")
+                    // 创建悬停效果动画
+                    elements.forEach(element => {
+                        element.addEventListener('mouseenter', () => {
+                            gsap.to(element, {
+                                duration: 0.3,
+                                scale: 1.1,
+                                backgroundColor: "#00c6ff",
+                                boxShadow: "0 0 20px rgba(0, 198, 255, 0.7)",
+                                ease: "power2.out"
+                            });
+                        });
                         
-                        // 添加悬停效果
-                        .to(elements, {
-                            duration: 0.4, 
-                            backgroundColor: "#00c6ff", 
-                            boxShadow: "0 0 20px rgba(0, 198, 255, 0.7)",
-                            color: "#fff",
-                            scale: 1.05,
-                            stagger: 0.1,
-                            ease: "power1.inOut"
-                        }, "+=0.5")
-                        .to(elements, {
-                            duration: 0.4, 
-                            backgroundColor: "",
-                            boxShadow: "0 0 0px rgba(0, 198, 255, 0)",
-                            scale: 1,
-                            stagger: 0.1,
-                            ease: "power1.inOut"
-                        }, "+=0.5")
-                        
-                        // 退场并重新开始
-                        .to(elements, {
-                            duration: 0.5, 
-                            opacity: 0, 
-                            scale: 0.5,
-                            x: 100, 
-                            stagger: 0.1, 
-                            ease: "back.in(1.5)"
-                        }, "+=0.7");
+                        element.addEventListener('mouseleave', () => {
+                            gsap.to(element, {
+                                duration: 0.3,
+                                scale: 1,
+                                backgroundColor: element.style.backgroundColor,
+                                boxShadow: element.style.boxShadow,
+                                ease: "power2.in"
+                            });
+                        });
+                    });
                     
-                    console.log('目录动画初始化成功');
-                    
+                    console.log('目录动画初始化完成');
                 } catch (error) {
-                    console.error('目录动画初始化失败:', error);
+                    console.error('GSAP目录动画初始化失败:', error);
                 }
             }
             
@@ -3999,5 +4116,53 @@
                 }
             }
 		</script>
+
+        <!-- 新增：标题页入场动画脚本 -->
+        <script>
+            Reveal.addEventListener( 'ready', function( event ) {
+                // 确保这是首次加载（ready事件通常只触发一次，但以防万一）
+                // 并且只针对第一个幻灯片（通常是标题页）
+                // 我们通过检查目标元素的上下文来假设这是第一页
+                const firstSlideSection = document.querySelector('.slides section[data-background-gradient]');
+                
+                // 检查是否找到了第一张幻灯片对应的元素
+                if (firstSlideSection) {
+                    const logoContainer = firstSlideSection.querySelector('.threejs-container');
+                    const title = firstSlideSection.querySelector('.title-content h1');
+                    const subtitle = firstSlideSection.querySelector('.title-content p small');
+
+                    // 确保所有元素都存在
+                    if (logoContainer && title && subtitle) {
+                        // 创建GSAP时间线
+                        const tl = gsap.timeline({ 
+                            // 添加一个小的延迟，确保页面渲染稳定
+                            delay: 0.2 
+                        });
+
+                        // 动画序列
+                        tl.to(logoContainer, { 
+                            opacity: 1,
+                            duration: 0.8, 
+                            ease: "power2.out" 
+                        })
+                        .to(title, { 
+                            opacity: 1, 
+                            y: 0, 
+                            duration: 0.7, 
+                            ease: "power2.out" 
+                        }, "-=0.5") // 在上一个动画结束前0.5秒开始
+                        .to(subtitle, { 
+                            opacity: 1, 
+                            duration: 0.5, 
+                            ease: "power1.inOut" 
+                        }, "-=0.3"); // 在上一个动画结束前0.3秒开始
+                    } else {
+                        console.warn('未能找到标题页动画所需的所有元素。');
+                    }
+                } else {
+                     console.warn('未能找到具有 data-background-gradient 属性的第一张幻灯片。');
+                }
+            });
+        </script>
 	</body>
 </html> 
