@@ -740,49 +740,33 @@
             .toc-item:hover::after {
                 left: 100%;
             }
-            
-            /* 打字光标动画 */
-            .typing-cursor {
-                display: inline-block;
-                width: 2px;
-                height: 1em;
-                background-color: #fff;
-                margin-left: 2px;
-                vertical-align: middle;
-                animation: blink 0.7s infinite;
-            }
-            
-            @keyframes blink {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0; }
-            }
-            
+
             /* 内容框过渡效果 */
             .highlight-box {
                 transition: all 0.3s ease;
             }
-            
+
             /* 提高强调文本的可视性 */
             .highlight-box strong {
                 transition: all 0.3s ease;
                 padding: 0 2px;
             }
-            
+
             /* 为列表项添加更好的过渡效果 */
             .highlight-box li {
                 transition: transform 0.2s ease;
             }
-            
+
             .highlight-box li:hover {
                 transform: translateX(5px);
             }
-            
+
             /* 为第四页业务板块添加特殊高亮 */
             .highlight-box h3 {
                 position: relative;
                 display: inline-block;
             }
-            
+
             .highlight-box h3::after {
                 content: '';
                 position: absolute;
@@ -793,9 +777,14 @@
                 background-color: #3b82f6;
                 transition: width 0.3s ease;
             }
-            
+
             .highlight-box:hover h3::after {
                 width: 100%;
+            }
+
+            @keyframes blink {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0; }
             }
         </style>
 	</head>
@@ -4882,9 +4871,59 @@
             });
         </script>
 
+        <!-- 为第三页(公司概述第一页)添加动画效果 -->
         <script>
-            // ... existing scripts ...
-            
+            // 页面完全加载后执行
+            window.addEventListener('load', function() {
+                // 强制初始化竞争对手雷达图
+                setTimeout(function() {
+                    console.log('延迟2秒强制初始化竞争对手雷达图');
+                    
+                    // 获取容器并确保其尺寸
+                    const competitorsContainer = document.getElementById('competitors-radar-chart');
+                    if (competitorsContainer) {
+                        // 确保容器有足够的高度和宽度
+                        if (competitorsContainer.offsetHeight < 100) {
+                            competitorsContainer.style.height = '480px';
+                        }
+                        if (competitorsContainer.offsetWidth < 100) {
+                            competitorsContainer.style.width = '100%';
+                        }
+                        
+                        // 强制初始化图表
+                        try {
+                            // 如果已经有图表实例，先销毁
+                            if (window.competitorsRadarChart) {
+                                window.competitorsRadarChart.dispose();
+                            }
+                            
+                            // 重新初始化
+                            initCompetitorsRadarChart();
+                            console.log('竞争对手雷达图初始化成功');
+                        } catch (error) {
+                            console.error('强制初始化竞争对手雷达图失败:', error);
+                            competitorsContainer.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败，请刷新页面重试</div>';
+                        }
+                    } else {
+                        console.error('未找到竞争对手雷达图容器');
+                    }
+                }, 2000); // 延迟2秒执行，确保页面元素已完全加载
+                
+                // 为所有ECharts容器添加明确的最小高度样式
+                const chartContainers = document.querySelectorAll('.echarts-container');
+                chartContainers.forEach(function(container) {
+                    if (container.offsetHeight < 100) {
+                        container.style.minHeight = '400px';
+                    }
+                });
+                
+                // 为估值指标图表容器特别设置更大的高度
+                const valuationContainer = document.getElementById('valuation-indicators-chart');
+                if (valuationContainer) {
+                    valuationContainer.style.minHeight = '500px'; // 设置更大的高度
+                }
+            });
+
             // 为第三页(公司概述第一页)添加动画效果
             Reveal.addEventListener('slidechanged', function(event) {
                 // 检查当前是否是第三页 (公司概述第一页)
@@ -4930,8 +4969,8 @@
                             opacity: 1,
                             y: 0,
                             scale: 1,
-                            delay: index * 0.2
-                        }, index * 0.3);
+                            delay: index * 0.2  // 错开每个框的动画时间
+                        }, index * 0.3);  // 位置参数，确保按顺序播放
                         
                         // 为每个框内的h3添加特殊动画
                         const heading = box.querySelector('h3');
@@ -4947,7 +4986,7 @@
                                     duration: 0.5,
                                     ease: "power1.out"
                                 }, 
-                                index * 0.3 + 0.2
+                                index * 0.3 + 0.2  // 位置参数，在框体动画之后
                             );
                         }
                         
@@ -4962,11 +5001,11 @@
                                 {
                                     opacity: 1,
                                     x: 0,
-                                    stagger: 0.15,
+                                    stagger: 0.15,  // 每个列表项之间的延迟
                                     duration: 0.5,
                                     ease: "power1.out"
                                 }, 
-                                index * 0.3 + 0.3
+                                index * 0.3 + 0.3  // 位置参数，在标题动画之后
                             );
                         }
                         
@@ -5012,7 +5051,61 @@
                     });
                 }
             });
-            
+        </script>
+
+        <!-- 为第四页(公司概述第二页)添加动画效果 -->
+        <script>
+            // 页面完全加载后执行
+            window.addEventListener('load', function() {
+                // 强制初始化竞争对手雷达图
+                setTimeout(function() {
+                    console.log('延迟2秒强制初始化竞争对手雷达图');
+                    
+                    // 获取容器并确保其尺寸
+                    const competitorsContainer = document.getElementById('competitors-radar-chart');
+                    if (competitorsContainer) {
+                        // 确保容器有足够的高度和宽度
+                        if (competitorsContainer.offsetHeight < 100) {
+                            competitorsContainer.style.height = '480px';
+                        }
+                        if (competitorsContainer.offsetWidth < 100) {
+                            competitorsContainer.style.width = '100%';
+                        }
+                        
+                        // 强制初始化图表
+                        try {
+                            // 如果已经有图表实例，先销毁
+                            if (window.competitorsRadarChart) {
+                                window.competitorsRadarChart.dispose();
+                            }
+                            
+                            // 重新初始化
+                            initCompetitorsRadarChart();
+                            console.log('竞争对手雷达图初始化成功');
+                        } catch (error) {
+                            console.error('强制初始化竞争对手雷达图失败:', error);
+                            competitorsContainer.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败，请刷新页面重试</div>';
+                        }
+                    } else {
+                        console.error('未找到竞争对手雷达图容器');
+                    }
+                }, 2000); // 延迟2秒执行，确保页面元素已完全加载
+                
+                // 为所有ECharts容器添加明确的最小高度样式
+                const chartContainers = document.querySelectorAll('.echarts-container');
+                chartContainers.forEach(function(container) {
+                    if (container.offsetHeight < 100) {
+                        container.style.minHeight = '400px';
+                    }
+                });
+                
+                // 为估值指标图表容器特别设置更大的高度
+                const valuationContainer = document.getElementById('valuation-indicators-chart');
+                if (valuationContainer) {
+                    valuationContainer.style.minHeight = '500px'; // 设置更大的高度
+                }
+            });
+
             // 为第四页(公司概述第二页)添加动画效果
             Reveal.addEventListener('slidechanged', function(event) {
                 // 检查当前是否是第四页 (公司概述第二页 - 主营业务)
@@ -5048,7 +5141,7 @@
                     // 逐个字符添加
                     for (let i = 0; i < originalTitle.length; i++) {
                         typingTl.to(title, {
-                            duration: 0.08,
+                            duration: 0.08,  // 每个字符的打字速度
                             onStart: function() {
                                 currentText += originalTitle[i];
                                 title.textContent = currentText;
@@ -5061,6 +5154,7 @@
                         opacity: 1,
                         duration: 1,
                         onComplete: function() {
+                            // 动画完成后移除光标
                             setTimeout(() => {
                                 cursor.remove();
                             }, 2000);
@@ -5083,7 +5177,7 @@
                             y: 0,
                             scale: 1,
                             delay: index * 0.1
-                        }, index * 0.3 + 0.8);
+                        }, index * 0.3 + 0.8);  // 在标题动画后开始
                         
                         // 获取内部元素
                         const heading = box.querySelector('h3');
@@ -5105,7 +5199,7 @@
                                     duration: 0.5,
                                     ease: "back.out(1.2)"
                                 },
-                                index * 0.3 + 1
+                                index * 0.3 + 1  // 在框体动画后
                             );
                         }
                         
@@ -5223,9 +5317,6 @@
                     });
                 }
             });
-            
-            // ... existing scripts ...
         </script>
 	</body>
-</html> 
 </html> 
