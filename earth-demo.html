@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three.js 3D地球效果展示</title>
+    <title>Three.js 3D地球效果展示 - 增强版</title>
     <style>
         body {
             margin: 0;
@@ -75,6 +75,57 @@
             border-radius: 5px;
             font-size: 14px;
         }
+        
+        #controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            text-align: right;
+            z-index: 100;
+        }
+        
+        #controls button {
+            background-color: #42affa;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            transition: background-color 0.3s ease;
+        }
+        
+        #controls button:hover {
+            background-color: #2c8bcd;
+        }
+        
+        .highlight-point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 0, 0.8);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            box-shadow: 0 0 10px #ffff00;
+            z-index: 10;
+        }
+        
+        .highlight-label {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+            font-size: 12px;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 11;
+        }
     </style>
 </head>
 <body>
@@ -91,6 +142,14 @@
         使用鼠标拖动以旋转视角 | 滚轮缩放 | 右键平移
     </div>
     
+    <div id="controls">
+        <button id="toggleRotation">暂停旋转</button>
+        <button id="toggleClouds">隐藏云层</button>
+        <button id="toggleAtmosphere">切换大气层</button>
+        <button id="toggleNight">切换夜景</button>
+        <button id="toggleGlowEffect">切换光晕</button>
+    </div>
+    
     <!-- 核心库 - Three.js -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
     
@@ -98,8 +157,16 @@
     <script>
         // 全局变量
         let scene, camera, renderer, controls;
-        let earth, clouds;
+        let earth, clouds, atmosphere, glowEffect;
         let animateEarth = true;
+        let showClouds = true;
+        let showAtmosphere = false;
+        let showNightLights = false;
+        let showGlowEffect = false;
+        let highlightPoints = [];
+        let clock = new THREE.Clock();
+        let particleSystems = [];
+        let meteors = [];
         
         // 加载管理
         const manager = new THREE.LoadingManager();
@@ -107,17 +174,20 @@
             primary: {
                 map: 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_atmos_2048.jpg',
                 bumpMap: 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_normal_2048.jpg',
-                specularMap: 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_specular_2048.jpg'
+                specularMap: 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_specular_2048.jpg',
+                nightMap: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_lights_2048.png'
             },
             fallback: {
                 map: 'https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg',
                 bumpMap: 'https://threejs.org/examples/textures/planets/earth_normal_2048.jpg',
-                specularMap: 'https://threejs.org/examples/textures/planets/earth_specular_2048.jpg'
+                specularMap: 'https://threejs.org/examples/textures/planets/earth_specular_2048.jpg',
+                nightMap: 'https://threejs.org/examples/textures/planets/earth_lights_2048.png'
             },
             alternate: {
                 map: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg',
                 bumpMap: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_normal_2048.jpg',
-                specularMap: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_specular_2048.jpg'
+                specularMap: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_specular_2048.jpg',
+                nightMap: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_lights_2048.png'
             }
         };
         
@@ -278,6 +348,15 @@
             // 添加星空背景
             addStars();
             
+            // 添加陨石效果
+            createMeteors();
+            
+            // 添加特殊地点标记
+            addLocationMarkers();
+            
+            // 注册按钮事件
+            setupButtonEvents();
+            
             // 开始动画
             animate();
             
@@ -313,14 +392,28 @@
                 earthTextureURLs.alternate.specularMap
             ]);
             
+            // 加载纹理 - 夜景贴图
+            const earthNightMap = loadTextureWithFallback([
+                earthTextureURLs.primary.nightMap,
+                earthTextureURLs.fallback.nightMap,
+                earthTextureURLs.alternate.nightMap
+            ]);
+            
             // 创建地球材质
             const earthMaterial = new THREE.MeshPhongMaterial({
                 map: earthMap,
                 bumpMap: earthBumpMap,
                 bumpScale: 0.05,
                 specularMap: earthSpecularMap,
-                shininess: 15
+                shininess: 15,
+                emissive: new THREE.Color(0x112244),
+                emissiveIntensity: 0.1
             });
+            
+            // 储存夜景贴图供后续使用
+            earthMaterial.userData = {
+                nightMap: earthNightMap
+            };
             
             // 创建地球网格
             earth = new THREE.Mesh(earthGeometry, earthMaterial);
@@ -342,6 +435,69 @@
             // 创建云层网格
             clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
             scene.add(clouds);
+            
+            // 创建大气层效果
+            createAtmosphere();
+            
+            // 创建光晕效果
+            createGlowEffect();
+        }
+        
+        // 创建大气层效果
+        function createAtmosphere() {
+            const atmosphereGeometry = new THREE.SphereGeometry(1.015, 64, 64);
+            const atmosphereMaterial = new THREE.MeshPhongMaterial({
+                color: 0x88aaff,
+                transparent: true,
+                opacity: 0.3,
+                side: THREE.BackSide
+            });
+            
+            atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+            atmosphere.scale.set(1.1, 1.1, 1.1);
+            atmosphere.visible = showAtmosphere;
+            scene.add(atmosphere);
+        }
+        
+        // 创建光晕效果
+        function createGlowEffect() {
+            const glowGeometry = new THREE.SphereGeometry(1.02, 64, 64);
+            const glowMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    "c": { type: "f", value: 0.2 },
+                    "p": { type: "f", value: 5.5 },
+                    glowColor: { type: "c", value: new THREE.Color(0x00aaff) },
+                    viewVector: { type: "v3", value: camera.position }
+                },
+                vertexShader: `
+                    uniform vec3 viewVector;
+                    uniform float c;
+                    uniform float p;
+                    varying float intensity;
+                    void main() {
+                        vec3 vNormal = normalize(normal);
+                        vec3 vNormel = normalize(viewVector);
+                        intensity = pow(c - dot(vNormal, vNormel), p);
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform vec3 glowColor;
+                    varying float intensity;
+                    void main() {
+                        vec3 glow = glowColor * intensity;
+                        gl_FragColor = vec4(glow, 1.0);
+                    }
+                `,
+                side: THREE.BackSide,
+                blending: THREE.AdditiveBlending,
+                transparent: true
+            });
+            
+            glowEffect = new THREE.Mesh(glowGeometry, glowMaterial);
+            glowEffect.scale.multiplyScalar(1.2);
+            glowEffect.visible = showGlowEffect;
+            scene.add(glowEffect);
         }
         
         // 添加光源
@@ -356,12 +512,18 @@
             const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
             directionalLight.position.set(5, 3, 5);
             scene.add(directionalLight);
+            
+            // 点光源 - 为某些区域增加亮度
+            const pointLight = new THREE.PointLight(0xff9900, 0.8, 8);
+            pointLight.position.set(-5, 2, -3);
+            scene.add(pointLight);
         }
         
         // 添加星空背景
         function addStars() {
             console.log('添加星空背景');
             
+            // 远距离星空
             const starGeometry = new THREE.BufferGeometry();
             const starMaterial = new THREE.PointsMaterial({
                 color: 0xffffff,
@@ -379,16 +541,440 @@
             starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
             const stars = new THREE.Points(starGeometry, starMaterial);
             scene.add(stars);
+            
+            // 添加闪烁星星
+            createTwinklingStars();
+            
+            // 添加星云
+            createNebula();
+        }
+        
+        // 创建闪烁星星
+        function createTwinklingStars() {
+            const twinkleStarCount = 100;
+            const twinkleGeometry = new THREE.BufferGeometry();
+            const twinklePositions = new Float32Array(twinkleStarCount * 3);
+            const twinkleSizes = new Float32Array(twinkleStarCount);
+            
+            for (let i = 0; i < twinkleStarCount; i++) {
+                const i3 = i * 3;
+                twinklePositions[i3] = (Math.random() - 0.5) * 50;
+                twinklePositions[i3 + 1] = (Math.random() - 0.5) * 50;
+                twinklePositions[i3 + 2] = (Math.random() - 0.5) * 50;
+                twinkleSizes[i] = Math.random() * 0.1 + 0.05;
+            }
+            
+            twinkleGeometry.setAttribute('position', new THREE.BufferAttribute(twinklePositions, 3));
+            twinkleGeometry.setAttribute('size', new THREE.BufferAttribute(twinkleSizes, 1));
+            
+            const twinkleMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0 }
+                },
+                vertexShader: `
+                    attribute float size;
+                    uniform float time;
+                    varying float vSize;
+                    void main() {
+                        vSize = size * (0.8 + 0.4 * sin(time + position.x * 5.0));
+                        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                        gl_PointSize = vSize * (300.0 / -mvPosition.z);
+                        gl_Position = projectionMatrix * mvPosition;
+                    }
+                `,
+                fragmentShader: `
+                    varying float vSize;
+                    void main() {
+                        float dist = length(gl_PointCoord - vec2(0.5, 0.5));
+                        if (dist > 0.5) discard;
+                        float alpha = smoothstep(0.5, 0.2, dist);
+                        gl_FragColor = vec4(1.0, 1.0, 1.0, alpha);
+                    }
+                `,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                depthTest: false
+            });
+            
+            const twinklingStars = new THREE.Points(twinkleGeometry, twinkleMaterial);
+            scene.add(twinklingStars);
+            
+            // 追踪星星的动画
+            particleSystems.push({
+                points: twinklingStars,
+                update: (time) => {
+                    twinklingStars.material.uniforms.time.value = time;
+                }
+            });
+        }
+        
+        // 创建星云
+        function createNebula() {
+            const nebulaGeometry = new THREE.IcosahedronGeometry(30, 2);
+            const nebulaMaterial = new THREE.MeshBasicMaterial({
+                color: 0x442266,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.1
+            });
+            
+            const nebula = new THREE.Mesh(nebulaGeometry, nebulaMaterial);
+            nebula.position.set(-30, 10, -60);
+            scene.add(nebula);
+            
+            particleSystems.push({
+                points: nebula,
+                update: (time) => {
+                    nebula.rotation.x = time * 0.05;
+                    nebula.rotation.y = time * 0.03;
+                }
+            });
+        }
+        
+        // 创建陨石效果
+        function createMeteors() {
+            for (let i = 0; i < 5; i++) {
+                createMeteor();
+            }
+            
+            // 每隔10秒创建一个新陨石
+            setInterval(createMeteor, 10000);
+        }
+        
+        // 创建单个陨石
+        function createMeteor() {
+            // 随机起点 (远离地球)
+            const startRadius = 15 + Math.random() * 10;
+            const phi = Math.random() * Math.PI * 2;
+            const theta = Math.random() * Math.PI;
+            
+            const startX = startRadius * Math.sin(theta) * Math.cos(phi);
+            const startY = startRadius * Math.sin(theta) * Math.sin(phi);
+            const startZ = startRadius * Math.cos(theta);
+            
+            // 随机终点 (靠近但不会撞击地球)
+            const endRadius = 3 + Math.random() * 2;
+            const endPhi = Math.random() * Math.PI * 2;
+            const endTheta = Math.random() * Math.PI;
+            
+            const endX = endRadius * Math.sin(endTheta) * Math.cos(endPhi);
+            const endY = endRadius * Math.sin(endTheta) * Math.sin(endPhi);
+            const endZ = endRadius * Math.cos(endTheta);
+            
+            // 创建陨石轨迹
+            const meteorGeometry = new THREE.BufferGeometry();
+            const meteorPoints = [];
+            
+            const segments = 50;
+            for (let i = 0; i <= segments; i++) {
+                const t = i / segments;
+                const x = startX + (endX - startX) * t;
+                const y = startY + (endY - startY) * t;
+                const z = startZ + (endZ - startZ) * t;
+                meteorPoints.push(x, y, z);
+            }
+            
+            meteorGeometry.setAttribute('position', new THREE.Float32BufferAttribute(meteorPoints, 3));
+            
+            // 创建陨石粒子材质
+            const meteorMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.2,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const meteorPoints3D = new THREE.Points(meteorGeometry, meteorMaterial);
+            scene.add(meteorPoints3D);
+            
+            // 创建陨石尾迹
+            const tailGeometry = new THREE.BufferGeometry();
+            tailGeometry.setAttribute('position', new THREE.Float32BufferAttribute(new Array(segments * 3).fill(0), 3));
+            
+            const tailMaterial = new THREE.LineBasicMaterial({
+                color: 0x88aaff,
+                transparent: true,
+                opacity: 0.5,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const tail = new THREE.Line(tailGeometry, tailMaterial);
+            scene.add(tail);
+            
+            // 存储陨石信息
+            const meteor = {
+                points: meteorPoints3D,
+                tail: tail,
+                progress: 0,
+                speed: 0.003 + Math.random() * 0.005,
+                segments: segments,
+                positions: meteorPoints,
+                alive: true,
+                tailLength: 10
+            };
+            
+            meteors.push(meteor);
+            
+            // 一段时间后删除陨石
+            setTimeout(() => {
+                if (meteor.alive) {
+                    scene.remove(meteor.points);
+                    scene.remove(meteor.tail);
+                    meteor.alive = false;
+                    
+                    // 从数组中移除
+                    const index = meteors.indexOf(meteor);
+                    if (index > -1) {
+                        meteors.splice(index, 1);
+                    }
+                }
+            }, 15000);
+        }
+        
+        // 更新陨石位置
+        function updateMeteors() {
+            meteors.forEach(meteor => {
+                if (!meteor.alive) return;
+                
+                meteor.progress += meteor.speed;
+                if (meteor.progress >= 1) {
+                    scene.remove(meteor.points);
+                    scene.remove(meteor.tail);
+                    meteor.alive = false;
+                    return;
+                }
+                
+                // 更新主粒子位置
+                const currentIndex = Math.floor(meteor.progress * meteor.segments);
+                if (currentIndex < meteor.segments) {
+                    const positionAttr = meteor.points.geometry.attributes.position;
+                    
+                    for (let i = 0; i <= currentIndex; i++) {
+                        const baseIndex = i * 3;
+                        positionAttr.array[baseIndex] = meteor.positions[baseIndex];
+                        positionAttr.array[baseIndex + 1] = meteor.positions[baseIndex + 1];
+                        positionAttr.array[baseIndex + 2] = meteor.positions[baseIndex + 2];
+                    }
+                    
+                    for (let i = currentIndex + 1; i <= meteor.segments; i++) {
+                        const baseIndex = i * 3;
+                        positionAttr.array[baseIndex] = 0;
+                        positionAttr.array[baseIndex + 1] = 0;
+                        positionAttr.array[baseIndex + 2] = 0;
+                    }
+                    
+                    positionAttr.needsUpdate = true;
+                }
+                
+                // 更新尾巴
+                const tailPositions = meteor.tail.geometry.attributes.position;
+                const tailLength = Math.min(meteor.tailLength, currentIndex);
+                
+                for (let i = 0; i < tailLength; i++) {
+                    const sourceIndex = (currentIndex - i) * 3;
+                    const targetIndex = i * 3;
+                    
+                    tailPositions.array[targetIndex] = meteor.positions[sourceIndex];
+                    tailPositions.
+                    tailPositions.array[targetIndex] = meteor.positions[sourceIndex];
+                    tailPositions.array[targetIndex + 1] = meteor.positions[sourceIndex + 1];
+                    tailPositions.array[targetIndex + 2] = meteor.positions[sourceIndex + 2];
+                }
+                
+                for (let i = tailLength; i < meteor.segments; i++) {
+                    const targetIndex = i * 3;
+                    tailPositions.array[targetIndex] = 0;
+                    tailPositions.array[targetIndex + 1] = 0;
+                    tailPositions.array[targetIndex + 2] = 0;
+                }
+                
+                tailPositions.needsUpdate = true;
+            });
+        }
+        
+        // 添加地理位置标记
+        function addLocationMarkers() {
+            // 经纬度数据格式: [纬度, 经度, 名称]
+            const locations = [
+                [39.9042, 116.4074, "北京"],
+                [40.7128, -74.0060, "纽约"],
+                [-33.8688, 151.2093, "悉尼"],
+                [55.7558, 37.6173, "莫斯科"],
+                [35.6762, 139.6503, "东京"],
+                [-1.2921, 36.8219, "内罗毕"]
+            ];
+            
+            locations.forEach(location => {
+                addLocationMarker(location[0], location[1], location[2]);
+            });
+        }
+        
+        // 添加单个地理位置标记
+        function addLocationMarker(lat, lon, name) {
+            // 转换经纬度到3D坐标
+            const phi = (90 - lat) * Math.PI / 180;
+            const theta = (lon + 180) * Math.PI / 180;
+            
+            const x = -1 * Math.sin(phi) * Math.cos(theta);
+            const y = Math.cos(phi);
+            const z = Math.sin(phi) * Math.sin(theta);
+            
+            // 创建点标记
+            const marker = {
+                position: new THREE.Vector3(x, y, z),
+                name: name,
+                element: null,
+                label: null
+            };
+            
+            // 创建DOM元素
+            const markerElement = document.createElement('div');
+            markerElement.className = 'highlight-point';
+            document.body.appendChild(markerElement);
+            
+            const labelElement = document.createElement('div');
+            labelElement.className = 'highlight-label';
+            labelElement.textContent = name;
+            document.body.appendChild(labelElement);
+            
+            marker.element = markerElement;
+            marker.label = labelElement;
+            
+            // 添加到点集合
+            highlightPoints.push(marker);
+        }
+        
+        // 更新点标记位置
+        function updateMarkers() {
+            // 对地球半径进行缩放，考虑到地球可能被缩放了
+            const scale = earth.scale.x;
+            const radius = 1 * scale;
+            
+            highlightPoints.forEach(point => {
+                // 获取地球上的实际位置
+                const worldPosition = point.position.clone();
+                worldPosition.applyMatrix4(earth.matrixWorld);
+                
+                // 计算点是否在地球的背面
+                const cameraPosition = camera.position.clone();
+                const pointToCameraDirection = new THREE.Vector3().subVectors(cameraPosition, worldPosition).normalize();
+                const pointDirection = worldPosition.clone().normalize();
+                const dot = pointToCameraDirection.dot(pointDirection);
+                
+                // 如果点在背面，则隐藏
+                if (dot < 0) {
+                    point.element.style.display = 'none';
+                    point.label.style.display = 'none';
+                    return;
+                }
+                
+                // 将3D坐标转换为屏幕坐标
+                const tempV = worldPosition.clone();
+                tempV.project(camera);
+                
+                const x = (tempV.x * 0.5 + 0.5) * window.innerWidth;
+                const y = (tempV.y * -0.5 + 0.5) * window.innerHeight;
+                
+                // 更新标记位置
+                point.element.style.display = '';
+                point.element.style.left = x + 'px';
+                point.element.style.top = y + 'px';
+                
+                // 更新标签位置
+                point.label.style.display = '';
+                point.label.style.left = (x + 15) + 'px';
+                point.label.style.top = (y - 15) + 'px';
+            });
+        }
+        
+        // 设置按钮事件
+        function setupButtonEvents() {
+            // 旋转开关
+            document.getElementById('toggleRotation').addEventListener('click', function() {
+                animateEarth = !animateEarth;
+                this.textContent = animateEarth ? '暂停旋转' : '恢复旋转';
+            });
+            
+            // 云层开关
+            document.getElementById('toggleClouds').addEventListener('click', function() {
+                showClouds = !showClouds;
+                clouds.visible = showClouds;
+                this.textContent = showClouds ? '隐藏云层' : '显示云层';
+            });
+            
+            // 大气层开关
+            document.getElementById('toggleAtmosphere').addEventListener('click', function() {
+                showAtmosphere = !showAtmosphere;
+                atmosphere.visible = showAtmosphere;
+                this.textContent = showAtmosphere ? '隐藏大气层' : '显示大气层';
+            });
+            
+            // 夜景开关
+            document.getElementById('toggleNight').addEventListener('click', function() {
+                showNightLights = !showNightLights;
+                
+                if (showNightLights) {
+                    // 切换到夜景模式
+                    if (earth.material.userData.nightMap) {
+                        earth.material.emissiveMap = earth.material.userData.nightMap;
+                        earth.material.emissiveIntensity = 1.0;
+                        earth.material.emissive = new THREE.Color(0xffffff);
+                    }
+                    this.textContent = '切换日景';
+                } else {
+                    // 切换回日景模式
+                    earth.material.emissiveMap = null;
+                    earth.material.emissiveIntensity = 0.1;
+                    earth.material.emissive = new THREE.Color(0x112244);
+                    this.textContent = '切换夜景';
+                }
+                
+                earth.material.needsUpdate = true;
+            });
+            
+            // 光晕效果开关
+            document.getElementById('toggleGlowEffect').addEventListener('click', function() {
+                showGlowEffect = !showGlowEffect;
+                glowEffect.visible = showGlowEffect;
+                this.textContent = showGlowEffect ? '关闭光晕' : '开启光晕';
+            });
         }
         
         // 动画循环
         function animate() {
             requestAnimationFrame(animate);
             
+            const deltaTime = clock.getDelta();
+            const elapsedTime = clock.getElapsedTime();
+            
             if (animateEarth) {
                 earth.rotation.y += 0.0005;
-                clouds.rotation.y += 0.0007;
+                if (clouds.visible) {
+                    clouds.rotation.y += 0.0007;
+                }
+                if (atmosphere.visible) {
+                    atmosphere.rotation.y += 0.0003;
+                }
             }
+            
+            // 更新光晕效果
+            if (glowEffect.visible) {
+                glowEffect.material.uniforms.viewVector.value = new THREE.Vector3().subVectors(
+                    camera.position, glowEffect.position
+                );
+            }
+            
+            // 更新粒子系统
+            particleSystems.forEach(system => {
+                system.update(elapsedTime);
+            });
+            
+            // 更新陨石
+            updateMeteors();
+            
+            // 更新标记
+            updateMarkers();
             
             if (controls) controls.update();
             renderer.render(scene, camera);
@@ -402,4 +988,4 @@
         }
     </script>
 </body>
-</html> 
+</html>
