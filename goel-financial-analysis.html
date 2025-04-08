@@ -201,21 +201,30 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                align-items: center;
                 height: 100%;
             }
             
-            .reveal .slides section[data-background-gradient] .threejs-container {
-                height: 300px;  /* 减小高度，为标题腾出空间 */
-                margin-bottom: 30px;
+            /* 未来展望部分幻灯片底部文字样式 */
+            section #industry-trend-stagger ~ p,
+            section #industry-trend-stagger ~ ul,
+            section #future-strategy-canvas ~ p,
+            section #future-strategy-canvas ~ ul,
+            section #risk-matrix-chart ~ p,
+            section #risk-matrix-chart ~ ul,
+            section #future-forecast-chart ~ p, 
+            section #future-forecast-chart ~ ul {
+                font-size: 12px !important; /* 缩小字体大小 */
+                line-height: 1.1 !important; /* 减小行高 */
+                margin-top: 3px !important;
+                margin-bottom: 3px !important;
             }
-            
-            .reveal .slides section[data-background-gradient] .title-content {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
+
+            /* 针对列表项的额外样式 */
+            section #industry-trend-stagger ~ ul li,
+            section #future-strategy-canvas ~ ul li,
+            section #risk-matrix-chart ~ ul li,
+            section #future-forecast-chart ~ ul li {
+                margin-bottom: 2px !important; /* 减少列表项之间的间距 */
             }
 
             /* 调整reveal.js内部元素的样式 */
@@ -739,15 +748,11 @@
                     
                     <!-- 新增：盛新锂能技术分析图 -->
                     <section>
-                        <h2>盛新锂能技术分析图</h2>
+                        <h2>歌尔股份技术分析图</h2>
                         <div style="text-align: center; margin: 20px 0;">
-                            <img src="0a9dc8d5d8208557cb89bc776ae9e88e.png" alt="盛新锂能技术分析图" style="max-width: 90%; max-height: 70vh;">
+                            <img src="dba40c6237ee3e20e95fe0f0c434f96d.png" alt="歌尔股份技术分析图" style="max-width: 90%; max-height: 70vh;">
                         </div>
-                        <p>盛新锂能股价和技术指标分析</p>
-                        <div class="highlight-box">
-                            <p>移动平均线、成交量和MACD指标综合分析</p>
-                            <p>历史价格区间从5.69至75.97元，显示较大波动性</p>
-                        </div>
+                        <!-- 文字已移除 -->
                     </section>
 				</section>
 
@@ -902,6 +907,14 @@
                     
                     <section>
                         <h2>行业发展趋势</h2>
+                        <p>AI技术与硬件融合加速，元宇宙产业蓬勃发展</p>
+                        <ul>
+                            <li>VR/MR/AR、智能可穿戴、TWS耳机等新兴智能硬件产品市场规模持续扩大</li>
+                            <li>预计2025年全球VR/AR市场规模将超过<span class="highlight">500亿美元</span></li>
+                            <li>AI人工智能技术与硬件融合创造更多应用场景，尤其在空间计算和混合现实领域</li>
+                            <li>随着Apple Vision Pro等新产品推出，元宇宙硬件市场迎来新机遇</li>
+                            <li>汽车电子领域（智能座舱、AR-HUD等）需求旺盛，成为新增长点</li>
+                        </ul>
                         <div class="gsap-container" id="industry-trend-stagger" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
                             <div class="gsap-stagger-box"></div>
                             <div class="gsap-stagger-box"></div>
@@ -913,66 +926,18 @@
                             <div class="gsap-stagger-box"></div>
                             <div class="gsap-stagger-box"></div>
                         </div>
-                        <p>AI技术与硬件融合加速，元宇宙产业蓬勃发展</p>
-                        <ul>
-                            <li>VR/MR/AR、智能可穿戴、TWS耳机等新兴智能硬件产品市场规模持续扩大</li>
-                            <li>预计2025年全球VR/AR市场规模将超过<span class="highlight">500亿美元</span></li>
-                            <li>AI人工智能技术与硬件融合创造更多应用场景，尤其在空间计算和混合现实领域</li>
-                            <li>随着Apple Vision Pro等新产品推出，元宇宙硬件市场迎来新机遇</li>
-                            <li>汽车电子领域（智能座舱、AR-HUD等）需求旺盛，成为新增长点</li>
-                        </ul>
                     </section>
                     
                     <section>
                         <h2>公司发展战略</h2>
-                        <div class="threejs-container">
-                            <canvas id="future-strategy-canvas"></canvas>
-                            <div class="threejs-loading" id="future-loading-text">加载中...</div>
-                        </div>
-                        <p>"精密零组件+智能硬件整机"双轮驱动，强化核心技术</p>
-                        <ul>
-                            <li>产品战略：重点布局高毛利率产品线，加强新兴领域产品开发</li>
-                            <li>技术创新：加大研发投入，保持4.5%以上的研发投入比例，强化声学、光学、微电子等核心技术</li>
-                            <li>市场拓展：深化与现有战略客户合作，积极开拓新客户，加强汽车电子业务布局</li>
-                            <li>运营提升：持续优化成本结构，提高智能制造水平，加强供应链管理</li>
-                        </ul>
-                    </section>
-                    
-                    <section>
-                        <h2>2025年展望</h2>
-                        <div class="echarts-container" id="future-forecast-chart"></div>
-                        <p>营收有望突破1200亿元，毛利率目标达到15%以上</p>
-                        <ul>
-                            <li>业务规模：营收目标1200亿元，毛利率15%以上，净利润率3%以上</li>
-                            <li>业务结构：精密零组件业务占比提升至20%以上，新业务（如汽车电子）占比达到10%</li>
-                            <li>技术创新：研发投入保持在营收的4.5%以上，专利申请量年增长15%以上</li>
-                            <li>运营效率：存货周转率提升10%，应收账款周转天数控制在90天以内</li>
-                        </ul>
-                    </section>
-                    
-                    <section>
-                        <h2>风险因素与应对措施</h2>
-                        <div class="echarts-container" id="risk-matrix-chart"></div>
-                        <p>多维度风险分析与前瞻性应对策略</p>
-                        <div style="display: flex; justify-content: space-between;">
-                            <div style="width: 48%;">
-                                <h3>主要风险</h3>
-                                <ul>
-                                    <li>市场风险：消费电子行业周期性波动，终端需求不确定性</li>
-                                    <li>客户风险：客户集中度高，订单波动性大，议价能力受限</li>
-                                    <li>技术风险：技术更新迭代快，创新成果转化不确定</li>
-                                    <li>运营风险：原材料价格波动，汇率波动，人工成本上升</li>
-                                </ul>
-                            </div>
-                            <div style="width: 48%;">
-                                <h3>应对措施</h3>
-                                <ul>
-                                    <li>加强市场预判，优化产品结构，提高产品竞争力</li>
-                                    <li>深化战略合作，拓展新客户，提升服务能力</li>
-                                    <li>加大研发投入，完善创新体系，加强人才培养</li>
-                                    <li>强化成本控制，优化供应链，提升运营效率</li>
-                                </ul>
-                            </div>
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 50px;">
+                            <p style="font-size: 1.5em; margin-bottom: 30px; color: #fff;">"精密零组件+智能硬件整机"双轮驱动，强化核心技术</p>
+                            <ul style="font-size: 1.2em; list-style: none; text-align: left; width: 80%;">
+                                <li style="margin-bottom: 20px;">• 产品战略：重点布局高毛利率产品线，加强新兴领域产品开发</li>
+                                <li style="margin-bottom: 20px;">• 技术创新：加大研发投入，保持4.5%以上的研发投入比例，强化声学、光学、微电子等核心技术</li>
+                                <li style="margin-bottom: 20px;">• 市场拓展：深化与现有战略客户合作，积极开拓新客户，加强汽车电子业务布局</li>
+                                <li style="margin-bottom: 20px;">• 运营提升：持续优化成本结构，提高智能制造水平，加强供应链管理</li>
+                            </ul>
                         </div>
                     </section>
 				</section>
@@ -3268,27 +3233,38 @@
                         grid: {
                             left: '3%',
                             right: '4%',
-                            bottom: '12%',
+                            bottom: '20%',
+                            top: '20%',
                             containLabel: true
                         },
                         xAxis: {
                             type: 'category',
                             data: ['营业收入(亿元)', '净利润(亿元)', '毛利率(%)', 'ROE(%)'],
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#fff'
+                                }
+                            },
                             axisLabel: {
                                 color: '#fff',
                                 interval: 0,
-                                rotate: 15
+                                rotate: 0 // 不旋转标签
                             }
                         },
                         yAxis: {
                             type: 'value',
-                            axisLabel: {
-                                color: '#fff'
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#fff'
+                                }
                             },
                             splitLine: {
                                 lineStyle: {
                                     color: 'rgba(255,255,255,0.1)'
                                 }
+                            },
+                            axisLabel: {
+                                color: '#fff'
                             }
                         },
                         series: [
@@ -3311,8 +3287,7 @@
                                     show: true,
                                     position: 'top',
                                     color: '#fff'
-                                },
-                                barGap: '30%'
+                                }
                             },
                             {
                                 name: '2025年(预测)',
@@ -4238,57 +4213,36 @@
             // 初始化特定类型的ECharts图表
             function initECharts(type) {
                 try {
-                    console.log('初始化图表:', type);
+                    console.log('初始化图表类型:', type);
                     
-                    // 初始化对应类型的图表
-                    switch (type) {
+                    // 根据类型初始化相应的图表
+                    switch(type) {
+                        case 'business-structure':
+                            initBusinessStructurePieChart();
+                            break;
                         case 'revenue-profit':
-                            initRevenueProfitLine();
+                            initRevenueProfitChart();
                             break;
                         case 'gross-margin':
-                            initGrossMarginLine();
-                            break;
-                        case 'business-structure':
-                            initBusinessStructurePie();
+                            initGrossMarginChart();
                             break;
                         case 'roe':
-                            initRoeLine();
-                            break;
-                        case 'risk-analysis':
-                            initCustomerRiskAnalysis();
-                            break;
-                        case 'competitors-radar':
-                            initCompetitorsRadarChart();
-                            break;
-                        case 'cost-structure':
-                            initCostStructurePie();
-                            break;
-                        case 'shareholder-structure':
-                            initShareholderStructurePie();
-                            break;
-                        case 'shareholder-concentration':
-                            initShareholderConcentrationBar();
-                            break;
-                        case 'stock-price':
-                            initStockPriceLine();
-                            break;
-                        case 'stock-performance':
-                            initStockPerformanceRelation();
-                            break;
-                        case 'valuation-indicators':
-                            initValuationIndicators();
+                            initRoeChart();
                             break;
                         case 'customer-concentration':
-                            initCustomerConcentrationBar();
+                            initCustomerConcentrationChart();
+                            break;
+                        case 'rd-investment':
+                            initRdInvestmentChart();
+                            break;
+                        case 'customer-risk':
+                            initCustomerRiskAnalysis();
                             break;
                         case 'margin-decline':
                             initMarginDeclineAnalysis();
                             break;
                         case 'performance-volatility':
                             initPerformanceVolatility();
-                            break;
-                        case 'future-forecast':
-                            initFutureForecast();
                             break;
                         case 'rd-efficiency':
                             initRdEfficiencyChart();
