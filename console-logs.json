@@ -1,0 +1,57 @@
+[
+  {
+    "type": "error",
+    "text": "Failed to load resource: net::ERR_PROXY_CONNECTION_FAILED",
+    "time": "2025-04-07T12:23:04.948Z"
+  },
+  {
+    "type": "error",
+    "text": "Failed to load resource: net::ERR_PROXY_CONNECTION_FAILED",
+    "time": "2025-04-07T12:23:04.949Z"
+  },
+  {
+    "type": "error",
+    "text": "Failed to load resource: net::ERR_PROXY_CONNECTION_FAILED",
+    "time": "2025-04-07T12:23:04.950Z"
+  },
+  {
+    "type": "error",
+    "text": "Failed to load resource: net::ERR_PROXY_CONNECTION_FAILED",
+    "time": "2025-04-07T12:23:04.951Z"
+  },
+  {
+    "type": "error",
+    "text": "Failed to load resource: net::ERR_PROXY_CONNECTION_FAILED",
+    "time": "2025-04-07T12:23:04.962Z"
+  },
+  {
+    "type": "log",
+    "text": "幻灯片已就绪",
+    "time": "2025-04-07T12:23:05.141Z"
+  },
+  {
+    "type": "log",
+    "text": "初始检测ECharts容器: false",
+    "time": "2025-04-07T12:23:05.142Z"
+  },
+  {
+    "type": "log",
+    "text": "初始检测Three.js容器: true",
+    "time": "2025-04-07T12:23:05.142Z"
+  },
+  {
+    "type": "log",
+    "text": "初始检测GSAP容器: false",
+    "time": "2025-04-07T12:23:05.143Z"
+  },
+  {
+    "type": "log",
+    "text": "处理Three.js幻灯片",
+    "time": "2025-04-07T12:23:05.143Z"
+  },
+  {
+    "type": "log",
+    "text": "找到logo canvas",
+    "time": "2025-04-07T12:23:05.144Z"
+  }
+]

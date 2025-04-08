@@ -33,10 +33,9 @@
         <style>
             .threejs-container {
                 width: 100%;
-                height: 300px;
+                height: 500px;
+                opacity: 0;
                 position: relative;
-                overflow: hidden;
-                margin-bottom: 30px;
             }
             
             #threejs-canvas {
@@ -50,37 +49,44 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                color: white;
-                font-size: 16px;
-                text-align: center;
+                color: #fff;
+                font-size: 18px;
             }
             
             .echarts-container {
                 width: 100%;
-                height: 400px;
+                height: 450px;
                 margin: 0 auto;
+                min-height: 450px; /* 确保最小高度 */
+                background-color: rgba(0,0,0,0.2); /* 添加背景色以确认容器位置 */
             }
             
             /* GSAP动画容器样式 */
             .gsap-container {
                 width: 100%;
-                height: 450px;
+                height: 400px;
                 position: relative;
                 overflow: hidden;
                 margin-top: 40px;
             }
             
             .gsap-box {
-                width: 100px;
-                height: 100px;
                 position: absolute;
-                border-radius: 8px;
+                width: 120px;
+                height: 120px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-weight: bold;
+                border-radius: 10px;
+                opacity: 0;
             }
             
             .gsap-text {
                 font-size: 3em;
                 position: absolute;
-                opacity: 0;
+                opacity: 1; /* 从0改为1，让文字直接显示 */
                 color: #fff;
                 width: 100%;
                 text-align: center;
@@ -111,8 +117,34 @@
             
             /* 歌尔股份专用样式 */
             .financial-data {
-                color: #1a73e8;
+                margin-top: 40px;
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                color: #fff;
+            }
+            
+            .data-item {
+                margin: 15px;
+                text-align: center;
+            }
+            
+            .data-value {
+                font-size: 1.6em;
                 font-weight: bold;
+                color: #f39c12;
+            }
+            
+            .comparison-up {
+                color: #2ecc71;
+            }
+            
+            .comparison-down {
+                color: #e74c3c;
+            }
+            
+            .comparison-stable {
+                color: #3498db;
             }
             
             .highlight-box {
@@ -125,16 +157,24 @@
             .data-comparison {
                 display: flex;
                 justify-content: space-around;
-                margin: 20px 0;
+                margin: 10px 0; /* 从20px减少到10px */
+                padding: 0 10px; /* 添加水平内边距 */
             }
             
             .comparison-item {
                 text-align: center;
+                padding: 0 5px; /* 添加内边距 */
+                max-width: 33%; /* 确保三列平均分布 */
+            }
+            
+            .comparison-item p {
+                margin: 5px 0; /* 减小段落间距 */
             }
             
             .comparison-value {
-                font-size: 2em;
+                font-size: 1em; /* 从1.3em减小到1em */
                 font-weight: bold;
+                margin: 5px 0 !important; /* 强制覆盖可能的其他样式 */
             }
             
             .positive-value {
@@ -147,23 +187,45 @@
 
             /* 标题页样式优化 */
             .title-content {
-                margin-top: 40px;
+                margin-top: 20px;  /* 从40px减少到20px */
+            }
+
+            /* 添加标题页垂直居中样式 */
+            .reveal .slides section[data-background-gradient] {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+            }
+            
+            .reveal .slides section[data-background-gradient] .threejs-container {
+                height: 300px;  /* 减小高度，为标题腾出空间 */
+                margin-bottom: 30px;
+            }
+            
+            .reveal .slides section[data-background-gradient] .title-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
             }
 
             /* 调整reveal.js内部元素的样式 */
             .reveal h1 {
-                font-size: 2.2em;
-                margin-bottom: 0.4em;
+                font-size: 1.8em;  /* 从2.2em减小到1.8em */
+                margin-bottom: 0.3em;  /* 减小底部边距 */
             }
 
             .reveal h2 {
-                font-size: 1.8em;
-                margin-bottom: 0.6em;
+                font-size: 1.6em;  /* 从1.8em减小到1.6em */
+                margin-bottom: 0.5em;
             }
 
             .reveal h3 {
-                font-size: 1.4em;
-                margin-bottom: 0.8em;
+                font-size: 1.3em;  /* 从1.4em减小到1.3em */
+                margin-bottom: 0.7em;
             }
 
             .reveal p {
@@ -194,7 +256,7 @@
             .gsap-text {
                 font-size: 3em;
                 position: absolute;
-                opacity: 0;
+                opacity: 1; /* 从0改为1，让文字直接显示 */
                 color: #fff;
                 width: 100%;
                 text-align: center;
@@ -291,6 +353,66 @@
             .highlight-box strong {
                 color: #60a5fa;
             }
+
+            .slides p {
+                margin-top: 20px;
+            }
+
+            /* 为图表标题和图例添加新的样式 */
+            .echarts-title {
+                font-size: 0.9em !important; 
+            }
+
+            .echarts-legend {
+                font-size: 0.8em !important;
+            }
+
+            .echarts-label {
+                font-size: 0.8em !important;
+            }
+
+            /* 添加底部大标题的样式 */
+            section > h1 {
+                font-size: 1.8em !important; /* 原来可能是2em或更大，调小一点 */
+            }
+
+            /* 底部文字样式 */
+            section > p {
+                font-size: 1em !important; /* 恢复正常字体大小 */
+                margin-top: 10px;
+                color: #ffffff;
+                font-weight: bold; /* 加粗底部文字 */
+            }
+
+            /* 特定图表类型的高度覆盖 */
+            #competitors-radar-chart, #shareholder-structure-chart {
+                height: 480px !important;
+                min-height: 480px !important;
+                width: 100% !important;
+                position: relative !important;
+            }
+            
+            /* 特定图表类型的高度覆盖 */
+            #shareholder-structure-chart, #shareholder-concentration-chart {
+                height: 350px !important;
+                min-height: 350px !important;
+                width: 100% !important;
+                position: relative !important;
+            }
+            
+            /* 为含有图表的页面底部文字增加额外间距 */
+            .echarts-container + p {
+                margin-top: 15px !important;
+                padding-bottom: 10px !important;
+            }
+            
+            /* 特定图表类型的高度覆盖 */
+            #stock-price-chart, #stock-performance-chart, #valuation-indicators-chart {
+                height: 350px !important;
+                min-height: 350px !important;
+                width: 100% !important;
+                position: relative !important;
+            }
         </style>
 	</head>
 
@@ -309,7 +431,7 @@
                     <div class="title-content">
 					    <h1>歌尔股份财务和成功因素分析</h1>
 					    <p>
-						    <small>第二组：闫杰龙、刘铭宇、谭显丞、张容馨、王康康</small>
+						    <small style="font-size: 0.9em;">第二组：闫杰龙、刘铭宇、谭显丞、张容馨、王康康</small>  <!-- 添加内联样式控制字体大小 -->
 					    </p>
                     </div>
 				</section>
@@ -342,7 +464,7 @@
 						</ul>
 					</div>
 					<div class="highlight-box">
-						<h3>2023年重要荣誉</h3>
+						<h3>2024年重要荣誉</h3>
 						<ul>
 							<li>中国电子元器件骨干企业百强榜单第4位</li>
 							<li>中国电子信息竞争力百强企业第15位</li>
@@ -375,48 +497,36 @@
 				<section>
 					<section>
 						<h2>财务指标分析</h2>
-						<p>2014-2023年主要财务数据与趋势</p>
+						<p>2014-2024年主要财务数据与趋势</p>
 					</section>
                     
                     <section>
                         <h2>营业收入与净利润趋势</h2>
                         <div class="echarts-container" id="revenue-profit-chart"></div>
-                        <p>近十年营收持续增长，净利润波动明显</p>
-                    </section>
-                    
-                    <section>
-                        <h2>季度数据分析</h2>
-                        <div class="echarts-container" id="quarterly-data-chart"></div>
-                        <p>2023年各季度营收与利润表现</p>
+                        <p>2024年营收突破千亿大关，净利润同比增长144.93%</p>
                     </section>
                     
                     <section>
                         <h2>毛利率变化与同业对比</h2>
                         <div class="echarts-container" id="gross-margin-chart"></div>
-                        <p>2020年后毛利率持续下滑，低于行业平均水平</p>
+                        <p>2023年毛利率降至8.93%历史低点，2024年显著回升至13.60%</p>
                     </section>
                     
                     <section>
                         <h2>ROE历年变化</h2>
                         <div class="echarts-container" id="roe-chart"></div>
-                        <p>ROE保持波动上升趋势，整体优于行业平均</p>
-                    </section>
-                    
-                    <section>
-                        <h2>资产负债结构</h2>
-                        <div class="echarts-container" id="asset-liability-chart"></div>
-                        <p>资产结构合理，负债率适中</p>
+                        <p>2023年ROE降至3.59%历史低点，2024年回升至8.65%</p>
                     </section>
                     
                     <section>
                         <h2>客户集中度分析</h2>
                         <div class="echarts-container" id="customer-chart"></div>
-                        <p>客户集中度较高，前五大客户占比超过60%</p>
+                        <p>2024年前五大客户占比达88.40%，第一大客户占比43.11%</p>
                     </section>
                     
                     <section>
                         <h2>同行业竞争对手对比</h2>
-                        <div class="echarts-container" id="competitors-radar-chart"></div>
+                        <div class="echarts-container" id="competitors-radar-chart" style="height:480px !important; width:100% !important;"></div>
                         <p>在营收规模、盈利能力和估值等多维度的对比</p>
                     </section>
                     
@@ -426,8 +536,8 @@
                         <div class="echarts-container" id="shareholder-structure-chart"></div>
                         <p>控股股东与实际控制人持股稳定，管理层持股比例高</p>
                         <div class="highlight-box">
-                            <p>歌尔集团持股14.84%，为第一大股东</p>
-                            <p>创始人姜滨、姜龙合计持股15.72%，保持实际控制地位</p>
+                            <p>歌尔集团持股14.56%，为第一大股东</p>
+                            <p>创始人姜滨、姜龙合计持股15.42%，保持实际控制地位</p>
                         </div>
                     </section>
                     
@@ -437,8 +547,8 @@
                         <div class="echarts-container" id="shareholder-concentration-chart"></div>
                         <p>前十大股东合计持股约40%，股权相对集中</p>
                         <div class="highlight-box">
-                            <p>员工持股计划持股1.97%，有助于核心员工利益绑定</p>
-                            <p>外资持股占比有所下降，从3.64%降至3.29%</p>
+                            <p>员工持股计划持股1.35%，有助于核心员工利益绑定</p>
+                            <p>外资持股占比3.29%，保持基本稳定</p>
                         </div>
                     </section>
                     
@@ -460,7 +570,7 @@
                         <p>股价波动通常领先于业绩变化，且波动幅度更大</p>
                         <div class="highlight-box">
                             <p>2021年股价高点对应业绩高点，2018年股价低点对应业绩低谷</p>
-                            <p>市值从2014年约235亿元增长至2023年约780亿元，增长3.3倍</p>
+                            <p>市值从2014年约235亿元增长至2024年约734.79亿元，增长3.1倍</p>
                         </div>
                     </section>
                     
@@ -468,12 +578,12 @@
                     <section>
                         <h2>市场估值指标分析</h2>
                         <div class="echarts-container" id="valuation-indicators-chart"></div>
-                        <p>当前PE约72倍(2023年业绩)，动态PE约29倍(2024年预测)</p>
+                        <p>当前PE约29倍(2024年业绩)，相比2023年明显改善</p>
                         <div class="data-comparison">
                             <div class="comparison-item">
                                 <p>市盈率(PE)</p>
-                                <p class="comparison-value">72.0</p>
-                                <p>高于行业平均(35.0)</p>
+                                <p class="comparison-value">29.0</p>
+                                <p>改善至合理区间</p>
                             </div>
                             <div class="comparison-item">
                                 <p>市净率(PB)</p>
@@ -499,7 +609,7 @@
                     <section>
                         <h2>技术创新与研发实力</h2>
                         <div class="echarts-container" id="rd-investment-bar"></div>
-                        <p>持续的研发投入是公司持续竞争力的关键</p>
+                        <p>2024年研发投入45.69亿元，累计申请专利34,000项 </p>
                     </section>
                     
                     <section>
@@ -514,9 +624,13 @@
                     
                     <section>
                         <h2>优质客户资源与战略转型</h2>
-                        <div class="threejs-container">
-                            <canvas id="client-relationship-canvas"></canvas>
-                            <div class="threejs-loading" id="client-loading-text">加载中...</div>
+                        <div style="height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin: 20px 0;">
+                            <h3 style="font-size: 28px; margin-bottom: 20px; color: #3498db;">与全球顶尖科技公司建立深度合作关系</h3>
+                            <ul style="text-align: left; font-size: 22px; list-style-type: none;">
+                                <li style="margin-bottom: 15px;">✓ 苹果公司AirPods等产品的重要供应商</li>
+                                <li style="margin-bottom: 15px;">✓ Meta公司VR/AR设备的核心合作伙伴</li>
+                                <li style="margin-bottom: 15px;">✓ 国内外头部科技企业战略合作伙伴</li>
+                            </ul>
                         </div>
                         <p>与全球顶尖科技公司建立深度合作关系</p>
                     </section>
@@ -541,25 +655,25 @@
                     <section>
                         <h2>客户集中度问题</h2>
                         <div class="echarts-container" id="customer-risk-analysis"></div>
-                        <p>对大客户的依赖程度过高带来的经营风险</p>
+                        <p>2024年前五大客户占比88.40%，较2023年略有下降</p>
                     </section>
                     
                     <section>
                         <h2>毛利率下滑分析</h2>
                         <div class="echarts-container" id="margin-decline-analysis"></div>
-                        <p>原材料价格上涨与竞争加剧导致毛利率承压</p>
+                        <p>2024年毛利率回升至13.60%，各业务板块全面提升</p>
                     </section>
                     
                     <section>
                         <h2>成本结构分析</h2>
                         <div class="echarts-container" id="cost-structure-pie"></div>
-                        <p>直接材料成本占比过高导致成本控制困难</p>
+                        <p>2024年直接材料占比降至85.23%，成本结构持续优化</p>
                     </section>
                     
                     <section>
                         <h2>业绩波动与周期性</h2>
                         <div class="echarts-container" id="performance-volatility-chart"></div>
-                        <p>受终端产品生命周期影响明显</p>
+                        <p>2024年净利润同比增长144.93%，表明公司走出周期性低谷</p>
                     </section>
 				</section>
 
@@ -583,7 +697,7 @@
                             <div class="gsap-stagger-box"></div>
                             <div class="gsap-stagger-box"></div>
                         </div>
-                        <p>AR/VR、智能穿戴设备将成为新增长点</p>
+                        <p>AI技术与硬件融合加速，元宇宙产业蓬勃发展</p>
                     </section>
                     
                     <section>
@@ -592,13 +706,13 @@
                             <canvas id="future-strategy-canvas"></canvas>
                             <div class="threejs-loading" id="future-loading-text">加载中...</div>
                         </div>
-                        <p>深化精密制造能力，扩大产业链布局</p>
+                        <p>"精密零组件+智能硬件整机"双轮驱动，强化核心技术</p>
                     </section>
                     
                     <section>
-                        <h2>2024年预期</h2>
+                        <h2>2025年展望</h2>
                         <div class="echarts-container" id="future-forecast-chart"></div>
-                        <p>新产品带动业绩增长，毛利率有望企稳回升</p>
+                        <p>营收有望突破1200亿元，毛利率目标达到15%以上</p>
                     </section>
 				</section>
 
@@ -673,6 +787,14 @@
                 // 处理GSAP动画幻灯片
                 if (isGsapSlide) {
                     checkGsapSlide();
+                }
+                
+                // 特别检查竞争对手雷达图
+                if (currentSlide.querySelector('#competitors-radar-chart')) {
+                    console.log('检测到竞争对手雷达图页面');
+                    setTimeout(function() {
+                        initCompetitorsRadarChart();
+                    }, 500);
                 }
             });
             
@@ -750,8 +872,9 @@
                     currentThreeJsCanvas = 'market';
                     initMarketPosition();
                 } else if (clientCanvas) {
-                    currentThreeJsCanvas = 'client';
-                    initClientRelationship();
+                    // 客户关系页面已替换为静态HTML，不再初始化Three.js
+                    currentThreeJsCanvas = '';
+                    console.log('客户关系页面已替换为静态HTML，跳过Three.js初始化');
                 } else if (futureCanvas) {
                     currentThreeJsCanvas = 'future';
                     initFutureStrategy();
@@ -765,8 +888,6 @@
                 const hasGrossMarginSection = slide.querySelector('#gross-margin-chart');
                 const hasBusinessStructureSection = slide.querySelector('#business-structure-chart');
                 const hasRoeSection = slide.querySelector('#roe-chart');
-                const hasAssetSection = slide.querySelector('#asset-liability-chart');
-                const hasLiabilitySection = slide.querySelector('#liability-chart');
                 const hasCustomerSection = slide.querySelector('#customer-chart');
                 const hasRdSection = slide.querySelector('#rd-investment-bar');
                 const hasCustomerRiskSection = slide.querySelector('#customer-risk-analysis');
@@ -785,7 +906,6 @@
                     'gross-margin-chart': !!hasGrossMarginSection,
                     'business-structure-chart': !!hasBusinessStructureSection,
                     'roe-chart': !!hasRoeSection,
-                    'asset-liability-chart': !!hasAssetSection,
                     'customer-chart': !!hasCustomerSection,
                     'rd-investment-bar': !!hasRdSection,
                     'customer-risk-analysis': !!hasCustomerRiskSection,
@@ -810,12 +930,6 @@
                 }
                 if (hasRoeSection) {
                     initRoeLine();
-                }
-                if (hasAssetSection) {
-                    initAssetStructurePie();
-                }
-                if (hasLiabilitySection) {
-                    initLiabilityStructurePie();
                 }
                 if (hasCustomerSection) {
                     initCustomerConcentrationBar();
@@ -852,75 +966,59 @@
                 }
             }
             
-            // 财务数据对象 - 实际数据（基于歌尔股份2023年年报）
+            // 财务数据对象 - 实际数据（基于歌尔股份2024年年报）
             const goelData = {
                 // 营收与利润数据（单位：亿元）- 使用MD文档中的实际数据
                 revenue: {
-                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-                    values: [123.00, 130.70, 190.40, 264.70, 237.80, 351.00, 577.40, 782.21, 1048.94, 985.74]
+                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+                    values: [123.00, 130.70, 190.40, 264.70, 237.80, 351.00, 577.40, 782.21, 1048.94, 985.74, 1009.54]
                 },
                 profit: {
-                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-                    values: [16.60, 12.50, 19.00, 22.80, 6.90, 8.80, 26.10, 42.75, 17.49, 10.88]
+                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+                    values: [16.60, 12.50, 19.00, 22.80, 6.90, 8.80, 26.10, 42.75, 17.49, 10.88, 26.65]
                 },
                 // 毛利率数据（百分比）
                 grossMargin: {
-                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-                    goel: [24.40, 21.82, 22.10, 23.21, 16.53, 15.43, 16.03, 14.13, 11.13, 8.93],
+                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+                    goel: [24.40, 21.82, 22.10, 23.21, 16.53, 15.43, 16.03, 14.13, 11.13, 8.93, 13.60],
                     // 行业数据未提供，保留原有估计值但稍作调整以保持一致性
-                    industry: [23.00, 22.50, 22.00, 21.50, 21.00, 20.50, 20.00, 19.50, 19.00, 18.50]
+                    industry: [23.00, 22.50, 22.00, 21.50, 21.00, 20.50, 20.00, 19.50, 19.00, 18.50, 18.00]
                 },
-                // 业务结构数据（2023年）
+                // 业务结构数据（2024年）
                 businessStructure: [
-                    {value: 13.18, name: '精密零组件'},
-                    {value: 24.54, name: '智能声学整机'},
-                    {value: 59.56, name: '智能硬件'},
-                    {value: 2.73, name: '其他业务'}
+                    {value: 15.62, name: '精密零组件'},
+                    {value: 31.67, name: '智能声学整机'},
+                    {value: 50.00, name: '智能硬件'}, // 确切占比未提供，估算值
+                    {value: 2.71, name: '其他业务'}  // 确切占比未提供，估算值
                 ],
                 // ROE数据（百分比）
                 roe: {
-                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-                    goel: [19.89, 10.57, 11.91, 17.22, 5.07, 4.31, 14.49, 17.61, 6.17, 3.59],
+                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+                    goel: [19.89, 10.57, 11.91, 17.22, 5.07, 4.31, 14.49, 17.61, 6.17, 3.59, 8.65],
                     // 行业数据未提供，保留原有估计值但稍作调整以保持一致性
-                    industry: [15.00, 14.50, 14.00, 13.50, 13.00, 12.50, 12.00, 11.50, 11.00, 10.50]
+                    industry: [15.00, 14.50, 14.00, 13.50, 13.00, 12.50, 12.00, 11.50, 11.00, 10.50, 10.00]
                 },
-                // 资产负债结构（2023年）
-                assetStructure: [
-                    {value: 30.25, name: '固定资产'},
-                    {value: 19.98, name: '货币资金'},
-                    {value: 16.85, name: '应收账款'},
-                    {value: 14.64, name: '存货'},
-                    {value: 2.81, name: '在建工程'},
-                    {value: 15.47, name: '其他资产'} // 计算得到
-                ],
-                liabilityStructure: [
-                    {value: 8.99, name: '长期借款'},
-                    {value: 7.07, name: '短期借款'},
-                    {value: 23.84, name: '应付账款'},
-                    {value: 4.71, name: '合同负债'},
-                    {value: 12.64, name: '其他负债'} // 估计值，以使总和约为57.25%（文档提到的资产负债率）
-                ],
-                // 客户集中度数据（2023年）
+                // 客户集中度数据（2024年）
                 customerConcentration: {
                     names: ['第一大客户', '第二大客户', '其他三大客户', '其他客户'],
-                    values: [43.38, 27.02, 18.35, 11.25] // 后两项是计算/估计值
+                    values: [43.11, 27.30, 17.99, 11.60] // 根据MD文档计算：前五大88.40%，减去第一二大客户
                 },
                 // 研发投入数据
                 rdInvestment: {
-                    years: ['2019', '2020', '2021', '2022', '2023'],
-                    // 2019-2021年数据未提供，使用估计值
-                    amount: [25.00, 35.00, 45.00, 51.98, 45.73], 
-                    percentage: [7.12, 6.06, 5.75, 4.96, 4.64] // 2019-2021年数据是估计值
+                    years: ['2019', '2020', '2021', '2022', '2023', '2024'],
+                    // 2019-2021年数据未提供，使用原有估计值
+                    amount: [25.00, 35.00, 45.00, 51.98, 45.73, 45.69], 
+                    percentage: [7.12, 6.06, 5.75, 4.96, 4.64, 4.53]
                 },
                 // 客户风险分析数据
                 customerRiskAnalysis: {
                     categories: ['高度依赖', '中度依赖', '低度依赖'],
-                    years: ['2019', '2020', '2021', '2022', '2023'],
-                    // 具体数据未提供，使用估计值但保持与客户集中度数据一致
+                    years: ['2019', '2020', '2021', '2022', '2023', '2024'],
+                    // 具体数据未提供，使用估计值但与2024年客户集中度保持一致
                     data: [
-                        [60, 65, 68, 70, 70.4], // 高度依赖（第一、二大客户合计）
-                        [20, 18, 17, 16, 18.35], // 中度依赖（其他三大客户）
-                        [20, 17, 15, 14, 11.25]  // 低度依赖（其他客户）
+                        [60, 65, 68, 70, 70.4, 70.41], // 高度依赖（第一、二大客户合计）
+                        [20, 18, 17, 16, 18.35, 17.99], // 中度依赖（其他三大客户）
+                        [20, 17, 15, 14, 11.25, 11.60]  // 低度依赖（其他客户）
                     ]
                 },
                 // 毛利率下滑因素分析
@@ -933,32 +1031,25 @@
                 ],
                 // 业绩波动分析
                 performanceVolatility: {
-                    years: ['2019', '2020', '2021', '2022', '2023'],
-                    revenue: [100, 164.29, 222.57, 298.45, 280.44], // 根据同比增长率计算
-                    profit: [100, 296.59, 485.80, 198.75, 123.64], // 根据同比增长率计算
-                    industry: [100, 130, 150, 165, 180] // 估计值
+                    years: ['2019', '2020', '2021', '2022', '2023', '2024'],
+                    revenue: [100, 164.29, 222.57, 298.45, 280.44, 287.21], // 根据同比增长率计算
+                    profit: [100, 296.59, 485.80, 198.75, 123.64, 302.84], // 根据同比增长率计算
+                    industry: [100, 130, 150, 165, 180, 190] // 估计值
                 },
-                // 2024年预测数据
-                forecast2024: {
-                    revenue: 1009.54,
-                    profit: 26.65,
-                    grossMargin: 12.57,
-                    roe: 6.5 // 估计值，未提供
+                // 2025年预测数据
+                forecast2025: {
+                    revenue: 1200, // 根据MD文档5.3章节预计2025年营收突破1200亿
+                    profit: 36, // 估计值，根据净利润率3%以上计算
+                    grossMargin: 15, // 根据MD文档目标达到15%以上
+                    roe: 9.5 // 估计值，基于改善趋势
                 },
-                // 新增部分：季度数据（2023年）
-                quarterlyData: {
-                    quarters: ['第一季度', '第二季度', '第三季度', '第四季度'],
-                    revenue: [241.22, 210.50, 287.75, 246.26],
-                    profit: [1.06, 3.16, 4.70, 1.96],
-                    cashflow: [1.34, 19.68, 12.99, 47.51]
-                },
-                // 新增部分：成本构成（2023年）
+                // 成本构成（2024年）
                 costStructure: [
-                    {value: 87.18, name: '直接材料'},
-                    {value: 4.64, name: '直接人工'},
-                    {value: 8.18, name: '制造费用'}
+                    {value: 85.23, name: '直接材料'},
+                    {value: 5.20, name: '直接人工'},
+                    {value: 9.57, name: '制造费用'}
                 ],
-                // 新增部分：竞争对手对比（2023年）
+                // 竞争对手对比（2023年）- 保持不变
                 competitors: {
                     companies: ['歌尔股份', '立讯精密', '舜宇光学', '瑞声科技'],
                     revenue: [985.74, 1894.87, 267.45, 149.78],
@@ -967,29 +1058,29 @@
                     pe: [72.0, 28.5, 36.2, 18.6],
                     pb: [2.53, 3.84, 2.62, 1.23]
                 },
-                // 新增部分：地域销售分布（2023年）
+                // 地域销售分布（2024年）
                 regionDistribution: [
                     {value: 7.28, name: '境内'},
                     {value: 92.72, name: '境外'}
                 ],
-                // 新增部分：营收与利润同比增长率
+                // 营收与利润同比增长率
                 growthRate: {
-                    years: ['2018', '2019', '2020', '2021', '2022', '2023'],
-                    revenue: [-10.16, 47.60, 64.29, 35.47, 34.10, -6.03],
-                    profit: [-69.74, 27.54, 122.95, 64.34, -58.42, -37.80]
+                    years: ['2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+                    revenue: [-10.16, 47.60, 64.29, 35.47, 34.10, -6.03, 2.41],
+                    profit: [-69.74, 27.54, 122.95, 64.34, -58.42, -37.80, 144.93]
                 },
-                // 新增部分：分业务毛利率(2023年)
+                // 分业务毛利率(2024年)
                 businessGrossMargin: {
                     categories: ['精密零组件', '智能声学整机', '智能硬件', '综合毛利率'],
-                    values: [20.49, 6.74, 7.27, 8.93],
-                    changes: [-0.71, 1.09, -3.87, -2.20] // 同比变动(百分点)
+                    values: [22.35, 11.24, 12.15, 13.60],
+                    changes: [1.86, 4.50, 4.88, 4.67] // 同比变动(百分点)
                 },
-                // 新增部分：股东结构数据（2023年底）
+                // 股东结构数据（2024年底）- 更新为2024年12月31日最新数据
                 shareholderStructure: {
                     names: ['歌尔集团', '姜滨', '姜龙', '香港中央结算', '中国证券金融', '员工持股计划', '其他股东'],
-                    values: [14.84, 8.40, 7.32, 3.29, 2.43, 1.97, 61.75]
+                    values: [14.56, 8.24, 7.18, 3.29, 2.38, 1.35, 63.00]
                 },
-                // 新增部分：股价历年表现数据
+                // 股价历年表现数据 - 保持不变，2024年数据未提供
                 stockPrice: {
                     years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
                     yearEnd: [11.78, 27.30, 14.53, 16.92, 8.40, 20.09, 38.50, 32.21, 19.69, 22.14],
@@ -997,16 +1088,16 @@
                     lowest: [8.56, 11.83, 13.80, 14.01, 8.10, 8.30, 17.10, 27.60, 15.60, 17.50],
                     changeRate: [3.79, 130.77, -46.78, 17.66, -50.30, 139.45, 92.98, -16.16, -39.00, 12.96]
                 },
-                // 新增部分：市值变化数据（亿元）
+                // 市值变化数据（亿元）- 更新2024年数据
                 marketValue: {
-                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-                    values: [235, 546, 291, 338, 180, 431, 831, 697, 431, 780]
+                    years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+                    values: [235, 546, 291, 338, 180, 431, 831, 697, 431, 780, 735] // 根据MD文档2.1章节，近期市值约734.79亿
                 },
-                // 新增部分：估值指标数据
+                // 估值指标数据 - 基于当前数据
                 valuation: {
                     indicators: ['市盈率(PE)', '市净率(PB)', 'EV/EBITDA'],
-                    current: [72.0, 2.53, 18.0],
-                    forecast: [29.0, 2.53, 15.0],
+                    current: [29.0, 2.53, 18.0], // 将动态市盈率更新为现实值
+                    forecast: [25.0, 2.53, 15.0], // 更新为2025年预测
                     industry: [35.0, 3.20, 22.0]
                 }
             };
@@ -1018,9 +1109,9 @@
             let currentThreeJsCanvas = '';
             
             // ECharts变量
-            let businessPieChart, revenueProfitChart, grossMarginChart, roeChart, assetLiabilityChart, customerChart;
+            let businessPieChart, revenueProfitChart, grossMarginChart, roeChart, customerChart;
             let rdInvestmentChart, customerRiskChart, marginDeclineChart, performanceVolatilityChart, futureChart;
-            let competitorsRadarChart, quarterlyDataChart, costStructureChart;
+            let competitorsRadarChart, costStructureChart;
             let shareholderStructurePieChart, shareholderConcentrationBarChart, stockPriceLineChart;
             let stockPerformanceRelationChart, valuationIndicatorsChart;
             let currentEChartsType = '';
@@ -1088,11 +1179,6 @@
                         currentEChartsType = 'roe';
                         initECharts('roe');
                     }
-                    if (currentSlide.querySelector('#asset-liability-chart')) {
-                        console.log('检测到资产负债图');
-                        currentEChartsType = 'asset-liability';
-                        initECharts('asset-liability');
-                    }
                     if (currentSlide.querySelector('#risk-analysis-chart')) {
                         console.log('检测到风险分析图');
                         currentEChartsType = 'risk-analysis';
@@ -1102,11 +1188,6 @@
                         console.log('检测到竞争对手雷达图');
                         currentEChartsType = 'competitors-radar';
                         initECharts('competitors-radar');
-                    }
-                    if (currentSlide.querySelector('#quarterly-data-chart')) {
-                        console.log('检测到季度数据图');
-                        currentEChartsType = 'quarterly-data';
-                        initECharts('quarterly-data');
                     }
                     if (currentSlide.querySelector('#cost-structure-pie')) {
                         console.log('检测到成本结构饼图');
@@ -1206,17 +1287,11 @@
                         case 'roe':
                             if (roeChart) roeChart.resize();
                             break;
-                        case 'asset-liability':
-                            if (assetLiabilityChart) assetLiabilityChart.resize();
-                            break;
                         case 'risk-analysis':
                             if (riskAnalysisChart) riskAnalysisChart.resize();
                             break;
                         case 'competitors-radar':
                             if (competitorsRadarChart) competitorsRadarChart.resize();
-                            break;
-                        case 'quarterly-data':
-                            if (quarterlyDataChart) quarterlyDataChart.resize();
                             break;
                         case 'cost-structure':
                             if (costStructureChart) costStructureChart.resize();
@@ -1578,7 +1653,7 @@
                     
                     const option = {
                         title: {
-                            text: '2023年业务结构占比',
+                            text: '2024年业务结构占比',
                             left: 'center',
                             textStyle: {
                                 color: '#fff'
@@ -1635,11 +1710,13 @@
                     
                     const option = {
                         title: {
-                            text: '营业收入与净利润十年趋势(2014-2023)',
+                            text: '营业收入与净利润十一年趋势(2014-2024)',
                             left: 'center',
                             textStyle: {
-                                color: '#fff'
-                            }
+                                color: '#fff',
+                                fontSize: 14  // 减小标题字体
+                            },
+                            className: 'echarts-title'
                         },
                         tooltip: {
                             trigger: 'axis',
@@ -1651,8 +1728,10 @@
                             data: ['营业收入', '净利润'],
                             bottom: 10,
                             textStyle: {
-                                color: '#fff'
-                            }
+                                color: '#fff',
+                                fontSize: 12  // 减小图例字体
+                            },
+                            className: 'echarts-legend'
                         },
                         grid: {
                             left: '3%',
@@ -1665,7 +1744,8 @@
                             boundaryGap: false,
                             data: goelData.revenue.years,
                             axisLabel: {
-                                color: '#fff'
+                                color: '#fff',
+                                fontSize: 11  // 减小x轴标签字体
                             }
                         },
                         yAxis: [
@@ -1676,7 +1756,8 @@
                                 max: 1100,
                                 axisLabel: {
                                     formatter: '{value}',
-                                    color: '#fff'
+                                    color: '#fff',
+                                    fontSize: 11  // 减小y轴标签字体
                                 },
                                 splitLine: {
                                     lineStyle: {
@@ -1696,7 +1777,8 @@
                                 max: 50,
                                 axisLabel: {
                                     formatter: '{value}',
-                                    color: '#fff'
+                                    color: '#fff',
+                                    fontSize: 11  // 减小y轴标签字体
                                 },
                                 splitLine: {
                                     show: false
@@ -1792,7 +1874,7 @@
                     
                     const option = {
                         title: {
-                            text: '毛利率变化与同业对比(2014-2023)',
+                            text: '毛利率变化(2014-2024)',
                             left: 'center',
                             textStyle: {
                                 color: '#fff'
@@ -1800,10 +1882,10 @@
                         },
                         tooltip: {
                             trigger: 'axis',
-                            formatter: '{b}<br />{a0}: {c0}%<br />{a1}: {c1}%'
+                            formatter: '{b}<br />{a0}: {c0}%'
                         },
                         legend: {
-                            data: ['歌尔股份', '行业平均'],
+                            data: ['歌尔股份'],
                             bottom: 10,
                             textStyle: {
                                 color: '#fff'
@@ -1867,20 +1949,6 @@
                                         }
                                     ]
                                 }
-                            },
-                            {
-                                name: '行业平均',
-                                type: 'line',
-                                data: goelData.grossMargin.industry,
-                                smooth: true,
-                                lineStyle: {
-                                    width: 3,
-                                    color: '#e74c3c',
-                                    type: 'dashed'
-                                },
-                                itemStyle: {
-                                    color: '#e74c3c'
-                                }
                             }
                         ]
                     };
@@ -1902,7 +1970,7 @@
                     
                     const option = {
                         title: {
-                            text: 'ROE历年变化与行业对比(2014-2023)',
+                            text: 'ROE历年变化与行业对比(2014-2024)',
                             left: 'center',
                             textStyle: {
                                 color: '#fff'
@@ -2003,117 +2071,6 @@
                     roeChart.setOption(option);
                 } catch (error) {
                     console.error('ROE变化图初始化失败:', error);
-                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
-                }
-            }
-            
-            // 初始化资产负债结构饼图
-            function initAssetLiabilityPie() {
-                const container = document.getElementById('asset-liability-chart');
-                if (!container) return;
-                
-                try {
-                    assetLiabilityChart = echarts.init(container);
-                    
-                    const option = {
-                        title: [
-                            {
-                                text: '资产结构',
-                                left: '25%',
-                                top: '5%',
-                                textAlign: 'center',
-                                textStyle: {
-                                    color: '#fff'
-                                },
-                                subtext: '2023年',
-                                subtextStyle: {
-                                    color: 'rgba(255,255,255,0.6)'
-                                }
-                            },
-                            {
-                                text: '负债结构',
-                                left: '75%',
-                                top: '5%',
-                                textAlign: 'center',
-                                textStyle: {
-                                    color: '#fff'
-                                },
-                                subtext: '2023年 (负债率57.25%)',
-                                subtextStyle: {
-                                    color: 'rgba(255,255,255,0.6)'
-                                }
-                            }
-                        ],
-                        tooltip: {
-                            trigger: 'item',
-                            formatter: '{a} <br/>{b}: {c}%'
-                        },
-                        legend: {
-                            bottom: 10,
-                            textStyle: {
-                                color: '#fff'
-                            },
-                            formatter: function(name) {
-                                // 资产
-                                let assetData = goelData.assetStructure.find(item => item.name === name);
-                                if (assetData) {
-                                    return `${name}: ${assetData.value.toFixed(2)}%`;
-                                }
-                                
-                                // 负债
-                                let liabData = goelData.liabilityStructure.find(item => item.name === name);
-                                if (liabData) {
-                                    return `${name}: ${liabData.value.toFixed(2)}%`;
-                                }
-                                
-                                return name;
-                            }
-                        },
-                        series: [
-                            {
-                                name: '资产结构',
-                                type: 'pie',
-                                radius: '50%',
-                                center: ['25%', '50%'],
-                                data: goelData.assetStructure,
-                                label: {
-                                    formatter: '{b}: {c}%',
-                                    color: '#fff'
-                                },
-                                emphasis: {
-                                    itemStyle: {
-                                        shadowBlur: 10,
-                                        shadowOffsetX: 0,
-                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                    }
-                                },
-                                color: ['#3498db', '#2ecc71', '#9b59b6', '#f39c12', '#1abc9c', '#95a5a6']
-                            },
-                            {
-                                name: '负债结构',
-                                type: 'pie',
-                                radius: '50%',
-                                center: ['75%', '50%'],
-                                data: goelData.liabilityStructure,
-                                label: {
-                                    formatter: '{b}: {c}%',
-                                    color: '#fff'
-                                },
-                                emphasis: {
-                                    itemStyle: {
-                                        shadowBlur: 10,
-                                        shadowOffsetX: 0,
-                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                    }
-                                },
-                                color: ['#e74c3c', '#f39c12', '#1abc9c', '#3498db', '#9b59b6']
-                            }
-                        ]
-                    };
-                    
-                    assetLiabilityChart.setOption(option);
-                } catch (error) {
-                    console.error('资产负债结构图初始化失败:', error);
                     container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
                 }
             }
@@ -2240,20 +2197,17 @@
                 try {
                     const texts = container.querySelectorAll('.gsap-text');
                     
-                    // 重置文字状态
+                    // 直接显示文字，不再创建动画
                     gsap.set(texts, {
-                        opacity: 0,
-                        y: 50
+                        opacity: 1,
+                        y: 0
                     });
                     
-                    // 创建动画
-                    managementTextAnimation = gsap.timeline({repeat: -1, repeatDelay: 1})
-                        .to(texts[0], {duration: 1, opacity: 1, y: 0, ease: "back.out(1.7)"})
-                        .to(texts[0], {duration: 1, opacity: 0, y: -50, ease: "power1.in", delay: 1.5})
-                        .to(texts[1], {duration: 1, opacity: 1, y: 0, ease: "back.out(1.7)"})
-                        .to(texts[1], {duration: 1, opacity: 0, y: -50, ease: "power1.in", delay: 1.5});
+                    // 不再创建动画时间线
+                    managementTextAnimation = null;
+                    
                 } catch (error) {
-                    console.error('管理团队文字动画初始化失败:', error);
+                    console.error('管理团队文字初始化失败:', error);
                 }
             }
             
@@ -2331,7 +2285,7 @@
                     
                     const option = {
                         title: {
-                            text: '客户集中度分析(2023)',
+                            text: '客户集中度分析(2024)',
                             left: 'center',
                             textStyle: {
                                 color: '#fff'
@@ -2429,7 +2383,7 @@
                     
                     const option = {
                         title: {
-                            text: '研发投入变化趋势(2019-2023)',
+                            text: '研发投入变化趋势(2019-2024)',
                             left: 'center',
                             textStyle: {
                                 color: '#fff'
@@ -2961,19 +2915,19 @@
                     futureChart = echarts.init(container);
                     
                     // 计算同比变化率
-                    const revenueChange = ((goelData.forecast2024.revenue - goelData.revenue.values[9]) / goelData.revenue.values[9] * 100).toFixed(2);
-                    const profitChange = ((goelData.forecast2024.profit - goelData.profit.values[9]) / goelData.profit.values[9] * 100).toFixed(2);
-                    const marginChange = (goelData.forecast2024.grossMargin - goelData.grossMargin.goel[9]).toFixed(2);
-                    const roeChange = (goelData.forecast2024.roe - goelData.roe.goel[9]).toFixed(2);
+                    const revenueChange = ((goelData.forecast2025.revenue - goelData.revenue.values[10]) / goelData.revenue.values[10] * 100).toFixed(2);
+                    const profitChange = ((goelData.forecast2025.profit - goelData.profit.values[10]) / goelData.profit.values[10] * 100).toFixed(2);
+                    const marginChange = (goelData.forecast2025.grossMargin - goelData.grossMargin.goel[10]).toFixed(2);
+                    const roeChange = (goelData.forecast2025.roe - goelData.roe.goel[10]).toFixed(2);
                     
                     const option = {
                         title: {
-                            text: '2024年预期指标',
+                            text: '2025年预期指标',
                             left: 'center',
                             textStyle: {
                                 color: '#fff'
                             },
-                            subtext: '净利润预计同比增长145%',
+                            subtext: '营收预计突破1200亿元',
                             subtextStyle: {
                                 color: 'rgba(255,255,255,0.7)'
                             }
@@ -2985,12 +2939,12 @@
                             },
                             formatter: function(params) {
                                 const indicator = params[0].name;
-                                let year2023 = params[0].value;
-                                let year2024 = params[1].value;
+                                let year2024 = params[0].value;
+                                let year2025 = params[1].value;
                                 let result = indicator + '<br/>';
                                 
-                                result += params[0].marker + '2023年: ' + year2023 + '<br/>';
-                                result += params[1].marker + '2024年(预测): ' + year2024 + '<br/>';
+                                result += params[0].marker + '2024年: ' + year2024 + '<br/>';
+                                result += params[1].marker + '2025年(预测): ' + year2025 + '<br/>';
                                 
                                 // 添加同比变化
                                 let change;
@@ -3015,7 +2969,7 @@
                             }
                         },
                         legend: {
-                            data: ['2023年', '2024年(预测)'],
+                            data: ['2024年', '2025年(预测)'],
                             bottom: 10,
                             textStyle: {
                                 color: '#fff'
@@ -3049,13 +3003,13 @@
                         },
                         series: [
                             {
-                                name: '2023年',
+                                name: '2024年',
                                 type: 'bar',
                                 data: [
-                                    goelData.revenue.values[9], 
-                                    goelData.profit.values[9], 
-                                    goelData.grossMargin.goel[9], 
-                                    goelData.roe.goel[9]
+                                    goelData.revenue.values[10], 
+                                    goelData.profit.values[10], 
+                                    goelData.grossMargin.goel[10], 
+                                    goelData.roe.goel[10]
                                 ],
                                 itemStyle: {
                                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -3071,13 +3025,13 @@
                                 barGap: '30%'
                             },
                             {
-                                name: '2024年(预测)',
+                                name: '2025年(预测)',
                                 type: 'bar',
                                 data: [
-                                    goelData.forecast2024.revenue, 
-                                    goelData.forecast2024.profit, 
-                                    goelData.forecast2024.grossMargin, 
-                                    goelData.forecast2024.roe
+                                    goelData.forecast2025.revenue, 
+                                    goelData.forecast2025.profit, 
+                                    goelData.forecast2025.grossMargin, 
+                                    goelData.forecast2025.roe
                                 ],
                                 itemStyle: {
                                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -3195,11 +3149,31 @@
 
             // 初始化竞争对手对比雷达图
             function initCompetitorsRadarChart() {
+                console.log('开始初始化竞争对手雷达图');
                 const container = document.getElementById('competitors-radar-chart');
-                if (!container) return;
+                if (!container) {
+                    console.error('无法找到竞争对手雷达图容器');
+                    return;
+                }
+                
+                console.log('容器尺寸:', container.offsetWidth, 'x', container.offsetHeight);
+                
+                // 确保容器有足够的尺寸
+                if (container.offsetHeight < 300) {
+                    container.style.height = '480px';
+                    console.log('调整容器高度为480px');
+                }
                 
                 try {
+                    // 销毁现有实例
+                    if (competitorsRadarChart) {
+                        competitorsRadarChart.dispose();
+                        console.log('销毁现有图表实例');
+                    }
+                    
+                    // 重新初始化
                     competitorsRadarChart = echarts.init(container);
+                    console.log('创建新图表实例');
                     
                     const option = {
                         title: {
@@ -3220,6 +3194,14 @@
                             },
                             data: goelData.competitors.companies
                         },
+                        // 添加全局动画属性
+                        animation: true,
+                        animationDuration: 2500,  // 增加动画时长到2.5秒
+                        animationEasing: 'elasticOut',  // 使用弹性缓出效果，更平滑
+                        animationDelay: function(idx) {
+                            return idx * 200;  // 为不同的数据项设置递增的延迟
+                        },
+                        animationThreshold: 10000,  // 提高动画元素阈值，确保所有元素都有动画
                         radar: {
                             indicator: [
                                 { name: '营收规模(亿元)', max: 2000 },
@@ -3252,6 +3234,12 @@
                         },
                         series: [{
                             type: 'radar',
+                            // 为series添加单独的动画延迟
+                            animationDelay: function(idx) {
+                                return 800 + idx * 300;  // 基础延迟800ms后，每个系列数据增加300ms
+                            },
+                            // 添加更自然的缓动效果
+                            animationEasing: 'cubicInOut',
                             data: [
                                 {
                                     value: [
@@ -3326,135 +3314,16 @@
                     };
                     
                     competitorsRadarChart.setOption(option);
+                    console.log('设置图表配置完成');
+                    
+                    // 强制执行一次resize
+                    setTimeout(function() {
+                        competitorsRadarChart.resize();
+                        console.log('执行图表resize');
+                    }, 100);
                 } catch (error) {
                     console.error('竞争对手雷达图初始化失败:', error);
-                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
-                }
-            }
-
-            // 初始化季度数据图表
-            function initQuarterlyDataChart() {
-                const container = document.getElementById('quarterly-data-chart');
-                if (!container) return;
-                
-                try {
-                    quarterlyDataChart = echarts.init(container);
-                    
-                    const option = {
-                        title: {
-                            text: '2023年季度营收、利润与现金流',
-                            left: 'center',
-                            textStyle: {
-                                color: '#fff'
-                            }
-                        },
-                        tooltip: {
-                            trigger: 'axis',
-                            axisPointer: {
-                                type: 'shadow'
-                            }
-                        },
-                        legend: {
-                            data: ['营收', '净利润', '经营现金流'],
-                            bottom: 10,
-                            textStyle: {
-                                color: '#fff'
-                            }
-                        },
-                        grid: {
-                            left: '3%',
-                            right: '4%',
-                            bottom: '15%',
-                            containLabel: true
-                        },
-                        xAxis: {
-                            type: 'category',
-                            data: goelData.quarterlyData.quarters,
-                            axisLabel: {
-                                color: '#fff'
-                            }
-                        },
-                        yAxis: [
-                            {
-                                type: 'value',
-                                name: '营收（亿元）',
-                                min: 0,
-                                max: 300,
-                                position: 'left',
-                                axisLabel: {
-                                    formatter: '{value}',
-                                    color: '#fff'
-                                },
-                                splitLine: {
-                                    lineStyle: {
-                                        color: 'rgba(255,255,255,0.1)'
-                                    }
-                                }
-                            },
-                            {
-                                type: 'value',
-                                name: '利润/现金流（亿元）',
-                                min: 0,
-                                max: 50,
-                                position: 'right',
-                                axisLabel: {
-                                    formatter: '{value}',
-                                    color: '#fff'
-                                },
-                                splitLine: {
-                                    show: false
-                                }
-                            }
-                        ],
-                        series: [
-                            {
-                                name: '营收',
-                                type: 'bar',
-                                yAxisIndex: 0,
-                                data: goelData.quarterlyData.revenue,
-                                barWidth: '25%',
-                                itemStyle: {
-                                    color: '#3498db'
-                                }
-                            },
-                            {
-                                name: '净利润',
-                                type: 'line',
-                                yAxisIndex: 1,
-                                data: goelData.quarterlyData.profit,
-                                lineStyle: {
-                                    width: 3,
-                                    color: '#2ecc71'
-                                },
-                                itemStyle: {
-                                    color: '#2ecc71'
-                                },
-                                symbol: 'circle',
-                                symbolSize: 8
-                            },
-                            {
-                                name: '经营现金流',
-                                type: 'line',
-                                yAxisIndex: 1,
-                                data: goelData.quarterlyData.cashflow,
-                                lineStyle: {
-                                    width: 3,
-                                    color: '#e67e22',
-                                    type: 'dotted'
-                                },
-                                itemStyle: {
-                                    color: '#e67e22'
-                                },
-                                symbol: 'triangle',
-                                symbolSize: 8
-                            }
-                        ]
-                    };
-                    
-                    quarterlyDataChart.setOption(option);
-                } catch (error) {
-                    console.error('季度数据图表初始化失败:', error);
-                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败，详细错误: ' + error.message + '</div>';
                 }
             }
 
@@ -3468,7 +3337,7 @@
                     
                     const option = {
                         title: {
-                            text: '2023年成本结构分析',
+                            text: '2024年成本结构分析',
                             left: 'center',
                             textStyle: {
                                 color: '#fff'
@@ -3531,8 +3400,10 @@
                         title: {
                             text: '股东结构分布',
                             left: 'center',
+                            top: 5, // 减小顶部空间
                             textStyle: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 14 // 减小标题字体
                             }
                         },
                         tooltip: {
@@ -3543,8 +3414,11 @@
                             orient: 'vertical',
                             left: 10,
                             top: 'center',
+                            itemWidth: 10, // 减小图例项宽度
+                            itemHeight: 10, // 减小图例项高度
                             textStyle: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 11 // 减小图例字体
                             },
                             data: goelData.shareholderStructure.names
                         },
@@ -3552,7 +3426,8 @@
                             {
                                 name: '持股比例',
                                 type: 'pie',
-                                radius: ['50%', '70%'],
+                                radius: ['40%', '60%'], // 减小饼图半径
+                                center: ['50%', '45%'], // 将饼图稍微上移
                                 avoidLabelOverlap: false,
                                 label: {
                                     show: false,
@@ -3561,7 +3436,7 @@
                                 emphasis: {
                                     label: {
                                         show: true,
-                                        fontSize: '18',
+                                        fontSize: '16', // 减小强调时的字体
                                         fontWeight: 'bold'
                                     }
                                 },
@@ -3607,8 +3482,10 @@
                         title: {
                             text: '主要股东持股比例',
                             left: 'center',
+                            top: 5, // 减小顶部空间
                             textStyle: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 14 // 减小标题字体
                             }
                         },
                         tooltip: {
@@ -3620,23 +3497,26 @@
                         grid: {
                             left: '3%',
                             right: '4%',
-                            bottom: '3%',
+                            bottom: '5%', // 减小底部空间
+                            top: '15%', // 减小顶部空间
                             containLabel: true
                         },
                         xAxis: {
                             type: 'category',
                             data: goelData.shareholderStructure.names,
                             axisLabel: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 10 // 减小轴标签字体
                             }
                         },
                         yAxis: {
                             type: 'value',
                             name: '持股比例 (%)',
-                            max: 80,
+                            max: 70, // 调整最大值以减小纵向空间
                             axisLabel: {
                                 color: '#eee',
-                                formatter: '{value}%'
+                                formatter: '{value}%',
+                                fontSize: 10 // 减小轴标签字体
                             }
                         },
                         series: [
@@ -3659,7 +3539,8 @@
                                 label: {
                                     show: true,
                                     position: 'top',
-                                    formatter: '{c}%'
+                                    formatter: '{c}%',
+                                    fontSize: 10 // 减小标签字体
                                 },
                                 markLine: {
                                     data: [
@@ -3671,7 +3552,8 @@
                                             },
                                             label: {
                                                 formatter: '控股阈值: 30%',
-                                                position: 'middle'
+                                                position: 'middle',
+                                                fontSize: 10 // 减小标记线标签字体
                                             }
                                         }
                                     ]
@@ -3708,33 +3590,36 @@
                         title: {
                             text: '股价走势 (2014-2023)',
                             left: 'center',
+                            top: 5, // 减小顶部空间
                             textStyle: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 14 // 减小标题字体
                             }
                         },
                         tooltip: {
                             trigger: 'axis',
-                            formatter: function(params) {
-                                const data = params[0].data;
-                                return `${params[0].name}年<br/>
-                                        年末: ${data[0]}元<br/>
-                                        最高: ${data[1]}元<br/>
-                                        最低: ${data[2]}元<br/>
-                                        变化率: ${data[3]}%`;
+                            axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
                             }
                         },
                         legend: {
                             data: ['年末价格', '最高价', '最低价'],
                             textStyle: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 11 // 减小图例字体
                             },
+                            itemWidth: 10, // 减小图例项宽度
+                            itemHeight: 10, // 减小图例项高度
                             bottom: 0
                         },
                         grid: {
                             left: '3%',
                             right: '4%',
                             bottom: '15%',
-                            top: '15%',
+                            top: '15%', // 减小顶部空间
                             containLabel: true
                         },
                         xAxis: {
@@ -3742,7 +3627,8 @@
                             boundaryGap: false,
                             data: goelData.stockPrice.years,
                             axisLabel: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 10 // 减小轴标签字体
                             }
                         },
                         yAxis: {
@@ -3750,30 +3636,27 @@
                             name: '股价 (元)',
                             axisLabel: {
                                 color: '#eee',
-                                formatter: '{value}元'
+                                formatter: '{value}元',
+                                fontSize: 10 // 减小轴标签字体
                             }
                         },
                         series: [
                             {
                                 name: '年末价格',
                                 type: 'line',
-                                data: goelData.stockPrice.years.map((year, index) => [
-                                    goelData.stockPrice.yearEnd[index],
-                                    goelData.stockPrice.highest[index],
-                                    goelData.stockPrice.lowest[index],
-                                    goelData.stockPrice.changeRate[index]
-                                ]),
+                                data: goelData.stockPrice.yearEnd,
                                 lineStyle: {
                                     width: 3,
                                     color: '#3498db'
                                 },
                                 symbol: 'circle',
-                                symbolSize: 8,
+                                symbolSize: 6, // 减小符号大小
                                 markPoint: {
                                     data: [
                                         { type: 'max', name: '最大值' },
                                         { type: 'min', name: '最小值' }
-                                    ]
+                                    ],
+                                    symbolSize: 40 // 减小标记点大小
                                 }
                             },
                             {
@@ -3786,7 +3669,7 @@
                                     type: 'dashed'
                                 },
                                 symbol: 'circle',
-                                symbolSize: 6
+                                symbolSize: 5 // 减小符号大小
                             },
                             {
                                 name: '最低价',
@@ -3798,7 +3681,7 @@
                                     type: 'dashed'
                                 },
                                 symbol: 'circle',
-                                symbolSize: 6
+                                symbolSize: 5 // 减小符号大小
                             }
                         ]
                     };
@@ -3831,8 +3714,10 @@
                         title: {
                             text: '股价与业绩关联分析',
                             left: 'center',
+                            top: 5, // 减小顶部空间
                             textStyle: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 14 // 减小标题字体
                             }
                         },
                         tooltip: {
@@ -3844,14 +3729,18 @@
                         legend: {
                             data: ['股价变化率', '营收增长率', '利润增长率'],
                             textStyle: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 11 // 减小图例字体
                             },
+                            itemWidth: 10, // 减小图例项宽度
+                            itemHeight: 10, // 减小图例项高度
                             bottom: 0
                         },
                         grid: {
                             left: '3%',
                             right: '4%',
                             bottom: '15%',
+                            top: '15%', // 减小顶部空间
                             containLabel: true
                         },
                         xAxis: {
@@ -3859,7 +3748,8 @@
                             boundaryGap: false,
                             data: goelData.stockPrice.years,
                             axisLabel: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 10 // 减小轴标签字体
                             }
                         },
                         yAxis: {
@@ -3867,7 +3757,8 @@
                             name: '变化率 (%)',
                             axisLabel: {
                                 color: '#eee',
-                                formatter: '{value}%'
+                                formatter: '{value}%',
+                                fontSize: 10 // 减小轴标签字体
                             }
                         },
                         series: [
@@ -3880,7 +3771,7 @@
                                     color: '#3498db'
                                 },
                                 symbol: 'circle',
-                                symbolSize: 8
+                                symbolSize: 6 // 减小符号大小
                             },
                             {
                                 name: '营收增长率',
@@ -3891,7 +3782,7 @@
                                     color: '#2ecc71'
                                 },
                                 symbol: 'circle',
-                                symbolSize: 6
+                                symbolSize: 5 // 减小符号大小
                             },
                             {
                                 name: '利润增长率',
@@ -3902,7 +3793,7 @@
                                     color: '#e74c3c'
                                 },
                                 symbol: 'circle',
-                                symbolSize: 6
+                                symbolSize: 5 // 减小符号大小
                             }
                         ]
                     };
@@ -3958,46 +3849,49 @@
                         title: {
                             text: '市场估值指标分析',
                             left: 'center',
+                            top: 5, // 减小顶部空间
                             textStyle: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 14 // 减小标题字体
                             }
                         },
                         tooltip: {
                             trigger: 'axis',
                             axisPointer: {
                                 type: 'shadow'
-                            },
-                            formatter: function(params) {
-                                const data = params[0];
-                                return `${data.name}<br/>${data.seriesName}: ${data.value}<br/>预测: ${goelData.valuation.forecast[data.dataIndex]}<br/>行业: ${goelData.valuation.industry[data.dataIndex]}`;
                             }
                         },
                         legend: {
                             data: ['当前值', '预测值', '行业均值'],
                             textStyle: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 11 // 减小图例字体
                             },
+                            itemWidth: 10, // 减小图例项宽度
+                            itemHeight: 10, // 减小图例项高度
                             bottom: 0
                         },
                         grid: {
                             left: '3%',
                             right: '4%',
-                            bottom: '15%',
-                            top: '15%',
+                            bottom: '25%', // 从15%增加到25%，给底部更多空间
+                            top: '15%', // 已是最佳设置
                             containLabel: true
                         },
                         xAxis: {
                             type: 'category',
                             data: goelData.valuation.indicators,
                             axisLabel: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 10 // 减小轴标签字体
                             }
                         },
                         yAxis: {
                             type: 'value',
                             name: '数值',
                             axisLabel: {
-                                color: '#eee'
+                                color: '#eee',
+                                fontSize: 10 // 减小轴标签字体
                             }
                         },
                         series: [
@@ -4010,7 +3904,8 @@
                                 },
                                 label: {
                                     show: true,
-                                    position: 'top'
+                                    position: 'top',
+                                    fontSize: 10 // 减小标签字体
                                 }
                             },
                             {
@@ -4063,17 +3958,11 @@
                         case 'roe':
                             initRoeLine();
                             break;
-                        case 'asset-liability':
-                            initAssetLiabilityPie();
-                            break;
                         case 'risk-analysis':
                             initCustomerRiskAnalysis();
                             break;
                         case 'competitors-radar':
                             initCompetitorsRadarChart();
-                            break;
-                        case 'quarterly-data':
-                            initQuarterlyDataChart();
                             break;
                         case 'cost-structure':
                             initCostStructurePie();
@@ -4161,6 +4050,60 @@
                     }
                 } else {
                      console.warn('未能找到具有 data-background-gradient 属性的第一张幻灯片。');
+                }
+            });
+        </script>
+
+        <!-- 添加强制初始化图表的脚本 -->
+        <script>
+            // 页面完全加载后执行
+            window.addEventListener('load', function() {
+                // 强制初始化竞争对手雷达图
+                setTimeout(function() {
+                    console.log('延迟2秒强制初始化竞争对手雷达图');
+                    
+                    // 获取容器并确保其尺寸
+                    const competitorsContainer = document.getElementById('competitors-radar-chart');
+                    if (competitorsContainer) {
+                        // 确保容器有足够的高度和宽度
+                        if (competitorsContainer.offsetHeight < 100) {
+                            competitorsContainer.style.height = '480px';
+                        }
+                        if (competitorsContainer.offsetWidth < 100) {
+                            competitorsContainer.style.width = '100%';
+                        }
+                        
+                        // 强制初始化图表
+                        try {
+                            // 如果已经有图表实例，先销毁
+                            if (window.competitorsRadarChart) {
+                                window.competitorsRadarChart.dispose();
+                            }
+                            
+                            // 重新初始化
+                            initCompetitorsRadarChart();
+                            console.log('竞争对手雷达图初始化成功');
+                        } catch (error) {
+                            console.error('强制初始化竞争对手雷达图失败:', error);
+                            competitorsContainer.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败，请刷新页面重试</div>';
+                        }
+                    } else {
+                        console.error('未找到竞争对手雷达图容器');
+                    }
+                }, 2000); // 延迟2秒执行，确保页面元素已完全加载
+                
+                // 为所有ECharts容器添加明确的最小高度样式
+                const chartContainers = document.querySelectorAll('.echarts-container');
+                chartContainers.forEach(function(container) {
+                    if (container.offsetHeight < 100) {
+                        container.style.minHeight = '400px';
+                    }
+                });
+                
+                // 为估值指标图表容器特别设置更大的高度
+                const valuationContainer = document.getElementById('valuation-indicators-chart');
+                if (valuationContainer) {
+                    valuationContainer.style.minHeight = '500px'; // 设置更大的高度
                 }
             });
         </script>

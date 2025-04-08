@@ -1,0 +1,32 @@
+[
+  {
+    "url": "https://fonts.googleapis.com/css?family=Montserrat:700",
+    "errorText": "net::ERR_PROXY_CONNECTION_FAILED",
+    "time": "2025-04-07T12:23:04.946Z"
+  },
+  {
+    "url": "https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js",
+    "errorText": "net::ERR_PROXY_CONNECTION_FAILED",
+    "time": "2025-04-07T12:23:04.949Z"
+  },
+  {
+    "url": "https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic",
+    "errorText": "net::ERR_PROXY_CONNECTION_FAILED",
+    "time": "2025-04-07T12:23:04.950Z"
+  },
+  {
+    "url": "https://cdn.bootcdn.net/ajax/libs/echarts/5.6.0/echarts.min.js",
+    "errorText": "net::ERR_PROXY_CONNECTION_FAILED",
+    "time": "2025-04-07T12:23:04.951Z"
+  },
+  {
+    "url": "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js",
+    "errorText": "net::ERR_PROXY_CONNECTION_FAILED",
+    "time": "2025-04-07T12:23:04.961Z"
+  },
+  {
+    "message": "THREE is not defined",
+    "stack": "ReferenceError: THREE is not defined\n    at initGoelLogo (file:///D:/%E6%A1%8C%E9%9D%A2/%E7%8E%8B%E5%BA%B7%E5%BA%B7/AI/Github%E5%AD%A6%E4%B9%A0/present-main/goel-financial-analysis.html:1226:17)\n    at handleThreeJsSlide (file:///D:/%E6%A1%8C%E9%9D%A2/%E7%8E%8B%E5%BA%B7%E5%BA%B7/AI/Github%E5%AD%A6%E4%B9%A0/present-main/goel-financial-analysis.html:700:21)\n    at <anonymous> (file:///D:/%E6%A1%8C%E9%9D%A2/%E7%8E%8B%E5%BA%B7%E5%BA%B7/AI/Github%E5%AD%A6%E4%B9%A0/present-main/goel-financial-analysis.html:653:21)\n    at Pe (file:///D:/%E6%A1%8C%E9%9D%A2/%E7%8E%8B%E5%BA%B7%E5%BA%B7/AI/Github%E5%AD%A6%E4%B9%A0/present-main/reveal.js-5.2.1/dist/reveal.js:8:91955)\n    at <anonymous> (file:///D:/%E6%A1%8C%E9%9D%A2/%E7%8E%8B%E5%BA%B7%E5%BA%B7/AI/Github%E5%AD%A6%E4%B9%A0/present-main/reveal.js-5.2.1/dist/reveal.js:8:89371)",
+    "time": "2025-04-07T12:23:05.145Z"
+  }
+]
