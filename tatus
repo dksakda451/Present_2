@@ -1,3 +1,0 @@
-[33m36a5008[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m 添加.cursor目录和更新项目文件
-[33m6d05472[m 将项目添加到版本控制
-[33mec0337c[m 修复了多个图表无法同时显示的问题：1. 修复了多个ID不一致的问题；2. 修改handleEChartsSlide和checkEChartsSlide函数，使用独立if语句代替else if链；3. 确保同一页面上的多个图表能够同时正确渲染
