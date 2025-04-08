@@ -34,7 +34,7 @@
             .threejs-container {
                 width: 100%;
                 height: 500px;
-                opacity: 0;
+                opacity: 1; /* 从0改为1，使容器默认可见 */
                 position: relative;
             }
             
@@ -80,13 +80,13 @@
                 color: white;
                 font-weight: bold;
                 border-radius: 10px;
-                opacity: 0;
+                opacity: 1; /* 从0改为1，使元素默认可见 */
             }
             
             .gsap-text {
                 font-size: 3em;
                 position: absolute;
-                opacity: 0;
+                opacity: 1; /* 从0改为1，使文本默认可见 */
                 color: #fff;
                 width: 100%;
                 text-align: center;
@@ -111,7 +111,7 @@
                 line-height: 60px;
                 border-radius: 8px;
                 color: white;
-                opacity: 0;
+                opacity: 1; /* 从0改为1，使元素默认可见 */
                 font-size: 26px;
             }
             
@@ -526,6 +526,56 @@
                 height: 350px;
                 margin: 0;
             }
+
+            /* 添加成本结构分析页面文字样式 */
+            .cost-structure-text {
+                font-size: 10px !important;
+                line-height: 1.1 !important;
+                margin-bottom: 3px !important;
+            }
+
+            .cost-structure-text ul {
+                font-size: 10px !important;
+                line-height: 1.1 !important;
+                margin-top: 3px !important;
+            }
+
+            .cost-structure-text li {
+                margin-bottom: 2px !important;
+            }
+
+            .cost-structure-text .highlight {
+                font-weight: bold;
+            }
+
+            /* 添加研发投入效率页面文字样式 */
+            .rd-efficiency-text {
+                font-size: 10px !important; /* 从12px减小到10px */
+                line-height: 1.1 !important; /* 从1.2减小到1.1 */
+                margin-bottom: 3px !important; /* 从4px减小到3px */
+            }
+
+            .rd-efficiency-text ul {
+                font-size: 10px !important; /* 从12px减小到10px */
+                line-height: 1.1 !important; /* 从1.2减小到1.1 */
+                margin-top: 3px !important; /* 从4px减小到3px */
+            }
+
+            .rd-efficiency-text li {
+                margin-bottom: 2px !important; /* 从3px减小到2px */
+            }
+
+            .rd-efficiency-text .highlight {
+                font-weight: bold;
+            }
+
+            /* 添加新样式：控制业绩波动与周期性页面大标题 */
+            #performance-volatility-chart + h1,
+            section h1.slide-bottom-title {
+                font-size: 0.8em !important;
+                margin-top: 5px !important;
+                margin-bottom: 5px !important;
+            }
         </style>
 	</head>
 
@@ -686,6 +736,19 @@
                             <p>市值从2014年约235亿元增长至2024年约734.79亿元，增长3.1倍</p>
                         </div>
                     </section>
+                    
+                    <!-- 新增：盛新锂能技术分析图 -->
+                    <section>
+                        <h2>盛新锂能技术分析图</h2>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <img src="0a9dc8d5d8208557cb89bc776ae9e88e.png" alt="盛新锂能技术分析图" style="max-width: 90%; max-height: 70vh;">
+                        </div>
+                        <p>盛新锂能股价和技术指标分析</p>
+                        <div class="highlight-box">
+                            <p>移动平均线、成交量和MACD指标综合分析</p>
+                            <p>历史价格区间从5.69至75.97元，显示较大波动性</p>
+                        </div>
+                    </section>
 				</section>
 
 				<!-- 6. 成功因素分析 -->
@@ -793,8 +856,8 @@
                     <section>
                         <h2>成本结构分析</h2>
                         <div class="echarts-container" id="cost-structure-pie"></div>
-                        <p>2024年直接材料占比降至85.23%，成本结构持续优化</p>
-                        <ul>
+                        <p class="cost-structure-text">2024年直接材料占比降至85.23%，成本结构持续优化</p>
+                        <ul class="cost-structure-text">
                             <li>直接材料降幅<span class="highlight">1.95%</span>，反映成本控制措施成效显著</li>
                             <li>直接人工占比<span class="highlight">5.20%</span>，同比上升0.56%</li>
                             <li>制造费用占比<span class="highlight">9.57%</span>，同比上升1.39%</li>
@@ -805,8 +868,7 @@
                     <section>
                         <h2>业绩波动与周期性</h2>
                         <div class="echarts-container" id="performance-volatility-chart"></div>
-                        <p>2024年净利润同比增长144.93%，表明公司走出周期性低谷</p>
-                        <ul>
+                        <ul style="font-size: 0.5em; line-height: 1.0; margin-top: 10px;">
                             <li>公司基本经历了两个完整的业绩周期：
                                 <ul>
                                     <li>第一周期（2014-2018年）：2017年达到阶段高点，2018年显著下滑</li>
@@ -821,8 +883,8 @@
                     <section>
                         <h2>研发投入效率问题</h2>
                         <div class="echarts-container" id="rd-efficiency-chart"></div>
-                        <p>2024年研发投入45.69亿元，占营收比例4.53%</p>
-                        <ul>
+                        <p class="rd-efficiency-text">2024年研发投入45.69亿元，占营收比例4.53%</p>
+                        <ul class="rd-efficiency-text">
                             <li>研发费用占营收比例从2022年的<span class="highlight">4.96%</span>下降到2023年的<span class="highlight">4.64%</span></li>
                             <li>研发投入与营收增长不同步，研发转化效率有待提高</li>
                             <li>资本化研发投入占比<span class="highlight">12.3%</span>，研发人员数量12,500余人</li>
@@ -940,8 +1002,8 @@
 				progress: true,
 				center: true,
 				hash: true,
-				transition: 'slide',
-				backgroundTransition: 'fade',
+				transition: 'none', // 从'slide'改为'none'
+				backgroundTransition: 'none', // 从'fade'改为'none'
 				plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
 			});
             
@@ -1098,6 +1160,8 @@
                 const hasStockPriceSection = slide.querySelector('#stock-price-chart');
                 const hasStockPerformanceSection = slide.querySelector('#stock-performance-chart');
                 const hasValuationIndicatorsSection = slide.querySelector('#valuation-indicators-chart');
+                const hasCostStructureSection = slide.querySelector('#cost-structure-pie');
+                const hasRdEfficiencySection = slide.querySelector('#rd-efficiency-chart');
                 
                 console.log('检查图表容器:', {
                     'revenue-profit-chart': !!hasRevenueSection,
@@ -1112,7 +1176,9 @@
                     'shareholder-concentration-chart': !!hasShareholderConcentrationSection,
                     'stock-price-chart': !!hasStockPriceSection,
                     'stock-performance-chart': !!hasStockPerformanceSection,
-                    'valuation-indicators-chart': !!hasValuationIndicatorsSection
+                    'valuation-indicators-chart': !!hasValuationIndicatorsSection,
+                    'cost-structure-pie': !!hasCostStructureSection,
+                    'rd-efficiency-chart': !!hasRdEfficiencySection
                 });
                 
                 // 初始化幻灯片上的所有图表，避免使用else if链，确保所有图表都能被初始化
@@ -1161,6 +1227,12 @@
                 }
                 if (hasValuationIndicatorsSection) {
                     initValuationIndicators();
+                }
+                if (hasCostStructureSection) {
+                    initCostStructurePie();
+                }
+                if (hasRdEfficiencySection) {
+                    initRdEfficiencyChart();
                 }
             }
             
@@ -1422,6 +1494,11 @@
                         currentEChartsType = 'margin-decline';
                         initECharts('margin-decline');
                     }
+                    if (currentSlide.querySelector('#rd-efficiency-chart')) {
+                        console.log('检测到研发投入效率图');
+                        currentEChartsType = 'rd-efficiency';
+                        initECharts('rd-efficiency');
+                    }
                 } catch (e) {
                     console.error('检查图表时出错:', e);
                 }
@@ -1511,6 +1588,9 @@
                             break;
                         case 'margin-decline':
                             if (marginDeclineChart) marginDeclineChart.resize();
+                            break;
+                        case 'rd-efficiency':
+                            if (rdEfficiencyChart) rdEfficiencyChart.resize();
                             break;
                         default:
                             console.warn('未知的图表类型:', currentEChartsType);
@@ -2168,7 +2248,7 @@
                     
                     const option = {
                         title: {
-                            text: 'ROE历年变化与行业对比(2014-2024)',
+                            text: 'ROE历年变化(2014-2024)',
                             left: 'center',
                             textStyle: {
                                 color: '#fff'
@@ -2395,18 +2475,25 @@
                 try {
                     const texts = container.querySelectorAll('.gsap-text');
                     
-                    // 重置文字状态
+                    // 设置文字状态为直接可见，无动画效果
                     gsap.set(texts, {
-                        opacity: 0,
-                        y: 50
+                        opacity: 1,
+                        y: 0
                     });
                     
-                    // 创建动画
+                    // 不创建动画时间线，直接显示文字
+                    // 注释掉原有的动画代码
+                    /*
                     managementTextAnimation = gsap.timeline({repeat: -1, repeatDelay: 1})
                         .to(texts[0], {duration: 1, opacity: 1, y: 0, ease: "back.out(1.7)"})
                         .to(texts[0], {duration: 1, opacity: 0, y: -50, ease: "power1.in", delay: 1.5})
                         .to(texts[1], {duration: 1, opacity: 1, y: 0, ease: "back.out(1.7)"})
                         .to(texts[1], {duration: 1, opacity: 0, y: -50, ease: "power1.in", delay: 1.5});
+                    */
+                    
+                    // 创建空的时间线以保持变量一致性
+                    managementTextAnimation = gsap.timeline();
+                    
                 } catch (error) {
                     console.error('管理团队文字动画初始化失败:', error);
                 }
@@ -2944,11 +3031,13 @@
                             text: '业绩波动性分析 (2019=100)',
                             left: 'center',
                             textStyle: {
-                                color: '#fff'
+                                color: '#fff',
+                                fontSize: 12  // 减小标题字体大小
                             },
                             subtext: '营收与利润波动性明显高于行业平均',
                             subtextStyle: {
-                                color: 'rgba(255,255,255,0.7)'
+                                color: 'rgba(255,255,255,0.7)',
+                                fontSize: 10  // 减小副标题字体大小
                             }
                         },
                         tooltip: {
@@ -3549,19 +3638,29 @@
                             formatter: '{a} <br/>{b}: {c}%'
                         },
                         legend: {
-                            orient: 'horizontal',
-                            bottom: 10,
+                            orient: 'vertical',
+                            left: 10,
+                            top: 'center',
+                            itemWidth: 10, // 减小图例项宽度
+                            itemHeight: 10, // 减小图例项高度
                             textStyle: {
-                                color: '#fff'
+                                color: '#eee',
+                                fontSize: 11 // 减小图例字体
                             }
                         },
                         series: [
                             {
                                 name: '成本占比',
                                 type: 'pie',
-                                radius: '55%',
+                                radius: ['40%', '70%'], // 改为环形图
                                 center: ['50%', '50%'],
-                                data: goelData.costStructure,
+                                avoidLabelOverlap: false,
+                                label: {
+                                    show: true,
+                                    position: 'outside',
+                                    formatter: '{b}: {c}%',
+                                    color: '#fff'
+                                },
                                 emphasis: {
                                     itemStyle: {
                                         shadowBlur: 10,
@@ -3569,13 +3668,25 @@
                                         shadowColor: 'rgba(0, 0, 0, 0.5)'
                                     }
                                 },
-                                label: {
-                                    formatter: '{b}: {c}%',
-                                    color: '#fff'
+                                labelLine: {
+                                    show: true
                                 },
-                                color: ['#e74c3c', '#9b59b6', '#3498db']
+                                data: goelData.costStructure,
+                                color: ['#e74c3c', '#9b59b6', '#3498db'],
+                                itemStyle: {
+                                    borderRadius: 10,
+                                    borderColor: '#121212',
+                                    borderWidth: 2
+                                }
                             }
-                        ]
+                        ],
+                        animation: true,
+                        animationDuration: 2500,  // 增加动画时长到2.5秒
+                        animationEasing: 'elasticOut',  // 使用弹性缓出效果，更平滑
+                        animationDelay: function(idx) {
+                            return idx * 200;  // 为不同的数据项设置递增的延迟
+                        },
+                        animationThreshold: 10000  // 提高动画元素阈值，确保所有元素都有动画
                     };
                     
                     costStructureChart.setOption(option);
@@ -3742,22 +3853,6 @@
                                     position: 'top',
                                     formatter: '{c}%',
                                     fontSize: 10 // 减小标签字体
-                                },
-                                markLine: {
-                                    data: [
-                                        {
-                                            name: '控股阈值',
-                                            yAxis: 30,
-                                            lineStyle: {
-                                                color: '#e74c3c'
-                                            },
-                                            label: {
-                                                formatter: '控股阈值: 30%',
-                                                position: 'middle',
-                                                fontSize: 10 // 减小标记线标签字体
-                                            }
-                                        }
-                                    ]
                                 }
                             }
                         ]
@@ -4195,6 +4290,9 @@
                         case 'future-forecast':
                             initFutureForecast();
                             break;
+                        case 'rd-efficiency':
+                            initRdEfficiencyChart();
+                            break;
                         default:
                             console.warn('未知的图表类型:', type);
                     }
@@ -4203,6 +4301,129 @@
                     currentEChartsType = type;
                 } catch (e) {
                     console.error('初始化图表出错:', e);
+                }
+            }
+
+            // 初始化研发投入效率图表
+            function initRdEfficiencyChart() {
+                const container = document.getElementById('rd-efficiency-chart');
+                if (!container) return;
+                
+                try {
+                    rdEfficiencyChart = echarts.init(container);
+                    
+                    const option = {
+                        title: {
+                            text: '研发投入效率分析',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff',
+                                fontSize: 14
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross'
+                            }
+                        },
+                        legend: {
+                            data: ['研发投入占比', '研发人员数量', '专利申请量'],
+                            bottom: 10,
+                            textStyle: {
+                                color: '#fff',
+                                fontSize: 11
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '15%',
+                            top: '15%',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: ['2019', '2020', '2021', '2022', '2023', '2024'],
+                            axisLabel: {
+                                color: '#fff',
+                                fontSize: 10
+                            }
+                        },
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '研发投入占比(%)',
+                                position: 'left',
+                                axisLabel: {
+                                    formatter: '{value}%',
+                                    color: '#fff',
+                                    fontSize: 10
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: 'rgba(255,255,255,0.1)'
+                                    }
+                                }
+                            },
+                            {
+                                type: 'value',
+                                name: '研发人员/专利数',
+                                position: 'right',
+                                axisLabel: {
+                                    color: '#fff',
+                                    fontSize: 10
+                                },
+                                splitLine: {
+                                    show: false
+                                }
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '研发投入占比',
+                                type: 'line',
+                                data: goelData.rdInvestment.percentage,
+                                lineStyle: {
+                                    width: 3,
+                                    color: '#3498db'
+                                },
+                                itemStyle: {
+                                    color: '#3498db'
+                                },
+                                label: {
+                                    show: true,
+                                    position: 'top',
+                                    formatter: '{c}%',
+                                    fontSize: 10,
+                                    color: '#fff'
+                                }
+                            },
+                            {
+                                name: '研发人员数量',
+                                type: 'bar',
+                                yAxisIndex: 1,
+                                data: [8000, 9500, 11000, 12000, 12300, 12500],
+                                itemStyle: {
+                                    color: '#2ecc71'
+                                }
+                            },
+                            {
+                                name: '专利申请量',
+                                type: 'bar',
+                                yAxisIndex: 1,
+                                data: [2500, 3000, 3500, 4000, 4200, 4500],
+                                itemStyle: {
+                                    color: '#e74c3c'
+                                }
+                            }
+                        ]
+                    };
+                    
+                    rdEfficiencyChart.setOption(option);
+                } catch (error) {
+                    console.error('研发投入效率图表初始化失败:', error);
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败</div>';
                 }
             }
 		</script>
