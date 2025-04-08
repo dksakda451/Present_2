@@ -27,15 +27,23 @@
         <!-- ECharts库 -->
         <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.6.0/echarts.min.js"></script>
         
-        <!-- GSAP动画库 - 直接使用CDN确保加载 -->
+        <!-- GSAP动画库及插件 -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+        
+        <!-- Particles.js -->
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
         
         <style>
             .threejs-container {
                 width: 100%;
-                height: 500px;
-                opacity: 1; /* 从0改为1，使容器默认可见 */
-                position: relative;
+                height: 200px;
+                opacity: 1;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1;
             }
             
             #threejs-canvas {
@@ -193,7 +201,46 @@
 
             /* 标题页样式优化 */
             .title-content {
-                margin-top: 20px;  /* 从40px减少到20px */
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                text-align: center;
+                z-index: 2;
+                opacity: 0;
+            }
+            
+            .title-content h1 {
+                font-size: 1.8em;
+                margin-bottom: 0;
+                opacity: 0;
+                transform: translateY(30px);
+                font-weight: 500;
+            }
+            
+            .author-info {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            
+            .author-info p {
+                margin: 0;
+            }
+            
+            .author-info small {
+                font-size: 0.6em;
+                opacity: 0;
+            }
+
+            .typing-cursor {
+                display: inline-block;
+                width: 2px;
+                height: 0.8em;
+                background-color: #fff;
+                margin-left: 2px;
+                animation: blink 0.7s infinite;
+                vertical-align: middle;
             }
 
             /* 添加标题页垂直居中样式 */
@@ -400,11 +447,12 @@
             }
 
             /* 特定图表类型的高度覆盖 */
-            #competitors-radar-chart, #shareholder-structure-chart {
-                height: 480px !important;
-                min-height: 480px !important;
+            #competitors-radar-chart {
+                height: 600px !important;
+                min-height: 600px !important;
                 width: 100% !important;
                 position: relative !important;
+                margin: 0 auto !important;
             }
             
             /* 特定图表类型的高度覆盖 */
@@ -585,6 +633,113 @@
                 margin-top: 5px !important;
                 margin-bottom: 5px !important;
             }
+            
+            /* 新增动画相关样式 */
+            .particles-bg {
+                position: fixed;  /* 改为fixed以确保全屏覆盖 */
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+            
+            .char {
+                display: inline-block;
+                opacity: 0;
+                transform: translateY(20px);
+                font-weight: 500;  /* 统一字重 */
+            }
+            
+            .typing-cursor {
+                display: inline-block;
+                width: 2px;
+                height: 0.8em;  /* 减小光标高度 */
+                background-color: #fff;
+                margin-left: 2px;
+                animation: blink 0.7s infinite;
+            }
+            
+            @keyframes blink {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0; }
+            }
+            
+            .reveal .slides section[data-background-gradient] {
+                background: linear-gradient(45deg, #283b95, #17b2c3);
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .reveal .slides section[data-background-gradient]::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+                animation: pulse 8s ease-in-out infinite;
+            }
+            
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); opacity: 0.5; }
+                50% { transform: scale(1.2); opacity: 0.8; }
+            }
+
+            /* 目录页样式 */
+            .toc-container {
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+            }
+            
+            .toc-item {
+                width: 300px;
+                height: 60px;
+                margin: 10px 0;
+                background: linear-gradient(45deg, rgba(26, 115, 232, 0.8), rgba(26, 115, 232, 0.6));
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2em;
+                color: #fff;
+                cursor: pointer;
+                opacity: 0;
+                transform: translateX(-100px);
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .toc-item:nth-child(2) { background: linear-gradient(45deg, rgba(52, 152, 219, 0.8), rgba(52, 152, 219, 0.6)); }
+            .toc-item:nth-child(3) { background: linear-gradient(45deg, rgba(46, 204, 113, 0.8), rgba(46, 204, 113, 0.6)); }
+            .toc-item:nth-child(4) { background: linear-gradient(45deg, rgba(230, 126, 34, 0.8), rgba(230, 126, 34, 0.6)); }
+            .toc-item:nth-child(5) { background: linear-gradient(45deg, rgba(155, 89, 182, 0.8), rgba(155, 89, 182, 0.6)); }
+            
+            .toc-item:hover {
+                transform: scale(1.05);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            }
+            
+            .toc-item::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                transition: 0.5s;
+            }
+            
+            .toc-item:hover::after {
+                left: 100%;
+            }
         </style>
 	</head>
 
@@ -596,27 +751,30 @@
 			<div class="slides">
 				<!-- 1. 标题页 -->
 				<section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
-                    <div class="threejs-container">
+                    <div id="particles-js" class="particles-bg"></div>
+                    <div class="threejs-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 200px;">
                         <canvas id="goel-logo-canvas"></canvas>
                         <div class="threejs-loading" id="logo-loading-text">加载中...</div>
                     </div>
                     <div class="title-content">
-					    <h1>歌尔股份财务和成功因素分析</h1>
+                        <h1 class="split-text">歌尔股份财务和成功因素分析</h1>
+                    </div>
+                    <div class="author-info" style="position: absolute; bottom: 30px; left: 0; width: 100%; text-align: center; z-index: 2;">
 					    <p>
-						    <small style="font-size: 0.9em;">第二组：闫杰龙、刘铭宇、谭显丞、张容馨、王康康</small>  <!-- 添加内联样式控制字体大小 -->
+                            <small class="typing-text" style="font-size: 0.6em; opacity: 0;">第二组：闫杰龙、刘铭宇、谭显丞、张容馨、王康康</small>
+                            <span class="typing-cursor"></span>
 					    </p>
                     </div>
 				</section>
 
 				<!-- 2. 目录页 -->
 				<section>
-					<!-- <h2>内容概览</h2> --> <!-- 删除此行 -->
-					<div class="gsap-container" id="toc-animation">
-                        <div class="gsap-timeline-element" style="top: 15%; background-color: #1a73e8; box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3); border-radius: 12px; font-weight: 600;">公司概述</div>
-                        <div class="gsap-timeline-element" style="top: 30%; background-color: #3498db; box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3); border-radius: 12px; font-weight: 600;">财务指标分析</div>
-                        <div class="gsap-timeline-element" style="top: 45%; background-color: #2ecc71; box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); border-radius: 12px; font-weight: 600;">成功因素分析</div>
-                        <div class="gsap-timeline-element" style="top: 60%; background-color: #e67e22; box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3); border-radius: 12px; font-weight: 600;">财务问题分析</div>
-                        <div class="gsap-timeline-element" style="top: 75%; background-color: #9b59b6; box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3); border-radius: 12px; font-weight: 600;">未来展望</div>
+					<div class="toc-container">
+                        <div class="toc-item">公司概述</div>
+                        <div class="toc-item">财务指标分析</div>
+                        <div class="toc-item">成功因素分析</div>
+                        <div class="toc-item">财务问题分析</div>
+                        <div class="toc-item">未来展望</div>
                     </div>
 				</section>
 
@@ -698,8 +856,44 @@
                     
                     <section>
                         <h2>同行业竞争对手对比</h2>
-                        <div class="echarts-container" id="competitors-radar-chart" style="height:480px !important; width:100% !important;"></div>
-                        <p>在营收规模、盈利能力和估值等多维度的对比</p>
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div class="echarts-container" id="competitors-radar-chart" style="height:600px !important; width:100% !important;"></div>
+                            <p style="font-size: 0.8em; color: #95a5a6; margin-top: 10px; text-align: center;">数据来源：2023年年报</p>
+                        </div>
+                    </section>
+                    
+                    <section>
+                        <h2>竞争对手详细分析</h2>
+                        <div class="highlight-box" style="width: 90%; margin: 20px auto; font-size: 0.8em;">
+                            <h3 style="color: #3498db; margin-bottom: 10px;">主要竞争对手分析</h3>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                                <div>
+                                    <h4 style="color: #f39c12;">立讯精密</h4>
+                                    <ul style="font-size: 0.9em; line-height: 1.3;">
+                                        <li>营收规模最大：1894.87亿元</li>
+                                        <li>净利润最高：66.34亿元</li>
+                                        <li>较高的市净率：3.84</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 style="color: #2ecc71;">舜宇光学</h4>
+                                    <ul style="font-size: 0.9em; line-height: 1.3;">
+                                        <li>最高毛利率：19.8%</li>
+                                        <li>较高市盈率：36.2</li>
+                                        <li>技术优势突出</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <h4 style="color: #e74c3c;">歌尔股份竞争优势</h4>
+                                <ul style="font-size: 0.9em; line-height: 1.3;">
+                                    <li>VR/AR领域领先地位</li>
+                                    <li>TWS耳机市场份额高</li>
+                                    <li>客户资源优质（苹果、Meta等）</li>
+                                    <li>研发投入持续增长</li>
+                                </ul>
+                            </div>
+                        </div>
                     </section>
                     
                     <!-- 新增：股东结构分析页面 -->
@@ -748,7 +942,7 @@
                     
                     <!-- 新增：盛新锂能技术分析图 -->
                     <section>
-                        <h2>歌尔股份技术分析图</h2>
+                        <h2>歌尔股份股价走势图</h2>
                         <div style="text-align: center; margin: 20px 0;">
                             <img src="dba40c6237ee3e20e95fe0f0c434f96d.png" alt="歌尔股份技术分析图" style="max-width: 90%; max-height: 70vh;">
                         </div>
@@ -3414,71 +3608,63 @@
 
             // 初始化竞争对手对比雷达图
             function initCompetitorsRadarChart() {
-                console.log('开始初始化竞争对手雷达图');
-                const container = document.getElementById('competitors-radar-chart');
-                if (!container) {
-                    console.error('无法找到竞争对手雷达图容器');
-                    return;
-                }
-                
-                console.log('容器尺寸:', container.offsetWidth, 'x', container.offsetHeight);
-                
-                // 确保容器有足够的尺寸
-                if (container.offsetHeight < 300) {
-                    container.style.height = '480px';
-                    console.log('调整容器高度为480px');
-                }
-                
                 try {
-                    // 销毁现有实例
+                    console.log('开始初始化竞争对手雷达图');
+                    const container = document.getElementById('competitors-radar-chart');
+                    if (!container) {
+                        console.error('未找到竞争对手雷达图容器');
+                        return;
+                    }
+
+                    // 确保容器尺寸
+                    container.style.height = '600px';
+                    container.style.width = '100%';
+
+                    // 如果已存在实例，先销毁
                     if (competitorsRadarChart) {
                         competitorsRadarChart.dispose();
-                        console.log('销毁现有图表实例');
                     }
                     
-                    // 重新初始化
+                    // 创建新实例
                     competitorsRadarChart = echarts.init(container);
-                    console.log('创建新图表实例');
+                    console.log('雷达图实例创建成功');
                     
                     const option = {
                         title: {
                             text: '行业竞争对手关键指标分析',
                             left: 'center',
+                            top: 20,
+                            textStyle: {
+                                color: '#fff',
+                                fontSize: 16
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            backgroundColor: 'rgba(0,0,0,0.7)',
+                            borderColor: '#fff',
                             textStyle: {
                                 color: '#fff'
                             }
                         },
-                        tooltip: {
-                            trigger: 'item'
-                        },
                         legend: {
-                            orient: 'horizontal',
-                            bottom: 10,
+                            data: ['歌尔股份', '立讯精密', '舜宇光学'],
+                            bottom: 20,
                             textStyle: {
-                                color: '#fff'
-                            },
-                            data: goelData.competitors.companies
+                                color: '#fff',
+                                fontSize: 12
+                            }
                         },
-                        // 添加全局动画属性
-                        animation: true,
-                        animationDuration: 2500,  // 增加动画时长到2.5秒
-                        animationEasing: 'elasticOut',  // 使用弹性缓出效果，更平滑
-                        animationDelay: function(idx) {
-                            return idx * 200;  // 为不同的数据项设置递增的延迟
-                        },
-                        animationThreshold: 10000,  // 提高动画元素阈值，确保所有元素都有动画
                         radar: {
-                            indicator: [
-                                { name: '营收规模(亿元)', max: 2000 },
-                                { name: '净利润(亿元)', max: 70 },
-                                { name: '毛利率(%)', max: 30 },
-                                { name: '市盈率', max: 80 },
-                                { name: '市净率', max: 5 }
-                            ],
+                            shape: 'circle',
+                            splitNumber: 5,
                             center: ['50%', '50%'],
                             radius: '60%',
-                            axisName: {
-                                color: '#fff'
+                            nameGap: 15,
+                            axisLine: {
+                                lineStyle: {
+                                    color: 'rgba(255, 255, 255, 0.2)'
+                                }
                             },
                             splitLine: {
                                 lineStyle: {
@@ -3486,92 +3672,92 @@
                                 }
                             },
                             splitArea: {
-                                show: true,
                                 areaStyle: {
-                                    color: 'rgba(255, 255, 255, 0.05)'
+                                    color: ['rgba(255,255,255,0.02)', 'rgba(255,255,255,0.05)',
+                                        'rgba(255,255,255,0.08)', 'rgba(255,255,255,0.1)',
+                                        'rgba(255,255,255,0.12)']
                                 }
                             },
-                            axisLine: {
-                                lineStyle: {
-                                    color: 'rgba(255, 255, 255, 0.3)'
+                            indicator: [
+                                { name: '营收规模(亿元)', max: 2000, color: '#fff' },
+                                { name: '净利润(亿元)', max: 70, color: '#fff' },
+                                { name: '毛利率(%)', max: 30, color: '#fff' },
+                                { name: '市盈率(倍)', max: 80, color: '#fff' },
+                                { name: '市净率(倍)', max: 5, color: '#fff' }
+                            ],
+                            name: {
+                                textStyle: {
+                                    color: '#fff',
+                                    fontSize: 12,
+                                    backgroundColor: 'transparent',
+                                    padding: [3, 5]
                                 }
                             }
                         },
                         series: [{
                             type: 'radar',
-                            // 为series添加单独的动画延迟
-                            animationDelay: function(idx) {
-                                return 800 + idx * 300;  // 基础延迟800ms后，每个系列数据增加300ms
-                            },
-                            // 添加更自然的缓动效果
-                            animationEasing: 'cubicInOut',
                             data: [
                                 {
-                                    value: [
-                                        goelData.competitors.revenue[0], 
-                                        goelData.competitors.profit[0], 
-                                        goelData.competitors.grossMargin[0], 
-                                        goelData.competitors.pe[0], 
-                                        goelData.competitors.pb[0]
-                                    ],
-                                    name: goelData.competitors.companies[0],
+                                    value: [985.74, 10.88, 8.93, 72.0, 2.53],
+                                    name: '歌尔股份',
+                                    symbol: 'circle',
+                                    symbolSize: 8,
                                     lineStyle: {
-                                        color: '#f39c12',
-                                        width: 2
+                                        width: 2,
+                                        color: '#e74c3c'
+                                    },
+                                    areaStyle: {
+                                        color: 'rgba(231, 76, 60, 0.2)'
+                                    },
+                                    itemStyle: {
+                                        color: '#e74c3c'
+                                    },
+                                    emphasis: {
+                                        lineStyle: {
+                                            width: 4
+                                        }
+                                    }
+                                },
+                                {
+                                    value: [1894.87, 66.34, 13.06, 28.5, 3.84],
+                                    name: '立讯精密',
+                                    symbol: 'circle',
+                                    symbolSize: 8,
+                                    lineStyle: {
+                                        width: 2,
+                                        color: '#f39c12'
                                     },
                                     areaStyle: {
                                         color: 'rgba(243, 156, 18, 0.2)'
-                                    }
-                                },
-                                {
-                                    value: [
-                                        goelData.competitors.revenue[1], 
-                                        goelData.competitors.profit[1], 
-                                        goelData.competitors.grossMargin[1], 
-                                        goelData.competitors.pe[1], 
-                                        goelData.competitors.pb[1]
-                                    ],
-                                    name: goelData.competitors.companies[1],
-                                    lineStyle: {
-                                        color: '#3498db',
-                                        width: 2
                                     },
-                                    areaStyle: {
-                                        color: 'rgba(52, 152, 219, 0.2)'
+                                    itemStyle: {
+                                        color: '#f39c12'
+                                    },
+                                    emphasis: {
+                                        lineStyle: {
+                                            width: 4
+                                        }
                                     }
                                 },
                                 {
-                                    value: [
-                                        goelData.competitors.revenue[2], 
-                                        goelData.competitors.profit[2], 
-                                        goelData.competitors.grossMargin[2], 
-                                        goelData.competitors.pe[2], 
-                                        goelData.competitors.pb[2]
-                                    ],
-                                    name: goelData.competitors.companies[2],
+                                    value: [267.45, 15.6, 19.8, 36.2, 2.62],
+                                    name: '舜宇光学',
+                                    symbol: 'circle',
+                                    symbolSize: 8,
                                     lineStyle: {
-                                        color: '#2ecc71',
-                                        width: 2
+                                        width: 2,
+                                        color: '#2ecc71'
                                     },
                                     areaStyle: {
                                         color: 'rgba(46, 204, 113, 0.2)'
-                                    }
-                                },
-                                {
-                                    value: [
-                                        goelData.competitors.revenue[3], 
-                                        goelData.competitors.profit[3], 
-                                        goelData.competitors.grossMargin[3], 
-                                        goelData.competitors.pe[3], 
-                                        goelData.competitors.pb[3]
-                                    ],
-                                    name: goelData.competitors.companies[3],
-                                    lineStyle: {
-                                        color: '#9b59b6',
-                                        width: 2
                                     },
-                                    areaStyle: {
-                                        color: 'rgba(155, 89, 182, 0.2)'
+                                    itemStyle: {
+                                        color: '#2ecc71'
+                                    },
+                                    emphasis: {
+                                        lineStyle: {
+                                            width: 4
+                                        }
                                     }
                                 }
                             ]
@@ -3579,18 +3765,30 @@
                     };
                     
                     competitorsRadarChart.setOption(option);
-                    console.log('设置图表配置完成');
-                    
-                    // 强制执行一次resize
-                    setTimeout(function() {
-                        competitorsRadarChart.resize();
-                        console.log('执行图表resize');
-                    }, 100);
+                    console.log('雷达图配置完成');
+
+                    // 添加窗口大小改变时的自动调整
+                    window.addEventListener('resize', function() {
+                        if (competitorsRadarChart) {
+                            competitorsRadarChart.resize();
+                        }
+                    });
+
                 } catch (error) {
                     console.error('竞争对手雷达图初始化失败:', error);
-                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败，详细错误: ' + error.message + '</div>';
+                    container.innerHTML = '<div style="text-align:center;padding-top:100px;color:red;">图表加载失败，请刷新页面重试</div>';
                 }
             }
+
+            // 在Reveal.js的slidechanged事件中添加图表初始化
+            Reveal.on('slidechanged', function(event) {
+                // 检查当前幻灯片是否包含竞争对手雷达图
+                if (event.currentSlide.querySelector('#competitors-radar-chart')) {
+                    console.log('检测到竞争对手雷达图页面，开始初始化');
+                    // 延迟一点时间确保DOM已经完全准备好
+                    setTimeout(initCompetitorsRadarChart, 100);
+                }
+            });
 
             // 初始化成本结构饼图
             function initCostStructurePie() {
@@ -4382,50 +4580,195 @@
             }
 		</script>
 
-        <!-- 新增：标题页入场动画脚本 -->
+        <!-- 新增：标题页动画脚本 -->
         <script>
-            Reveal.addEventListener( 'ready', function( event ) {
-                // 确保这是首次加载（ready事件通常只触发一次，但以防万一）
-                // 并且只针对第一个幻灯片（通常是标题页）
-                // 我们通过检查目标元素的上下文来假设这是第一页
-                const firstSlideSection = document.querySelector('.slides section[data-background-gradient]');
-                
-                // 检查是否找到了第一张幻灯片对应的元素
-                if (firstSlideSection) {
-                    const logoContainer = firstSlideSection.querySelector('.threejs-container');
-                    const title = firstSlideSection.querySelector('.title-content h1');
-                    const subtitle = firstSlideSection.querySelector('.title-content p small');
+            // 初始化particles.js
+            document.addEventListener('DOMContentLoaded', function() {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: {
+                            value: 80,
+                            density: {
+                                enable: true,
+                                value_area: 800
+                            }
+                        },
+                        color: {
+                            value: '#ffffff'
+                        },
+                        shape: {
+                            type: 'circle'
+                        },
+                        opacity: {
+                            value: 0.5,
+                            random: true
+                        },
+                        size: {
+                            value: 3,
+                            random: true
+                        },
+                        line_linked: {
+                            enable: true,
+                            distance: 150,
+                            color: '#ffffff',
+                            opacity: 0.4,
+                            width: 1
+                        },
+                        move: {
+                            enable: true,
+                            speed: 2,
+                            direction: 'none',
+                            random: true,
+                            straight: false,
+                            out_mode: 'out',
+                            bounce: false
+                        }
+                    },
+                    interactivity: {
+                        detect_on: 'canvas',
+                        events: {
+                            onhover: {
+                                enable: true,
+                                mode: 'grab'
+                            },
+                            onclick: {
+                                enable: true,
+                                mode: 'push'
+                            },
+                            resize: true
+                        }
+                    },
+                    retina_detect: true
+                });
+            });
 
-                    // 确保所有元素都存在
-                    if (logoContainer && title && subtitle) {
-                        // 创建GSAP时间线
+            // 标题页动画
+            Reveal.addEventListener('ready', function(event) {
+                if (event.currentSlide.querySelector('.split-text')) {
+                    // 分割标题文字
+                    const title = event.currentSlide.querySelector('.split-text');
+                    const text = title.textContent;
+                    title.textContent = '';
+                    
+                    // 创建字符span
+                    [...text].forEach(char => {
+                        const span = document.createElement('span');
+                        span.className = 'char';
+                        span.textContent = char;
+                        title.appendChild(span);
+                    });
+
+                    // 创建动画时间线
                         const tl = gsap.timeline({ 
-                            // 添加一个小的延迟，确保页面渲染稳定
-                            delay: 0.2 
+                        delay: 0.5
                         });
 
-                        // 动画序列
-                        tl.to(logoContainer, { 
+                    // 标题容器动画
+                    tl.to('.title-content', {
                             opacity: 1,
+                        duration: 0.5
+                    });
+
+                    // 字符动画
+                    tl.to('.char', {
+                        opacity: 1,
+                        y: 0,
                             duration: 0.8, 
-                            ease: "power2.out" 
-                        })
-                        .to(title, { 
+                        stagger: 0.03,
+                        ease: "back.out(1.7)"
+                    });
+
+                    // 作者信息动画
+                    tl.to('.author-info', {
                             opacity: 1, 
                             y: 0, 
-                            duration: 0.7, 
+                        duration: 0.5,
                             ease: "power2.out" 
-                        }, "-=0.5") // 在上一个动画结束前0.5秒开始
-                        .to(subtitle, { 
+                    })
+                    .to('.typing-text', {
                             opacity: 1, 
-                            duration: 0.5, 
+                        duration: 0.5
+                    })
+                    .to('.typing-cursor', {
+                        opacity: 1,
+                        duration: 0.3
+                    });
+
+                    // 背景脉冲动画
+                    gsap.to('[data-background-gradient]::before', {
+                        scale: 1.2,
+                        opacity: 0.8,
+                        duration: 4,
+                        repeat: -1,
+                        yoyo: true,
                             ease: "power1.inOut" 
-                        }, "-=0.3"); // 在上一个动画结束前0.3秒开始
-                    } else {
-                        console.warn('未能找到标题页动画所需的所有元素。');
-                    }
-                } else {
-                     console.warn('未能找到具有 data-background-gradient 属性的第一张幻灯片。');
+                    });
+                }
+            });
+
+            // 目录页动画
+            Reveal.addEventListener('slidechanged', function(event) {
+                // 检查是否是目录页
+                const tocContainer = event.currentSlide.querySelector('.toc-container');
+                if (tocContainer) {
+                    // 获取所有目录项
+                    const tocItems = tocContainer.querySelectorAll('.toc-item');
+                    
+                    // 创建动画时间线
+                    const tl = gsap.timeline({
+                        defaults: {
+                            duration: 0.5,
+                            ease: "power2.out"
+                        }
+                    });
+
+                    // 为每个目录项添加动画
+                    tocItems.forEach((item, index) => {
+                        tl.fromTo(item, 
+                            {
+                                opacity: 0,
+                                x: -100,
+                                rotation: -10
+                            },
+                            {
+                                opacity: 1,
+                                x: 0,
+                                rotation: 0,
+                                duration: 0.6,
+                                ease: "back.out(1.7)"
+                            },
+                            index * 0.15 // 错开每个项目的动画时间
+                        );
+                    });
+
+                    // 添加鼠标悬停效果
+                    tocItems.forEach(item => {
+                        item.addEventListener('mouseenter', () => {
+                            gsap.to(item, {
+                                scale: 1.05,
+                                boxShadow: "0 5px 15px rgba(0,0,0,0.3)",
+                                duration: 0.3
+                            });
+                        });
+
+                        item.addEventListener('mouseleave', () => {
+                            gsap.to(item, {
+                                scale: 1,
+                                boxShadow: "none",
+                                duration: 0.3
+                            });
+                        });
+
+                        // 点击效果
+                        item.addEventListener('click', () => {
+                            gsap.to(item, {
+                                scale: 0.95,
+                                duration: 0.1,
+                                yoyo: true,
+                                repeat: 1
+                            });
+                        });
+                    });
                 }
             });
         </script>
@@ -4484,4 +4827,5 @@
             });
         </script>
 	</body>
+</html> 
 </html> 
