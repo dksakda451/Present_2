@@ -211,6 +211,30 @@
                 opacity: 0;
             }
             
+            /* Center the section titles */
+            .market-position-title, 
+            .honors-title {
+                text-align: center;
+                width: 100%;
+                display: block;
+                font-size: 1.5em;
+                margin-bottom: 20px;
+            }
+            
+            /* Ensure list content stays properly aligned */
+            .market-position-section ul,
+            .honors-section ul {
+                display: inline-block;
+                text-align: left;
+            }
+            
+            /* Center the sections themselves */
+            .market-position-section,
+            .honors-section {
+                text-align: center;
+                width: 100%;
+            }
+            
             .title-content h1 {
                 font-size: 1.8em;
                 margin-bottom: 0;
@@ -786,6 +810,48 @@
                 0%, 100% { opacity: 1; }
                 50% { opacity: 0; }
             }
+            
+            /* Centered section titles with reduced font size */
+            .section-title {
+                text-align: center;
+                width: 100%;
+                display: block;
+                font-size: 0.8em; /* 减小从1.0em到0.8em */
+                margin-bottom: 10px; /* 减小从12px到10px */
+                font-weight: 500;
+            }
+            
+            /* Ensure the section has enough space */
+            .content-section {
+                margin-bottom: 12px; /* 减小从15px到12px */
+                text-align: center;
+                width: 100%;
+            }
+            
+            /* Keep bullet points properly aligned */
+            .content-section ul {
+                display: inline-block;
+                text-align: left;
+                margin-top: 6px; /* 减小从8px到6px */
+                font-size: 0.8em; /* 减小从0.9em到0.8em */
+            }
+            
+            /* Adjust bullet point spacing */
+            .content-section li {
+                margin-bottom: 6px; /* 减小从8px到6px */
+                font-size: 0.8em; /* 减小从0.9em到0.8em */
+            }
+            
+            /* Specific fix for Reveal.js slides */
+            .reveal h2 {
+                font-size: 1.3em;  /* Reduced size for h2 elements */
+                margin-bottom: 15px;
+            }
+            
+            /* Give more vertical space to slide content */
+            .reveal .slides section {
+                padding-top: 15px;
+            }
         </style>
 	</head>
 
@@ -831,20 +897,20 @@
 						<h3>歌尔股份有限公司（股票代码：002241）</h3>
 						<p>全球领先的智能声学、精密光学和电子产品解决方案提供商</p>
 					</div>
-					<div class="highlight-box">
-						<h3>市场地位</h3>
+					<div class="content-section">
+						<h2 class="section-title">市场地位</h2>
 						<ul>
 							<li>全球知名的消费电子精密零组件和智能产品制造商</li>
 							<li>苹果公司AirPods等产品的重要供应商</li>
 							<li>VR/AR领域的核心供应商之一</li>
 						</ul>
 					</div>
-					<div class="highlight-box">
-						<h3>2024年重要荣誉</h3>
+					<div class="content-section">
+						<h2 class="section-title">2024年重要荣誉</h2>
 						<ul>
-							<li>中国电子元器件骨干企业百强榜单第4位</li>
-							<li>中国电子信息竞争力百强企业第15位</li>
-							<li>中国制造业民营企业500强第55位</li>
+							<li>2024年度中国电子元器件骨干企业百强榜单第6位</li>
+							<li>2024年中国电子信息竞争力百强企业第18位</li>
+							<li>2024年中国民营企业500强第99位</li>
 						</ul>
 					</div>
 				</section>
